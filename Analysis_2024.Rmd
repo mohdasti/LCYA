@@ -1,0 +1,1426 @@
+---
+title: "LC–YA data analysis"
+author: "Mohammad Dastgheib"
+date: '`r Sys.Date()`'
+output:
+  html_document:
+        code_folding: hide
+        toc: true
+        toc_depth: 6
+        toc_float: true
+        number_sections: true
+        df_print: paged 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(readr)
+library(dplyr)
+library(plotly)
+library(gridExtra)
+library(grid)
+library(report)
+library(tidyverse)
+library(ggplot2)
+library(viridis)
+library(ggpubr)
+library(rstatix)
+library(ggridges)
+
+```
+
+
+
+```{r, include=FALSE, cache=TRUE}
+#Loading the data from `csv` format
+
+setwd("/Users/mohdasti/Documents/LC–YA")
+lcya_behdata_trial_cts_cva <- read_csv("lcya_behdata_trial_cts_cva.csv")
+#View(lcya_behdata_trial_cts_cva)
+LC_YA <- lcya_behdata_trial_cts_cva
+```
+
+For now, I will be working on perceptual data. Future analyses will expand into CDT and MST
+Also, the main difference between current analysis from previous works is that this data is cleaned. In addition, current dataset includes the subjects in which have not completed all 4 tasks. Future analyses could limit the subjects to those who have completed the 4 tasks.
+
+# Description of current data {.tabset .tabset-fade .tabset-pills}
+
+- Number of subjects for ADT : 47
+   - Ratio of valid trials: 9946/11654 = 85.34%
+
+```{r, include=F, echo=F, cache=TRUE}
+unique_values_count_aud <- LC_YA %>%
+    filter(task=='aud') %>%
+  summarise(unique_count = n_distinct(sub))
+
+# Print the result
+print(unique_values_count_aud$unique_count)
+```
+
+
+
+- Number of subjects for VDT: 47
+    - Ratio of valid trials: 10194/11494 = 88.68%
+
+```{r, include=F, echo=F, cache=TRUE}
+unique_values_count_vis <- LC_YA %>%
+    filter(task=='vis') %>%
+  summarise(unique_count = n_distinct(sub))
+
+# Print the result
+print(unique_values_count_vis$unique_count)
+```
+
+
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+ADT_cleaned <- LC_YA %>%
+    filter(task == 'aud') %>%
+    filter(invalid_resp1 == 0) %>%
+    filter(invalid_grip == FALSE)
+
+VDT_cleaned <- LC_YA %>%
+    filter(task == 'vis') %>%
+    filter(invalid_resp1 == 0) %>%
+    filter(invalid_grip == FALSE)
+# Function to calculate total trials per subject
+calculate_total_trials <- function(data) {
+    data %>%
+        group_by(sub) %>%
+        summarise(total_trials = n())
+}
+
+# Calculate total trials for ADT and VDT
+total_trials_ADT <- calculate_total_trials(ADT_cleaned)
+total_trials_VDT <- calculate_total_trials(VDT_cleaned)
+
+# Combine the data frames
+combined_data <- bind_rows(
+    mutate(total_trials_ADT, task = "ADT"),
+    mutate(total_trials_VDT, task = "VDT")
+)
+
+# Create a facetted bar plot
+facetted_bar_plot <- ggplot(combined_data, aes(x = sub, y = total_trials, fill = task)) +
+    geom_bar(stat = "identity", position = "dodge", alpha = 0.7) +
+    labs(title = "Total Number of Trials per Subject (ADT vs. VDT)",
+         x = "Subject",
+         y = "Total Trials",
+         fill = "Task") +
+    facet_wrap(~task, scales = "free_y", ncol = 1) +
+    theme_minimal()
+ggplotly(facetted_bar_plot)
+```
+
+```{r, include=F, echo=F, cache=TRUE}
+# Removing subjects with poor performance
+# For now, my exclusion criteria is below 75% of all trials—after RT and Hangrip removal
+# ADT
+
+ADT_subjects_to_remove <- c('LCYA013', 'LCYA021', 'LCYA024', 'LCYA029', 'LCYA037', 'LCYA054', 'LCYA061', 'LCYA064', 'LCYA065', 'LCYA087')
+
+ADT_cleaned <- ADT_cleaned %>%
+  filter(!sub %in% ADT_subjects_to_remove)
+
+# VDT
+VDT_subjects_to_remove <- c('LCYA065','LCYA037','LCYA061','LCYA087')
+VDT_cleaned <- VDT_cleaned %>%
+  filter(!sub %in% VDT_subjects_to_remove)
+# CDT tbd
+
+
+```
+
+We removed subjest with less than 2/3 of the original total trial number:
+
+- Number of subjects for ADT : 37
+    - Ratio of valid trials: 8702/11654 = 74.66%
+- Number of subjects for VDT: 43
+    - Ratio of valid trials: 9875/11654 = 84.73%
+
+
+# ADT {.tabset .tabset-fade .tabset-pills}
+
+## Accuracy 
+
+### Traditional with 'Standard'
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+ADT_cleaned$stimLev <- recode_factor(ADT_cleaned$stimLev, '0' = "Standard", '4' = "4", '8' = "8", '32' = "32", '128' = "128")
+ADT_cleaned$gf_trPer <- as.factor(ADT_cleaned$gf_trPer)
+ADT_cleaned$gf_trPer <- recode_factor(ADT_cleaned$gf_trPer, '0.05' = "Low", '0.4' = "High")
+
+# Calculate mean accuracy and standard error
+acc_ADT <- ADT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    summarise(corrects = mean(iscorr),
+              corrects_se = sd(iscorr) / sqrt(length(iscorr))) %>%
+    distinct()
+
+# Assign group based on oddball level
+acc_ADT$grp <- c(1,2)[acc_ADT$stimLev %in% c("4","8","32","128")+ 1L]
+
+    # Plotting
+p1_ADT<- ggplot(acc_ADT, aes(x = stimLev, y = corrects, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0, 1) +
+  ggtitle("Accuracy") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = corrects - corrects_se, ymax = corrects + corrects_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Oddball Level (Hz)") +
+  ylab("Corrects") +
+  guides(color = guide_legend(title = "Grip Level")) 
+ggplotly(p1_ADT)
+   
+```
+
+### Proportion of responding 'Different'
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+#ADT_cleaned <- LC_YA %>%
+#    filter(task == 'aud') %>%
+#    filter(invalid_resp1 == 0) %>%
+#    filter(invalid_grip == FALSE)
+
+ADT_cleaned$stimLev <- recode_factor(ADT_cleaned$stimLev, '0' = "Standard", '4' = "4", '8' = "8", '32' = "32", '128' = "128")
+ADT_cleaned$gf_trPer <- as.factor(ADT_cleaned$gf_trPer)
+ADT_cleaned$gf_trPer <- recode_factor(ADT_cleaned$gf_trPer, '0.05' = "Low", '0.4' = "High")
+
+
+# Calculate mean accuracy and standard error
+diff_ADT <- ADT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    summarise(diff = mean(resp1_diff, na.rm = T),
+              diff_se = sd(resp1_diff, na.rm = TRUE) / sqrt(length(resp1_diff))) %>%
+    distinct()
+
+
+# Assuming 'diff_ADT' is your data frame
+# Assuming 'diff_ADT' is your data frame
+
+# Specify the desired order of levels for 'stimLev'
+desired_order <- c("Standard", "4", "8", "32", "128")
+
+# Convert 'stimLev' to factor with the desired order
+diff_ADT$stimLev <- factor(diff_ADT$stimLev, levels = desired_order)
+
+# Plotting with the modified 'stimLev'
+p2_ADT <- ggplot(diff_ADT, aes(x = stimLev, y = diff, color = gf_trPer, group = gf_trPer)) +
+    geom_point(size = 3) +
+    geom_line(size = 1.2) +
+    geom_linerange(mapping = aes(ymin = diff - diff_se, ymax = diff + diff_se)) +
+    ylim(0, 1) +
+    ggtitle("Proportion of Responding 'Different'") +
+    scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+    xlab("Oddball Level (Hz)") +
+    ylab("P('Different')") +
+    guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p2_ADT)   
+```
+
+### Responding 'Different' for every participant
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+# Calculate individual subject responses
+subject_responses_ADT <- ADT_cleaned %>%
+  group_by(sub, gf_trPer, stimLev) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE))
+
+# Plotting
+p9_ADT <- ggplot(subject_responses_ADT, aes(x = gf_trPer, y = response, color = gf_trPer, text = as.character(sub))) +
+  geom_boxplot(position = position_dodge(width = 0.8), outlier.shape = NA) +
+  geom_point(position = position_jitterdodge(dodge.width = 0.75, jitter.width = 0.2), alpha = 0.5) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_ADT$stimLev))) +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p9_ADT, tooltip = "text")
+
+
+
+```
+
+
+### Correct responses regardless of conditions
+
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+ADT_acc_no_condition <- ADT_cleaned %>%
+    summarise(Accuracy = mean(iscorr), .by = sub)
+
+p11_ADT<- ADT_acc_no_condition %>%
+  ggplot(aes(Accuracy, text = as.character(sub))) +
+  scale_x_continuous(
+    "Percent correct",
+    limits = c(0, 1),
+    labels = scales::percent_format(scale = 100)
+  ) +
+  scale_y_continuous(
+    "Count",
+    expand = expansion(c(0, .05))
+  ) +
+  geom_histogram(
+    color = "black",
+    fill = "grey80"
+  )
+
+ggplotly(p11_ADT, tooltip = "text")
+
+```
+
+
+<!--
+### Comparison of Low vs High for each subject
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+# Calculate individual subject responses
+subject_responses_ADT_2 <- ADT_cleaned %>%
+  group_by(sub, stimLev, gf_trPer) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE)) %>%
+  arrange(gf_trPer) %>%
+  ungroup()
+
+# Replace 'sub' with 'gf_trPer' for X-axis labels
+subject_responses_ADT_2$gf_trPer <- factor(subject_responses_ADT_2$gf_trPer, levels = c("Low", "High"))
+
+# Plotting
+p10_ADT <- ggplot(subject_responses_ADT_2, aes(x = gf_trPer, y = response, color=gf_trPer, group = sub, text =   as.character(sub))) +
+  geom_line(color = "gray") +
+  geom_point(size = 2) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_ADT_2$stimLev)))+
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p10_ADT, tooltip = "text")
+
+```
+
+-->
+
+## Reaction Time 
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+RT_ADT <- ADT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    filter(iscorr==1) %>%
+    summarise(RT = mean(resp1RT),
+              RT_se = sd(resp1RT) / sqrt(length(resp1RT))) %>%
+    distinct()
+
+
+# Assign group based on oddball level
+RT_ADT$grp <- c(1,2)[RT_ADT$stimLev %in% c("4","8","32","128")+ 1L]
+
+    # Plotting
+p3_ADT <- ggplot(RT_ADT, aes(x = stimLev, y = RT, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0,3) +
+  ggtitle("Mean Reaction Time for Correct Trials") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = RT - RT_se, ymax = RT + RT_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Oddball Level (Hz)") +
+  ylab("Reaction Time (S)") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p3_ADT)
+
+```
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+RT_ADT <- ADT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    filter(iscorr==1) %>%
+    summarise(RT = median(resp1RT),
+              RT_se = sd(resp1RT) / sqrt(length(resp1RT))) %>%
+    distinct()
+
+
+# Assign group based on oddball level
+RT_ADT$grp <- c(1,2)[RT_ADT$stimLev %in% c("4","8","32","128")+ 1L]
+
+    # Plotting
+p4_ADT <-ggplot(RT_ADT, aes(x = stimLev, y = RT, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0,3) +
+  ggtitle("Median Reaction Time for Correct Trials") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = RT - RT_se, ymax = RT + RT_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Oddball Level (Hz)") +
+  ylab("Reaction Time (S)") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p4_ADT)
+```
+
+## Veridicality and Reaction Time
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Assuming your data frame is named df_ADT and contains columns like gf_trPer, stimLev, correct, RT
+
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+
+# Create a new variable for the combination of gf_trPer and iscorr
+ADT_cleaned <- ADT_cleaned %>%
+  mutate(group_combination = paste(gf_trPer, factor(iscorr), sep = "_"))
+
+# Create density plots with adjusted colors and legend labels
+p5_ADT <- ggplot(ADT_cleaned, aes(x = resp1RT, fill = group_combination)) +
+  geom_density(alpha = 0.7, adjust = 1.5) + 
+  facet_grid(gf_trPer ~ stimLev) +
+  guides(color = FALSE) + 
+  xlab("Reaction Time (S)")+
+  ylab("Density") +
+  scale_fill_manual(
+    values = c("#FFD9CC", "#BC3C29FF", "#CCE6FF", "#004080"),
+    breaks = c("High_0", "High_1", "Low_0", "Low_1"),
+    labels = c("High Grip Incorrect", "High Grip Correct", "Low Grip Incorrect", "Low Grip Correct")
+  ) +
+  theme_minimal() +  # Adjust the theme if needed
+  ggtitle("Distribution of RT for Different Levels of Hand Grip and Oddball")
+
+ggplotly(p5_ADT)
+```
+
+
+## Speed-Accuracy Tradeoff
+
+If there is a tradeoff between accuracy and speed, then we must observe an increase in accuracy over time (possibly followed by a decrease, which would limit the difference in average reaction time by accuracy).
+
+
+### Evenly Spaced Bins over RT
+<!--
+```{r echo=F, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+rt_range <- 3000
+n_bins <- 10
+break_seq <- seq(0, rt_range, rt_range/n_bins)
+
+timeslice_range_1 <- ADT_cleaned %>%
+  mutate(RT_bin = cut(resp1RT*1000, breaks = break_seq)) %>%
+  group_by(RT_bin, stimLev) %>%
+  mutate(RT_bin_avg = mean(resp1RT*1000, na.rm = T))
+
+count_range <- timeslice_range_1 %>%
+  group_by(RT_bin, stimLev) %>%
+  summarise(subjcount = n_distinct(ADT_cleaned$sub), totalcount = n())
+
+timeslice_range_1 <- timeslice_range_1 %>%
+  group_by(RT_bin_avg, stimLev, ADT_cleaned$sub) %>% 
+  summarise(ss_acc = mean(iscorr, na.rm=T)) %>% 
+  group_by(RT_bin_avg, stimLev) %>%
+  summarise(mean = mean(ss_acc),
+            n = n())
+
+# Specify the desired order of levels for 'stimLev'
+timeslice_range_1$stimLev <- recode_factor(timeslice_range_1$stimLev, 'Standard' = "0", '4' = "4", '8' = "8", '32' = "32", '128' = "128")
+desired_order <- c("0", "4", "8", "32", "128")
+
+# Convert 'stimLev' to factor with the desired order
+timeslice_range_1$stimLev <- factor(timeslice_range_1$stimLev, levels = desired_order)
+
+
+ggplot(aes(x=RT_bin_avg, y=mean, weight = n, 
+           color = stimLev, group = stimLev), 
+       data = timeslice_range_1) + 
+  geom_point(aes(size = n)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x,2), se = FALSE) +
+  geom_hline(yintercept = 0.2, lty = "dashed") +
+  scale_color_manual(values = viridisLite::viridis(5, direction = -1, option = "viridis"), labels = c("0", "4", "8", "32", "128")) +
+  scale_size_continuous(breaks = c(3, 15, 27, 39,47)) +
+  xlab("Average RT (ms)") +
+  ylab("Proportion Correct")
+
+
+```
+-->
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+rt_range <- 3000
+n_bins <- 10
+break_seq <- seq(0, rt_range, rt_range/n_bins)
+
+timeslice_range_2 <- ADT_cleaned %>%
+  mutate(RT_bin = cut(resp1RT*1000, breaks = break_seq)) %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  mutate(RT_bin_avg = mean(resp1RT*1000, na.rm = TRUE))
+
+count_range <- timeslice_range_2 %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  summarise(subjcount = n_distinct(ADT_cleaned$sub), totalcount = n())
+
+timeslice_range_2 <- timeslice_range_2 %>%
+  group_by(RT_bin_avg, stimLev, gf_trPer, ADT_cleaned$sub) %>% 
+  summarise(ss_acc = mean(iscorr, na.rm=TRUE)) %>% 
+  group_by(RT_bin_avg, stimLev, gf_trPer) %>%
+  summarise(mean = mean(ss_acc),
+            n = n())
+
+# Specify the desired order of levels for 'stimLev'
+timeslice_range_2$stimLev <- recode_factor(timeslice_range_2$stimLev, 'Standard' = "0", '4' = "4", '8' = "8", '32' = "32", '128' = "128")
+desired_order <- c("0", "4", "8", "32", "128")
+
+# Convert 'stimLev' to factor with the desired order
+timeslice_range_2$stimLev <- factor(timeslice_range_2$stimLev, levels = desired_order)
+
+# Plot including gf_trPer
+p6_ADT <- ggplot(aes(x=RT_bin_avg, y=mean, weight = n, 
+           color = stimLev, group = interaction(stimLev, gf_trPer)), 
+       data = timeslice_range_2) + 
+  geom_point(aes(size = n)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x,2), se = FALSE) +
+  geom_hline(yintercept = 0.2, lty = "dashed") +
+  scale_color_manual(values = viridisLite::viridis(5, direction = -1, option = "viridis"), labels = c("0", "4", "8", "32", "128")) +
+  scale_size_continuous(breaks = c(1, 13, 24, 35,47)) +
+  facet_wrap(~gf_trPer) +
+  xlab("Average RT (ms)") +
+  ylab("Proportion Correct")
+
+ggplotly(p6_ADT)
+```
+
+
+### Quantiles over RT
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(dplyr)
+library(ggplot2)
+
+# Specify the number of quantiles
+n_quantiles <- 10
+
+timeslice_range <- ADT_cleaned %>%
+  group_by(stimLev, gf_trPer) %>%
+  mutate(RT_bin = ntile(resp1RT * 1000, n_quantiles)) %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  mutate(RT_bin_avg = mean(resp1RT * 1000, na.rm = TRUE))
+
+count_range <- timeslice_range %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  summarise(subjcount = n_distinct(sub), totalcount = n())
+
+timeslice_range <- timeslice_range %>%
+  group_by(RT_bin_avg, stimLev, gf_trPer, sub) %>% 
+  summarise(ss_acc = mean(iscorr, na.rm = TRUE)) %>% 
+  group_by(RT_bin_avg, stimLev, gf_trPer) %>%
+  summarise(mean = mean(ss_acc),
+            n = n())
+
+# Specify the desired order of levels for 'stimLev'
+timeslice_range$stimLev <- recode_factor(timeslice_range$stimLev, 'Standard' = "0", '4' = "4", '8' = "8", '32' = "32", '128' = "128")
+desired_order <- c("0", "4", "8", "32", "128")
+
+# Convert 'stimLev' to factor with the desired order
+timeslice_range$stimLev <- factor(timeslice_range$stimLev, levels = desired_order)
+
+p7_ADT <- ggplot(aes(x = RT_bin_avg, y = mean, weight = n, 
+           color = stimLev, group = interaction(stimLev, gf_trPer)), 
+       data = timeslice_range) + 
+  geom_point(aes(size = n)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE) +
+  geom_hline(yintercept = 0.2, lty = "dashed") +
+  scale_color_manual(values = viridisLite::viridis(5, direction = -1, option = "viridis"), labels = c("0", "4", "8", "32", "128")) +
+  scale_size_continuous(breaks = c(29, 32, 35, 38, 43)) + 
+  facet_wrap(~gf_trPer) +
+  xlab("Average RT (ms)") +
+  ylab("Proportion Correct")
+
+ggplotly(p7_ADT)
+```
+
+
+
+
+1. Downward Trend for 'Standard,' '32,' and '128' Levels:
+Faster RT with High Accuracy: A downward trend for these stimulus levels indicates that as the average reaction time decreases, the proportion of correct responses tends to increase. This pattern suggests that participants are able to respond more quickly without sacrificing accuracy, possibly indicating that these stimulus levels are easier or more familiar.
+
+2. Upward Trend for '4' and '8' Levels:
+Slower RT with High Accuracy: An upward trend for these stimulus levels suggests that as the average reaction time increases, the proportion of correct responses also increases. This pattern may imply that participants take more time to respond, possibly indicating that these stimulus levels are more challenging or require additional processing.
+
+Interpretation:
+Interaction Effect: The contrasting trends across stimulus levels suggest an interaction effect between reaction time and proportion correct. This interaction could be driven by differences in the perceptual difficulty or cognitive demands associated with each stimulus level.
+
+Optimal Speed-Accuracy Tradeoff: For the levels showing a downward trend, participants may find an optimal balance between speed and accuracy, responding quickly while maintaining high accuracy. In contrast, the upward trend levels may require a more cautious approach, with participants taking more time to ensure accurate responses.
+
+Considerations:
+Cognitive Load: Differences in cognitive load or perceptual demands across stimulus levels could influence the observed patterns. Levels with lower cognitive load may allow for faster responses without compromising accuracy.
+
+Individual Differences: Individual participants may exhibit varied speed-accuracy tradeoff strategies, contributing to the observed trends. Consider exploring individual-level data to capture this variability.
+
+
+
+## Analysis of Error types
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Filter data for stimLev values other than "Standard"
+ADT_error_means_filtered <- ADT_cleaned %>%
+  filter(stimLev != "Standard")
+
+# Calculate means and standard errors
+ADT_error_means <- ADT_error_means_filtered %>%
+  group_by(stimLev, gf_trPer) %>%
+  summarise(mean_miss = mean(miss), se_miss = sd(miss) / sqrt(n()))
+
+# Plotting
+p8_ADT <- ggplot(ADT_error_means, aes(x = stimLev, fill = gf_trPer)) +
+  geom_bar(aes(y = mean_miss), position = "dodge", stat = "identity", width = 0.7) +
+  geom_errorbar(aes(ymin = mean_miss - se_miss, ymax = mean_miss + se_miss),
+                position = position_dodge(0.7), width = 0.25) +
+  labs(title = "Bar Plot of Miss Values Across Oddball Levels",
+       x = "Stimulus Level", y = "Count",
+       subtitle = "Error bars represent standard errors (SE) of the mean") +
+  scale_fill_manual(values = c("Low" = "#0072B5FF", "High" = "#BC3C29FF"), name = "Grip Level") +
+  theme_minimal() 
+
+
+ggplotly(p8_ADT)
+```
+
+<!--
+## Comparison of Low vs High for each subject
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+# Calculate individual subject responses
+subject_responses_ADT_2 <- ADT_cleaned %>%
+  group_by(sub, stimLev, gf_trPer) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE)) %>%
+  arrange(gf_trPer) %>%
+  ungroup()
+
+# Replace 'sub' with 'gf_trPer' for X-axis labels
+subject_responses_ADT_2$gf_trPer <- factor(subject_responses_ADT_2$gf_trPer, levels = c("Low", "High"))
+
+# Plotting
+p10_ADT <- ggplot(subject_responses_ADT_2, aes(x = gf_trPer, y = response, color=gf_trPer, group = sub, text =   as.character(sub))) +
+  geom_line(color = "gray") +
+  geom_point(size = 2) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_ADT_2$stimLev)))+
+  guides(color = guide_legend(title = "Grip Level"))
+
+#p10_ADT
+
+ ggplotly(p10_ADT, tooltip = "text")
+
+```
+
+-->
+## Signal Detection Theory 
+
+### Relationship between d-prime and criterion
+
+```{r, include=F, echo=F, cache=TRUE}
+library(dplyr)
+
+calculate_sdt_metrics <- function(data, subject) {
+  result <- data %>%
+    filter(sub == subject) %>%
+    group_by(stimLev, gf_trPer) %>%
+    summarize(
+      n_hit = sum(hit, na.rm = TRUE),
+      n_fa = sum(fa, na.rm = TRUE),
+      n_miss = sum(miss, na.rm = TRUE),
+      n_cr = sum(cr, na.rm = TRUE)
+    ) %>%
+    group_by(gf_trPer) %>%
+    mutate(
+      n_fa = na_if(n_fa, 0),
+      n_cr = na_if(n_cr, 0),
+      n_fa = ifelse(is.na(n_fa), 0, n_fa),
+      n_cr = ifelse(is.na(n_cr), 0, n_cr)
+    ) %>%
+    mutate(
+      p_hit = (n_hit + 0.5) / (n_hit + n_miss + 1),
+      p_fa = (n_fa + 0.5) / (n_fa + n_cr + 1),
+      dprime = qnorm(p_hit) - qnorm(p_fa),
+      c = -0.5 * (qnorm(p_hit) + qnorm(p_fa))
+    )
+
+  result$subject <- subject
+  return(result)
+}
+
+# Get unique subjects from ADT_cleaned
+subjects_ADT_SDT <- unique(ADT_cleaned$sub)
+
+# Initialize an empty dataframe to store results
+ADT_SDT_all_subjects_results <- data.frame()
+
+# Loop through each subject and calculate SDT metrics
+for (subject in subjects_ADT_SDT) {
+  subject_result <- calculate_sdt_metrics(ADT_cleaned, subject)
+  ADT_SDT_all_subjects_results <- bind_rows(ADT_SDT_all_subjects_results, subject_result)
+}
+
+# Merge the calculated metrics back into ADT_cleaned
+ADT_cleaned <- left_join(ADT_cleaned, select(ADT_SDT_all_subjects_results, sub = subject, stimLev, gf_trPer, dprime, c), by = c("sub", "stimLev", "gf_trPer"))
+
+```
+
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+ADT_cleaned %>%
+  filter(stimLev != 'Standard') %>%
+    summarise(sub, stimLev, gf_trPer, c, dprime) %>% distinct() %>%
+  ggplot(aes(x = c, y = dprime, color = as.factor(gf_trPer), fill = as.factor(gf_trPer))) +
+  geom_hline(yintercept = 0, lty = 2, linewidth = 0.25) +
+  geom_vline(xintercept = 0, lty = 2, linewidth = 0.25) +
+  geom_point(
+    size = 2, 
+    position = position_jitter(0.1),
+    alpha = 0.7
+  ) +
+  scale_color_manual(
+    values = c("0.05" = "#004080", "0.4" = "#BC3C29FF"),
+    labels = c("Low", "High"),
+    name = "Grip Level"  # Set legend title
+  ) +
+  scale_fill_manual(
+    values = c("0.05" = "#004080", "0.4" = "#BC3C29FF"),
+    labels = c("Low", "High"),
+    guide = FALSE  # Remove legend for fill
+  ) +
+  geom_smooth(
+    method = "lm",
+    linewidth = 0.33,
+    color = "grey",
+    alpha = 0.2
+  ) +
+  labs(x = "Criterion", y = "Discriminability") +
+  facet_grid(gf_trPer ~ stimLev, scales = "free") +
+  theme_minimal() +  # Adjust the theme if needed
+  ggtitle("Relationship Between Criterion and Discriminability") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+```
+
+## Bayesian GLMM for SDT
+
+### First model
+
+#### Coding for predictor variable
+
+
+```{r, include=F, echo=F, cache=TRUE}
+
+# Coding for predictor variable
+
+ADT_cleaned$isOddball <- as.factor(ADT_cleaned$isOddball)
+ADT_cleaned$isOddball <- recode_factor(ADT_cleaned$isOddball, '0' = "notOddball", '1' = "isOddball")
+contrasts(ADT_cleaned$isOddball) <- c(-0.5, 0.5)
+contrasts(ADT_cleaned$isOddball)
+```
+
+#### Model Specification
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(brms)
+# Model Specification
+
+f0 <- resp1_diff ~ 1 + gf_trPer * stimLev + isOddball +
+  (1 + isOddball | sub) + 
+  (1 | stimLev) +
+  (1 | gf_trPer)
+
+# Prior distribution
+
+p0 <- prior(normal(0, 1), class = b) +
+  prior(student_t(3, 0, 1), class = sd) +
+  prior(lkj(1), class = cor)
+
+m0 <- brm(
+  formula = f0, 
+  family = bernoulli(link = probit),
+  data = ADT_cleaned,
+  prior = p0,
+  file = "models/m0"
+)
+```
+
+
+#### Model Convergence
+
+Caterpillar plots of the main parameters’ mcmc chains.
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+mcmc_plot(m0, type = "trace") +
+  theme(legend.position = "bottom")
+```
+
+#### Posterior Predictive check
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+pp_check(m0, type = "bars_grouped", group = "isOddball", ndraws = 100) + 
+  scale_x_continuous(breaks = c(0, 1), labels = c("No", "Yes"))
+```
+
+#### Model Summary
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+summary(m0, prior = TRUE)
+```
+
+#### Summary of the baseline model’s main parameters
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(parameters)
+
+parameters(m0, centrality = "mean")
+```
+
+#### Estimated parameters’ posterior distributions for our model
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(tidybayes)
+library(scales)
+library(varde)
+gather_draws(m0, b_Intercept, b_isOddball1) %>% 
+  mutate(
+    .variable = factor(
+      .variable, 
+      levels = c("b_Intercept", "b_isOddball1"), 
+      labels = c("Criterion", "dprime")
+    )
+  ) %>% 
+  # Negate intercept to criterion
+  mutate(.value = if_else(.variable == "Criterion", -.value, .value)) %>% 
+  ggplot(aes(.value, .variable)) +
+  scale_x_continuous(
+    "Parameter value",
+    breaks = extended_breaks(7)
+  ) +
+  scale_y_discrete(
+    "Parameter",
+    expand = expansion(0.01)
+  ) +
+  geom_vline(xintercept = 0, linewidth = 0.25) +
+  stat_halfeye(
+    adjust = 1.5,
+    slab_color = "black",
+    slab_fill = "lightskyblue2",
+    slab_linewidth = 0.25,
+    normalize = "xy",
+    height = 0.75
+  )
+```
+
+#### Variance Decomposition
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+var_m0 <- varde(m0)
+plot(var_m0, type = "river")
+```
+
+<!--
+
+Person-parameters’ shrinkage
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+bind_rows(
+  coef(m0)$sub[,,1] %>% 
+    as.data.frame() %>% 
+    rownames_to_column("sub"),
+  coef(m0)$sub[,,2] %>% 
+    as.data.frame() %>% 
+    rownames_to_column("sub"),
+  .id = "Parameter"
+) %>% 
+  tibble() %>% 
+  mutate(Parameter = factor(Parameter, labels = c("c", "dprime"))) %>% 
+  pivot_wider(names_from = Parameter, values_from = Estimate:Q97.5) %>% 
+  left_join(select(ADT_cleaned, sub, c, dprime, stimLev)) %>% 
+    filter(stimLev != 'Standard') %>% distinct() %>%
+  ggplot(aes(c, dprime)) +
+  geom_hline(yintercept = 0, lty = 2, linewidth = .25) +
+  geom_vline(xintercept = 0, lty = 2, linewidth = .25) +
+  labs(x = "Criterion", y = "dprime") +
+  geom_segment(
+    aes(
+      x = c, xend = -Estimate_c,
+      y = dprime, yend = Estimate_dprime
+    ),
+    linewidth = .25
+  ) +
+  geom_point(shape = 21, fill = "white", col = "grey30") +
+  geom_point(
+    aes(-Estimate_c, Estimate_dprime)
+  ) +
+  theme(
+    aspect.ratio = 1
+  )
+```
+
+-->
+
+
+# VDT {.tabset .tabset-fade .tabset-pills}
+
+## Accuracy 
+
+### Traditional with 'Standard'
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+  
+VDT_cleaned$stimLev <- recode_factor(VDT_cleaned$stimLev, '0'="Standard", '0.04'="0.04", '0.08'="0.08", '0.16'="0.16", '0.32'="0.32")
+VDT_cleaned$gf_trPer <- as.factor(VDT_cleaned$gf_trPer)
+VDT_cleaned$gf_trPer <- recode_factor(VDT_cleaned$gf_trPer, '0.05' = "Low", '0.4' = "High")
+
+# Calculate mean accuracy and standard error
+acc_VDT <- VDT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    summarise(corrects = mean(iscorr),
+              corrects_se = sd(iscorr) / sqrt(length(iscorr))) %>%
+    distinct()
+
+# Assign group based on oddball level
+acc_VDT$grp <- c(1,2)[acc_VDT$stimLev %in% c("0.04","0.08","0.16","0.32")+ 1L]
+
+    # Plotting
+p1_VDT <- ggplot(acc_VDT, aes(x = stimLev, y = corrects, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0, 1) +
+  ggtitle("Accuracy") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = corrects - corrects_se, ymax = corrects + corrects_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Contrast level") +
+  ylab("Corrects") +
+  guides(color = guide_legend(title = "Grip Level"))
+   
+ggplotly(p1_VDT)
+```
+
+### Proportion of responding 'Different'
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+#VDT_cleaned <- LC_YA %>%
+#    filter(task == 'vis') %>%
+#    filter(invalid_resp1 == 0) %>%
+#    filter(invalid_grip == FALSE)
+
+VDT_cleaned$stimLev <- recode_factor(VDT_cleaned$stimLev, '0'="Standard", '0.04'="0.04", '0.08'="0.08", '0.16'="0.16", '0.32'="0.32")
+VDT_cleaned$gf_trPer <- as.factor(VDT_cleaned$gf_trPer)
+VDT_cleaned$gf_trPer <- recode_factor(VDT_cleaned$gf_trPer, '0.05' = "Low", '0.4' = "High")
+
+
+# Calculate mean accuracy and standard error
+diff_VDT <- VDT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    summarise(diff = mean(resp1_diff, na.rm = T),
+              diff_se = sd(resp1_diff, na.rm = TRUE) / sqrt(length(resp1_diff))) %>%
+    distinct()
+
+
+# Assuming 'diff_VDT' is your data frame
+# Assuming 'diff_VDT' is your data frame
+
+# Specify the desired order of levels for 'stimLev'
+desired_order <- c("Standard", "0.04","0.08","0.16","0.32")
+
+# Convert 'stimLev' to factor with the desired order
+diff_VDT$stimLev <- factor(diff_VDT$stimLev, levels = desired_order)
+
+# Plotting with the modified 'stimLev'
+p2_VDT <- ggplot(diff_VDT, aes(x = stimLev, y = diff, color = gf_trPer, group = gf_trPer)) +
+    geom_point(size = 3) +
+    geom_line(size = 1.2) +
+    geom_linerange(mapping = aes(ymin = diff - diff_se, ymax = diff + diff_se)) +
+    ylim(0, 1) +
+    ggtitle("Proportion of Responding 'Different'") +
+    scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+    xlab("Contrast level") +
+    ylab("P('Different')") +
+    guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p2_VDT)  
+```
+
+### Responding 'Different' for every participant
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(ggplot2)
+library(plotly)
+library(dplyr)
+
+# Your existing code...
+
+# Calculate individual subject responses
+subject_responses_VDT <- VDT_cleaned %>%
+  group_by(sub, gf_trPer, stimLev) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE))
+
+# Plotting
+p9_VDT <- ggplot(subject_responses_VDT, aes(x = gf_trPer, y = response, color = gf_trPer, text = as.character(sub))) +
+  geom_boxplot(position = position_dodge(width = 0.8), outlier.shape = NA) +
+  geom_point(position = position_jitterdodge(dodge.width = 0.75, jitter.width = 0.2), alpha = 0.5) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_VDT$stimLev))) +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p9_VDT, tooltip = "text")
+
+
+
+```
+
+<!--
+### Comparison of Low vs High for each subject across oddball levels
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Calculate individual subject responses
+subject_responses_VDT_2 <- VDT_cleaned %>%
+  group_by(sub, stimLev, gf_trPer) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE)) %>%
+  arrange(gf_trPer) %>%
+  ungroup()  # Remove grouping
+
+# Replace 'sub' with 'gf_trPer' for X-axis labels
+subject_responses_VDT_2$gf_trPer <- factor(subject_responses_VDT_2$gf_trPer, levels = c("Low", "High"))
+
+# Plotting
+p10_VDT <- ggplot(subject_responses_VDT_2, aes(x = gf_trPer, y = response, color = gf_trPer, group = sub, text = as.character(sub))) +
+  geom_line(color = "gray") +
+  geom_point(size = 2) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_VDT_2$stimLev)))+ 
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p10_VDT, tooltip = "text")
+
+```
+
+-->
+
+### Correct responses regardless of conditions
+
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+VDT_acc_no_condition <- VDT_cleaned %>%
+    summarise(Accuracy = mean(iscorr), .by = sub)
+
+p11_VDT<- VDT_acc_no_condition %>%
+  ggplot(aes(Accuracy, text = as.character(sub))) +
+  scale_x_continuous(
+    "Percent correct",
+    limits = c(0, 1),
+    labels = scales::percent_format(scale = 100)
+  ) +
+  scale_y_continuous(
+    "Count",
+    expand = expansion(c(0, .05))
+  ) +
+  geom_histogram(
+    color = "black",
+    fill = "grey80"
+  )
+
+ggplotly(p11_VDT, tooltip = "text")
+
+```
+
+
+## Reaction Time
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+RT_VDT <- VDT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    filter(iscorr==1) %>%
+    summarise(RT = mean(resp1RT),
+              RT_se = sd(resp1RT) / sqrt(length(resp1RT))) %>%
+    distinct()
+
+
+# Assign group based on oddball level
+RT_VDT$grp <- c(1,2)[RT_VDT$stimLev %in% c("0.04","0.08","0.16","0.32")+ 1L]
+
+    # Plotting
+p3_VDT <- ggplot(RT_VDT, aes(x = stimLev, y = RT, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0,3) +
+  ggtitle("Mean Reaction Time for Correct Trials") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = RT - RT_se, ymax = RT + RT_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Contrast level") +
+  ylab("Reaction Time (S)") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p3_VDT)
+```
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+RT_VDT <- VDT_cleaned %>%
+    group_by(gf_trPer, stimLev) %>%
+    filter(iscorr==1) %>%
+    summarise(RT = median(resp1RT),
+              RT_se = sd(resp1RT) / sqrt(length(resp1RT))) %>%
+    distinct()
+
+
+# Assign group based on oddball level
+RT_VDT$grp <- c(1,2)[RT_VDT$stimLev %in% c("0.04","0.08","0.16","0.32")+ 1L]
+
+    # Plotting
+p4_VDT <- ggplot(RT_VDT, aes(x = stimLev, y = RT, group = interaction(grp,gf_trPer ), color = gf_trPer)) +
+  geom_point(position = position_dodge(0.1), size = 3) +
+  geom_line(size = 1.2) +
+  ylim(0,3) +
+  ggtitle("Median Reaction Time for Correct Trials") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  geom_linerange(position = position_dodge(0.1), mapping = aes(ymin = RT - RT_se, ymax = RT + RT_se)) +
+  labs(caption = "Error bars represent standard error of the mean (SEM)") +
+  xlab("Contrast level") +
+  ylab("Reaction Time (S)") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p4_VDT)
+```
+
+## Veridicality and Reaction Time
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Assuming your data frame is named df_ADT and contains columns like gf_trPer, stimLev, correct, RT
+
+# Load required libraries
+library(ggplot2)
+library(dplyr)
+
+# Create a new variable for the combination of gf_trPer and iscorr
+VDT_cleaned <- VDT_cleaned %>%
+  mutate(group_combination = paste(gf_trPer, factor(iscorr), sep = "_"))
+
+# Create density plots with adjusted colors and legend labels
+p5_VDT <- ggplot(VDT_cleaned, aes(x = resp1RT, fill = group_combination)) +
+  geom_density(alpha = 0.7, adjust = 1.5) + 
+  facet_grid(gf_trPer ~ stimLev) +
+  guides(color = FALSE) + 
+  xlab("Reaction Time (S)")+
+  ylab("Density") +
+  scale_fill_manual(
+    values = c("#FFD9CC", "#BC3C29FF", "#CCE6FF", "#004080"),
+    breaks = c("High_0", "High_1", "Low_0", "Low_1"),
+    labels = c("High Grip Incorrect", "High Grip Correct", "Low Grip Incorrect", "Low Grip Correct")
+  ) +
+  theme_minimal() +  # Adjust the theme if needed
+  ggtitle("Distribution of Reaction Times for Different Levels of Hand Grip and Oddball")
+
+ggplotly(p5_VDT)
+```
+
+
+## Speed-Accuracy Tradeoff
+
+If there is a tradeoff between accuracy and speed, then we must observe an increase in accuracy over time (possibly followed by a decrease, which would limit the difference in average reaction time by accuracy).
+
+
+### Evenly Spaced Bins over RT
+
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+rt_range <- 3000
+n_bins <- 10
+break_seq <- seq(0, rt_range, rt_range/n_bins)
+
+timeslice_range_4 <- VDT_cleaned %>%
+  mutate(RT_bin = cut(resp1RT*1000, breaks = break_seq)) %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  mutate(RT_bin_avg = mean(resp1RT*1000, na.rm = TRUE))
+
+count_range <- timeslice_range_4 %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  summarise(subjcount = n_distinct(VDT_cleaned$sub), totalcount = n())
+
+timeslice_range_4 <- timeslice_range_4 %>%
+  group_by(RT_bin_avg, stimLev, gf_trPer, VDT_cleaned$sub) %>% 
+  summarise(ss_acc = mean(iscorr, na.rm=TRUE)) %>% 
+  group_by(RT_bin_avg, stimLev, gf_trPer) %>%
+  summarise(mean = mean(ss_acc),
+            n = n())
+
+# Specify the desired order of levels for 'stimLev'
+timeslice_range_4$stimLev <- recode_factor(timeslice_range_4$stimLev, '0'="Standard", '0.04'="0.04", '0.08'="0.08", '0.16'="0.16", '0.32'="0.32")
+desired_order <- c("0", "0.04", "0.08", "0.16", "0.32")
+
+# Convert 'stimLev' to factor with the desired order
+timeslice_range_4$stimLev <- factor(timeslice_range_4$stimLev, levels = desired_order)
+
+# Plot including gf_trPer
+p6_VDT <- ggplot(aes(x=RT_bin_avg, y=mean, weight = n, 
+           color = stimLev, group = interaction(stimLev, gf_trPer)), 
+       data = timeslice_range_4) + 
+  geom_point(aes(size = n)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x,2), se = FALSE) +
+  geom_hline(yintercept = 0.2, lty = "dashed") +
+  scale_color_manual(values = viridisLite::viridis(5, direction = -1, option = "viridis"), labels = c("0", "0.04", "0.08", "0.16", "0.32")) +
+  scale_size_continuous(breaks = c(1, 10, 20, 30,46)) +
+  facet_wrap(~gf_trPer) +
+  xlab("Average RT (ms)") +
+  ylab("Proportion Correct")
+
+ggplotly(p6_VDT)
+```
+
+
+### Quantiles over RT
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+library(dplyr)
+library(ggplot2)
+
+# Specify the number of quantiles
+n_quantiles <- 10
+
+timeslice_range_5 <- VDT_cleaned %>%
+  group_by(stimLev, gf_trPer) %>%
+  mutate(RT_bin = ntile(resp1RT * 1000, n_quantiles)) %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  mutate(RT_bin_avg = mean(resp1RT * 1000, na.rm = TRUE))
+
+count_range <- timeslice_range_5 %>%
+  group_by(RT_bin, stimLev, gf_trPer) %>%
+  summarise(subjcount = n_distinct(sub), totalcount = n())
+
+timeslice_range_5 <- timeslice_range_5 %>%
+  group_by(RT_bin_avg, stimLev, gf_trPer, sub) %>% 
+  summarise(ss_acc = mean(iscorr, na.rm = TRUE)) %>% 
+  group_by(RT_bin_avg, stimLev, gf_trPer) %>%
+  summarise(mean = mean(ss_acc),
+            n = n())
+
+# Specify the desired order of levels for 'stimLev'
+timeslice_range_5$stimLev <- recode_factor(timeslice_range_5$stimLev, '0'="Standard", '0.04'="0.04", '0.08'="0.08", '0.16'="0.16", '0.32'="0.32")
+desired_order <- c("0", "0.04", "0.08", "0.16", "0.32")
+
+# Convert 'stimLev' to factor with the desired order
+timeslice_range_5$stimLev <- factor(timeslice_range_5$stimLev, levels = desired_order)
+
+p7_VDT <- ggplot(aes(x = RT_bin_avg, y = mean, weight = n, 
+           color = stimLev, group = interaction(stimLev, gf_trPer)), 
+       data = timeslice_range_5) + 
+  geom_point(aes(size = n)) +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = FALSE) +
+  geom_hline(yintercept = 0.2, lty = "dashed") +
+  scale_color_manual(values = viridisLite::viridis(5, direction = -1, option = "viridis"), labels = c("0", "0.04", "0.08", "0.16", "0.32")) +
+  scale_size_continuous(breaks = c(26, 29, 32, 34, 41)) + 
+  facet_wrap(~gf_trPer) +
+  xlab("Average RT (ms)") +
+  ylab("Proportion Correct")
+
+ggplotly(p7_VDT)
+```
+
+
+## Analysis of Error types
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Filter data for stimLev values other than "Standard"
+VDT_error_means_filtered <- VDT_cleaned %>%
+  filter(stimLev != "Standard")
+
+# Calculate means and standard errors
+VDT_error_means <- VDT_error_means_filtered %>%
+  group_by(stimLev, gf_trPer) %>%
+  summarise(mean_miss = mean(miss), se_miss = sd(miss) / sqrt(n()))
+
+# Plotting
+p8_VDT <- ggplot(VDT_error_means, aes(x = stimLev, fill = gf_trPer)) +
+  geom_bar(aes(y = mean_miss), position = "dodge", stat = "identity", width = 0.7) +
+  geom_errorbar(aes(ymin = mean_miss - se_miss, ymax = mean_miss + se_miss),
+                position = position_dodge(0.7), width = 0.25) +
+  labs(title = "Bar Plot of Miss Values Across Oddball Levels",
+       x = "Stimulus Level", y = "Count",
+       subtitle = "Error bars represent standard errors (SE) of the mean") +
+  scale_fill_manual(values = c("Low" = "#0072B5FF", "High" = "#BC3C29FF"), name = "Grip Level") +
+  theme_minimal() 
+
+ggplotly(p8_VDT)
+```
+
+### Comparison of Low vs High for each subject across oddball levels
+
+```{r  message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+
+# Calculate individual subject responses
+subject_responses_ADT_2 <- ADT_cleaned %>%
+  group_by(sub, stimLev, gf_trPer) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE)) %>%
+  arrange(gf_trPer) %>%
+  ungroup()
+
+# Replace 'sub' with 'gf_trPer' for X-axis labels
+subject_responses_ADT_2$gf_trPer <- factor(subject_responses_ADT_2$gf_trPer, levels = c("Low", "High"))
+
+# Plotting
+p10_ADT <- ggplot(subject_responses_ADT_2, aes(x = gf_trPer, y = response, color=gf_trPer, group = sub, text =   as.character(sub))) +
+  geom_line(color = "gray") +
+  geom_point(size = 2) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_ADT_2$stimLev)))+
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p10_ADT, tooltip = "text")
+
+```
+
+
+```{r message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+# Calculate individual subject responses
+subject_responses_VDT_2 <- VDT_cleaned %>%
+  group_by(sub, stimLev, gf_trPer) %>%
+  summarise(response = mean(resp1_diff, na.rm = TRUE)) %>%
+  arrange(gf_trPer) %>%
+  ungroup()  # Remove grouping
+
+# Replace 'sub' with 'gf_trPer' for X-axis labels
+subject_responses_VDT_2$gf_trPer <- factor(subject_responses_VDT_2$gf_trPer, levels = c("Low", "High"))
+
+# Plotting
+p10_VDT <- ggplot(subject_responses_VDT_2, aes(x = gf_trPer, y = response, color = gf_trPer, group = sub, text = as.character(sub))) +
+  geom_line(color = "gray") +
+  geom_point(size = 2) +
+  ggtitle("Proportion of Responding 'Different'") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  xlab("Grip Level") +
+  ylab("P('Different')") +
+  facet_wrap(~stimLev, scales = "free_x", ncol = length(unique(subject_responses_VDT_2$stimLev)))+ 
+  guides(color = guide_legend(title = "Grip Level"))
+
+ggplotly(p10_VDT, tooltip = "text")
+
+```
+
+
+
+
+
+## Signal Detection Theory 
+
+### Relationship between d-prime and criterion
+
+```{r, include=F, echo=F, cache=TRUE}
+library(dplyr)
+
+calculate_sdt_metrics <- function(data, subject) {
+  result <- data %>%
+    filter(sub == subject) %>%
+    group_by(stimLev, gf_trPer) %>%
+    summarize(
+      n_hit = sum(hit, na.rm = TRUE),
+      n_fa = sum(fa, na.rm = TRUE),
+      n_miss = sum(miss, na.rm = TRUE),
+      n_cr = sum(cr, na.rm = TRUE)
+    ) %>%
+    group_by(gf_trPer) %>%
+    mutate(
+      n_fa = na_if(n_fa, 0),
+      n_cr = na_if(n_cr, 0),
+      n_fa = ifelse(is.na(n_fa), 0, n_fa),
+      n_cr = ifelse(is.na(n_cr), 0, n_cr)
+    ) %>%
+    mutate(
+      p_hit = (n_hit + 0.5) / (n_hit + n_miss + 1),
+      p_fa = (n_fa + 0.5) / (n_fa + n_cr + 1),
+      dprime = qnorm(p_hit) - qnorm(p_fa),
+      c = -0.5 * (qnorm(p_hit) + qnorm(p_fa))
+    )
+
+  result$subject <- subject
+  return(result)
+}
+
+# Get unique subjects from ADT_cleaned
+subjects_VDT_SDT <- unique(VDT_cleaned$sub)
+
+# Initialize an empty dataframe to store results
+VDT_SDT_all_subjects_results <- data.frame()
+
+# Loop through each subject and calculate SDT metrics
+for (subject in subjects_VDT_SDT) {
+  subject_result <- calculate_sdt_metrics(VDT_cleaned, subject)
+  VDT_SDT_all_subjects_results <- bind_rows(VDT_SDT_all_subjects_results, subject_result)
+}
+
+# Merge the calculated metrics back into VDT_cleaned
+VDT_cleaned <- left_join(VDT_cleaned, select(VDT_SDT_all_subjects_results, sub = subject, stimLev, gf_trPer, dprime, c), by = c("sub", "stimLev", "gf_trPer"))
+
+```
+
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE, include=TRUE}
+VDT_cleaned %>%
+  filter(stimLev != 'Standard') %>%
+    summarise(sub, stimLev, gf_trPer, c, dprime) %>% distinct() %>%
+  ggplot(aes(x = c, y = dprime, color = as.factor(gf_trPer), fill = as.factor(gf_trPer))) +
+  geom_hline(yintercept = 0, lty = 2, linewidth = 0.25) +
+  geom_vline(xintercept = 0, lty = 2, linewidth = 0.25) +
+  geom_point(
+    size = 2, 
+    position = position_jitter(0.1),
+    alpha = 0.7
+  ) +
+  scale_color_manual(
+    values = c("0.05" = "#004080", "0.4" = "#BC3C29FF"),
+    labels = c("Low", "High"),
+    name = "Grip Level"  # Set legend title
+  ) +
+  scale_fill_manual(
+    values = c("0.05" = "#004080", "0.4" = "#BC3C29FF"),
+    labels = c("Low", "High"),
+    guide = FALSE  # Remove legend for fill
+  ) +
+  geom_smooth(
+    method = "lm",
+    linewidth = 0.33,
+    color = "grey",
+    alpha = 0.2
+  ) +
+  labs(x = "Criterion", y = "Discriminability") +
+  facet_grid(gf_trPer ~ stimLev, scales = "free") +
+  theme_minimal() +  # Adjust the theme if needed
+  ggtitle("Relationship Between Criterion and Discriminability") +
+  guides(color = guide_legend(title = "Grip Level"))
+
+```
