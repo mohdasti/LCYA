@@ -1,0 +1,17 @@
+readr
+dplyr
+ggplot2
+plotly
+gridExtra
+report
+viridisLite
+viridis
+ggridges
+googledrive
+Matrix
+lme4
+sjPlot
+arules
+emmeans
+zoo
+changepoint
