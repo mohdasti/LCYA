@@ -9,11 +9,6 @@ output:
     toc_depth: 6
     toc_float: true
     number_sections: true
-    df_print: paged
-    always_allow_html: true
-  pdf_document:
-    toc: true
-    toc_depth: '6'
 ---
 
 ```{r setup, include=FALSE}
@@ -29,6 +24,13 @@ library(ggplot2)
 library(viridis)
 library(ggridges)
 library("googledrive")
+library(ggeasy)
+library(gt)
+library(cowplot)
+#remotes::install_github('jorvlan/raincloudplots')
+library(raincloudplots)
+library(tidyr)
+
 ```
 
 
@@ -8173,7 +8175,6 @@ ggplot(MST_4T_combined, aes(x = REC, y = LDI)) +
 
 
 
-
 ## Statistical Analysis
 
 ### Effect of Grip on responses
@@ -8897,5 +8898,312 @@ print(marginal_plot7)
 
 ```
 
+## Misc Plots
 
+### Distribution of Proportion of 'Diff' and RT
+
+```{r  message=FALSE, warning=FALSE, cache=T, include=TRUE}
+
+library(plyr)
+library(facefuns)
+desired_order <- c("0", "1", "2", "3", "4")
+
+## ADT 
+
+ADT_anova_grip_diff_combined$stimLev <- factor(ADT_anova_grip_diff_combined$stimLev, levels = desired_order)
+
+ggplot(ADT_anova_grip_diff_combined, aes(x = stimLev, y = diff, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level (Hz)") +
+  scale_y_continuous(name = "diff", limits = c(0, 1)) +
+  ggtitle("Distribution of 'Different' responses — ADT ") +
+  labs(fill = "Grip Level")
+
+
+
+detach("package:plyr", unload = TRUE, force = T)
+
+
+ADT_anova_grip_diff_RT_combinedd <- ADT_4T %>% group_by(stimLev, isStrength, sub) %>%
+  filter(iscorr == '1') %>% summarise(RT = median(resp1RT), stimLev, isStrength, sub) %>% distinct() 
+ADT_anova_grip_diff_RT_combinedd$stimLev <- as.factor(ADT_anova_grip_diff_RT_combinedd$stimLev)
+ADT_anova_grip_diff_RT_combinedd$stimLev <- recode_factor(ADT_anova_grip_diff_RT_combinedd$stimLev, '0'="0",'4'="1", '8'="2", '32'="3", '128'="4")
+ADT_anova_grip_diff_RT_combinedd$task <- "ADT"
+
+
+ggplot(ADT_anova_grip_diff_RT_combinedd, aes(x = stimLev, y = RT, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level") +
+  scale_y_continuous(name = "RT", limits = c(0, 3)) +
+  ggtitle("Distribution of Correct Median Reaction times — ADT ") +
+  labs(fill = "Grip Level")
+
+
+
+
+## VDT 
+
+VDT_anova_grip_diff_combined$stimLev <- factor(VDT_anova_grip_diff_combined$stimLev, levels = desired_order)
+
+ggplot(VDT_anova_grip_diff_combined, aes(x = stimLev, y = diff, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level") +
+  scale_y_continuous(name = "diff", limits = c(0, 1)) +
+  ggtitle("Distribution of 'Different' responses — VDT ") +
+  labs(fill = "Grip Level")
+
+
+#detach("package:plyr", unload = TRUE, force = T)
+
+
+VDT_anova_grip_diff_RT_combinedd <- VDT_4T %>% group_by(stimLev, isStrength, sub) %>%
+  filter(iscorr == '1') %>%
+  summarise(RT = median(resp1RT), stimLev, isStrength, sub) %>% distinct() 
+VDT_anova_grip_diff_RT_combinedd$stimLev <- as.factor(VDT_anova_grip_diff_RT_combinedd$stimLev)
+VDT_anova_grip_diff_RT_combinedd$stimLev <- recode_factor(VDT_anova_grip_diff_RT_combinedd$stimLev, '0'="0",'0.04'="1", '0.08'="2", '0.16'="3", '0.32'="4")
+VDT_anova_grip_diff_RT_combinedd$task <- "VDT"
+
+
+ggplot(VDT_anova_grip_diff_RT_combinedd, aes(x = stimLev, y = RT, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level") +
+  scale_y_continuous(name = "RT", limits = c(0, 3)) +
+  ggtitle("Distribution of Correct Median Reaction times — VDT ") +
+  labs(fill = "Grip Level")
+
+
+
+## CDT 
+
+CDT_anova_grip_diff_combined$stimLev <- factor(CDT_anova_grip_diff_combined$stimLev, levels = desired_order)
+
+ggplot(CDT_anova_grip_diff_combined, aes(x = stimLev, y = diff, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level") +
+  scale_y_continuous(name = "diff", limits = c(0, 1)) +
+  ggtitle("Distribution of 'Different' responses — CDT ") +
+  labs(fill = "Grip Level")
+
+
+#detach("package:plyr", unload = TRUE, force = T)
+
+
+CDT_anova_grip_diff_RT_combinedd <- CDT_4T %>% group_by(stimLev, isStrength, sub) %>%
+  filter(iscorr == '1') %>% summarise(RT = median(resp1RT), stimLev, isStrength, sub) %>% distinct() 
+CDT_anova_grip_diff_RT_combinedd$stimLev <- as.factor(CDT_anova_grip_diff_RT_combinedd$stimLev)
+CDT_anova_grip_diff_RT_combinedd$stimLev <- recode_factor(CDT_anova_grip_diff_RT_combinedd$stimLev, '0'="0",'5'="1", '20'="2", '45'="3", '90'="4")
+CDT_anova_grip_diff_RT_combinedd$task <- "CDT"
+
+
+ggplot(CDT_anova_grip_diff_RT_combinedd, aes(x = stimLev, y = RT, fill = factor(isStrength))) +
+  geom_split_violin(alpha = .5, trim = FALSE) +
+  geom_boxplot(width = .2, alpha = .8, fatten = NULL, show.legend = FALSE) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"), labels = c("0", "1")) +
+  stat_summary(fun.data = "mean_se", geom = "pointrange", show.legend = FALSE, 
+               position = position_dodge(.175)) +
+  scale_x_discrete(name = "Oddball level") +
+  scale_y_continuous(name = "RT", limits = c(0, 3)) +
+  ggtitle("Distribution of Correct Median Reaction times — CDT ") +
+  labs(fill = "Grip Level")
+
+
+
+```
+
+
+### Bias-corrected proportion correct
+
+This is based on the d-prime calculated using log-linear edge correction. Hence, the range of d-prime is smaller than usual
+
+```{r  message=FALSE, warning=FALSE, cache=T, include=TRUE}
+
+
+ADT_bcpc<-ADT_4T %>% 
+  select(sub, stimLev, isStrength,hit,fa,miss,cr)%>% 
+  group_by(isStrength, stimLev, sub)%>% 
+  summarize(n_hit=sum(hit, na.rm = T),
+            n_fa = sum(fa, na.rm = T),
+            n_miss= sum(miss, na.rm = T),
+            n_cr = sum(cr, na.rm = T))
+
+
+## adding n_fa and n_cr from standard to oddball trials
+ADT_bcpc <- ADT_bcpc %>% 
+  group_by(sub, stimLev, isStrength) %>%
+  mutate(n_fa = na_if(n_fa, 0)) %>%
+  fill(n_fa) %>% mutate(n_fa = ifelse(is.na(n_fa), 0, n_fa))
+
+ADT_bcpc <- ADT_bcpc %>% 
+  group_by(isStrength, stimLev, sub) %>%
+  mutate(n_cr = na_if(n_cr, 0)) %>%
+  fill(n_cr) %>% mutate(n_cr = ifelse(is.na(n_cr), 0, n_cr))
+
+## using the adjusted formula based on loglinear approach
+ADT_bcpc <- ADT_bcpc %>% 
+  mutate(
+    hit_r = (n_hit+0.5)/(n_hit+ n_miss+1)
+  )
+
+ADT_bcpc <- ADT_bcpc %>% 
+  mutate(
+    fa_r = (n_fa+0.5)/(n_fa + n_cr+1)
+  ) 
+
+## calculating the d-prime and the formula
+ADT_bcpc$dprime <- qnorm(ADT_bcpc$hit_r) - qnorm(ADT_bcpc$fa_r)
+
+# remove d-prime for stimLev 0 as it is meaningless
+
+ADT_bcpc <- ADT_bcpc %>%
+  filter(stimLev != 0)
+
+# proportion correct in an ideal situation
+ADT_bcpc <- ADT_bcpc %>%
+  group_by(stimLev, isStrength) %>%
+  mutate(bc_pc = pnorm(dprime / 2)) %>%
+  ungroup() 
+ # mutate(dprime_hat = mean(dprime)))
+
+# Load the dplyr package if not already loaded
+library(dplyr)
+
+# Group by 'sub', 'isStrength', and 'stimLev' and calculate the mean of 'pc'
+ADT_bcpc_mean <- ADT_bcpc %>%
+  group_by(sub, isStrength, stimLev) %>%
+  summarise(mean_bc_pc = mean(bc_pc, na.rm = TRUE))
+
+ADT_bcpc_mean$isStrength <- factor(ADT_bcpc_mean$isStrength)
+
+# Plotting the boxplot
+ggplot(ADT_bcpc_mean, aes(x = factor(stimLev), y = mean_bc_pc, color = isStrength)) +
+  geom_boxplot(position=position_dodge(1)) +
+  labs(x = "Stimus Level", y = "Proportion Correct", fill = "Grip Level") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  ylim(0,1) +
+  ggtitle("Overall distribution of accuracy across stimulus levels - ADT") +
+  guides(color = guide_legend(title = "Grip level")) +
+  theme_classic()# Specify colors for each boxplot
+
+# Create the raincloud plot
+ggplot(data = ADT_bcpc_mean, aes(x = factor(stimLev), y = mean_bc_pc, fill = factor(isStrength))) +
+  geom_flat_violin(position = position_nudge(x = .1, y = 0), alpha = .8) +
+  geom_point(aes(y = mean_bc_pc, color = factor(isStrength)), 
+             position = position_jitter(width = .1), size = 2, alpha = 0.6) +
+  geom_boxplot(aes(group = interaction(factor(stimLev), factor(isStrength)), color = factor(isStrength)),  # Separate boxplots by both stimLev and isStrength
+               width = 0.2, size = 1 ,outlier.shape = NA, fill = NA) +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"))  +
+  theme_classic() +
+  ylim(0,1) +
+  theme(legend.position = "none") +  # Remove the legend
+  labs(
+    x = "Stimulus Level",
+    y = "Proportion Correct",
+    title = "Overall distribution of accuracy across stimulus levels - ADT"
+  ) 
+
+
+VDT_bcpc<-VDT_4T %>% 
+  select(sub, stimLev, isStrength,hit,fa,miss,cr)%>% 
+  group_by(isStrength, stimLev, sub)%>% 
+  summarize(n_hit=sum(hit, na.rm = T),
+            n_fa = sum(fa, na.rm = T),
+            n_miss= sum(miss, na.rm = T),
+            n_cr = sum(cr, na.rm = T))
+
+
+## adding n_fa and n_cr from standard to oddball trials
+VDT_bcpc <- VDT_bcpc %>% 
+  group_by(sub, stimLev, isStrength) %>%
+  mutate(n_fa = na_if(n_fa, 0)) %>%
+  fill(n_fa) %>% mutate(n_fa = ifelse(is.na(n_fa), 0, n_fa))
+
+VDT_bcpc <- VDT_bcpc %>% 
+  group_by(isStrength, stimLev, sub) %>%
+  mutate(n_cr = na_if(n_cr, 0)) %>%
+  fill(n_cr) %>% mutate(n_cr = ifelse(is.na(n_cr), 0, n_cr))
+
+## using the adjusted formula based on loglinear approach
+VDT_bcpc <- VDT_bcpc %>% 
+  mutate(
+    hit_r = (n_hit+0.5)/(n_hit+ n_miss+1)
+  )
+
+VDT_bcpc <- VDT_bcpc %>% 
+  mutate(
+    fa_r = (n_fa+0.5)/(n_fa + n_cr+1)
+  ) 
+
+## calculating the d-prime and the formula
+VDT_bcpc$dprime <- qnorm(VDT_bcpc$hit_r) - qnorm(VDT_bcpc$fa_r)
+
+# remove d-prime for stimLev 0 as it is meaningless
+
+VDT_bcpc <- VDT_bcpc %>%
+  filter(stimLev != 0)
+
+# proportion correct in an ideal situation
+VDT_bcpc <- VDT_bcpc %>%
+  group_by(stimLev, isStrength) %>%
+  mutate(bc_pc = pnorm(dprime / 2)) %>%
+  ungroup() 
+# mutate(dprime_hat = mean(dprime)))
+
+
+# Group by 'sub', 'isStrength', and 'stimLev' and calculate the mean of 'pc'
+VDT_bcpc_mean <- VDT_bcpc %>%
+  group_by(sub, isStrength, stimLev) %>%
+  summarise(mean_bc_pc = mean(bc_pc, na.rm = TRUE))
+
+VDT_bcpc_mean$isStrength <- factor(VDT_bcpc_mean$isStrength)
+
+# Plotting the boxplot
+ggplot(VDT_bcpc_mean, aes(x = factor(stimLev), y = mean_bc_pc, color = isStrength)) +
+  geom_boxplot(position=position_dodge(1)) +
+  labs(x = "Stimus Level", y = "Proportion Correct", fill = "Grip Level") +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  ylim(0,1) +
+  ggtitle("Overall distribution of accuracy across stimulus levels - VDT") +
+  guides(color = guide_legend(title = "Grip level")) +
+  theme_classic()# Specify colors for each boxplot
+
+# Create the raincloud plot
+ggplot(data = VDT_bcpc_mean, aes(x = factor(stimLev), y = mean_bc_pc, fill = factor(isStrength))) +
+  geom_flat_violin(position = position_nudge(x = .1, y = 0), alpha = .8) +
+  geom_point(aes(y = mean_bc_pc, color = factor(isStrength)), 
+             position = position_jitter(width = .1), size = 2, alpha = 0.6) +
+  geom_boxplot(aes(group = interaction(factor(stimLev), factor(isStrength)), color = factor(isStrength)),  # Separate boxplots by both stimLev and isStrength
+               width = 0.2, size = 1 ,outlier.shape = NA, fill = NA) +
+  scale_color_manual(values = c("#0072B5FF", "#BC3C29FF")) +
+  scale_fill_manual(values = c("#0072B5FF", "#BC3C29FF"))  +
+  theme_classic() +
+  ylim(0,1) +
+  theme(legend.position = "none") +  # Remove the legend
+  labs(
+    x = "Stimulus Level",
+    y = "Proportion Correct",
+    title = "Overall distribution of accuracy across stimulus levels - VDT"
+  ) 
+
+```
 
