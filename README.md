@@ -67,7 +67,7 @@ If you use this code or data, please cite:
 ## Contact
 
 Mohammad Dastgheib
-[Your contact information]
+mdast003@ucr.edu
 
 ## License
 
