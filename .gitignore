@@ -1,0 +1,48 @@
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# RMarkdown
+*_cache/
+*_files/
+*.html
+
+# Data files (keep structure but not actual data)
+*.csv
+*.txt
+*.xlsx
+*.xls
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Output directories that can be regenerated
+plots/
+temp/
+cache/
+
+# Large files
+*.png
+*.jpg
+*.jpeg
+*.pdf
+*.svg
+!figures/publication/*.png
+
+# Logs
+*.log
+
+# Backup files
+*~
+*.bak
+*.backup
