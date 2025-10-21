@@ -16,6 +16,7 @@ LCYA-Clean/
 ├── analysis/                    # Analysis files
 │   ├── main/                   # Primary publication analysis
 │   │   └── Aggregated_analysis_publication.Rmd
+│   ├── manuscript_scripts/     # Scripts verified to generate manuscript results
 │   └── exploratory/            # Exploratory analyses (empty, for future use)
 │
 ├── code/                       # Analysis code
@@ -42,7 +43,8 @@ LCYA-Clean/
 └── documentation/             # Additional documentation
     ├── ANALYSIS_OVERVIEW.md
     ├── CODE_DOCUMENTATION.md
-    └── REPOSITORY_STRUCTURE.md
+    ├── REPOSITORY_STRUCTURE.md
+    └── results_reports/       # Markdown outputs matched to manuscript Results
 ```
 
 ## File Descriptions

@@ -18,18 +18,29 @@ The study includes four main perceptual discrimination tasks:
 LCYA-Clean/
 ├── analysis/           # Main analysis files
 │   └── main/          # Primary publication analysis
+│   └── manuscript_scripts/  # Scripts verified to generate manuscript results
 ├── code/              # Analysis code
 │   ├── plot_objects/  # ggplot object definitions
 │   └── utilities/     # Helper functions and utilities
 ├── figures/           # Generated figures
 │   └── publication/   # Publication-ready figures
 └── documentation/     # Additional documentation
+    └── results_reports/ # Markdown outputs matched to manuscript Results
 ```
 
 ## Key Files
 
 ### Main Analysis
 - `analysis/main/Aggregated_analysis_publication.Rmd` - Complete analysis pipeline and results
+
+### Manuscript-Verified Scripts and Reports
+
+- Scripts used to generate manuscript Results are in `analysis/manuscript_scripts/`:
+  - `Bivariate_Individual_Differences_brms.R` → writes `documentation/results_reports/Individual_Differences_Brms_Report.md`
+  - `Final_Individual_Differences_Verification.R` → writes CSVs in `Final_Individual_Differences_Results/` and summarized in `documentation/results_reports/INDIVIDUAL_DIFFERENCES_FINAL_SUMMARY.md`
+- Additional reports:
+  - `documentation/results_reports/PHYSIOLOGICAL_EFFECTS_ANALYSIS_SUMMARY.md`
+  - `documentation/results_reports/FINAL_RESULTS_COMPARISON.md`
 
 ### Plot Objects
 - `code/plot_objects/ggplot_objects_ADT.R` - Auditory task visualizations

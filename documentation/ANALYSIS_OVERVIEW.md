@@ -54,7 +54,12 @@ The LCYA study investigates perceptual discrimination abilities across multiple 
 
 ## Key Findings
 
-[Summary of main results will be added here]
+See detailed manuscript-aligned reports in `documentation/results_reports/`:
+
+- Individual differences (bivariate brms and sensitivity): `results/Individual_Differences_Brms_Report.md`
+- Final individual differences summary and manuscript text: `INDIVIDUAL_DIFFERENCES_FINAL_SUMMARY.md`, `Updated_Individual_Differences_Manuscript_Text.md`
+- Physiological effects (TEPR + AUCI, corrected V2): `PHYSIOLOGICAL_EFFECTS_ANALYSIS_SUMMARY.md`
+- Version comparison (V1 vs corrected V2): `FINAL_RESULTS_COMPARISON.md`
 
 ## Technical Notes
 
