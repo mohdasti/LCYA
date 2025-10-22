@@ -1,6 +1,14 @@
-# Eyetracker Data Preprocessing
+# Data Preprocessing Pipeline
 
-This directory contains MATLAB scripts for converting eyetracker data from `.mat` format to `.csv` format for statistical analysis in R.
+This directory contains the complete data processing pipeline for the LC-YA study:
+- **MATLAB scripts**: Convert eyetracker `.mat` files to CSV format
+- **Python notebooks**: Process behavioral data and integrate grip force measurements
+
+## Complete Processing Pipeline
+
+1. **MATLAB Conversion** (`*.m` files) → Convert `.mat` files to CSV
+2. **Python Processing** (`python_notebooks/`) → Aggregate and process trial-level data
+3. **R Analysis** (`../../analysis/manuscript_scripts/`) → Statistical analyses
 
 ## Scripts Overview
 
@@ -180,10 +188,20 @@ The conversion functions do not pollute the MATLAB workspace. The original scrip
 ### Data Integrity
 All transformations preserve the original data relationships and apply consistent recoding rules across subjects.
 
+## Python Notebooks
+
+See `python_notebooks/README.md` for detailed documentation of:
+- **AVDT notebook**: Process Auditory/Visual Discrimination data
+- **CDT notebook**: Process Change Detection data
+- **MST notebook**: Process Mnemonic Similarity Task data
+- **Aggregate groupby notebook**: Calculate SDT measures and prepare for analysis
+
+These notebooks were developed by **Mohammad Dastgheib** and **Andrew Sun**.
+
 ## Citation
 
 If you use these scripts, please cite:
-> LC-YA Study Team (2024). Eyetracker Data Preprocessing Scripts. 
+> Dastgheib, M. & Sun, A. (2024). LC-YA Data Processing Pipeline. 
 > GitHub: https://github.com/mohdasti/LCYA
 
 ## Contact
