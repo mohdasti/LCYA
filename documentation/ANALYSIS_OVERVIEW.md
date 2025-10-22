@@ -18,13 +18,13 @@ The LCYA study investigates perceptual discrimination abilities across multiple 
 - **Response**: Same/Different judgments with confidence ratings
 - **Key Measures**: Proportion of "Different" responses, reaction time, confidence
 
-### 3. Color Discrimination Task (CDT)
-- **Purpose**: Measure color discrimination sensitivity
-- **Stimuli**: Color patches with varying hue differences
+### 3. Change Detection Task (CDT)
+- **Purpose**: Measure arrow direction change detection sensitivity
+- **Stimuli**: Arrow stimuli with varying direction changes
 - **Response**: Same/Different judgments with confidence ratings
 - **Key Measures**: Proportion of "Different" responses, reaction time, confidence
 
-### 4. Memory Similarity Task (MST)
+### 4. Mnemonic Similarity Task (MST)
 - **Purpose**: Measure memory-based similarity judgments
 - **Stimuli**: Images with varying similarity to studied items
 - **Response**: Old/Similar/New judgments with confidence ratings

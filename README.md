@@ -9,8 +9,8 @@ This repository contains the supplementary materials and analysis code for the L
 The study includes four main perceptual discrimination tasks:
 - **ADT** (Auditory Discrimination Task): Frequency discrimination
 - **VDT** (Visual Discrimination Task): Contrast discrimination  
-- **CDT** (Color Discrimination Task): Color discrimination
-- **MST** (Memory Similarity Task): Memory-based similarity judgments
+- **CDT** (Change Detection Task): Arrow direction change detection
+- **MST** (Mnemonic Similarity Task): Memory-based similarity judgments
 
 ## Repository Structure
 
@@ -45,7 +45,7 @@ LCYA-Clean/
 ### Plot Objects
 - `code/plot_objects/ggplot_objects_ADT.R` - Auditory task visualizations
 - `code/plot_objects/ggplot_objects_VDT.R` - Visual task visualizations
-- `code/plot_objects/ggplot_objects_CDT.R` - Color task visualizations
+- `code/plot_objects/ggplot_objects_CDT.R` - Change detection task visualizations
 - `code/plot_objects/ggplot_objects_MST.R` - Memory task visualizations
 - `code/plot_objects/ggplot_objects_dist.R` - Distribution plots
 
