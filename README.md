@@ -1,16 +1,30 @@
-# LCYA: Veridicality and Other Measures
+# LCYA: Locus Coeruleus - Young Adults Study
 
 ## Overview
 
-This repository contains the supplementary materials and analysis code for the LCYA (Look-Change-Young-Adult) study investigating perceptual discrimination tasks and their relationship to memory and confidence measures.
+This repository contains the supplementary materials and analysis code for the **LCYA (Locus Coeruleus - Young Adults)** study. The study investigates the **effects and interactions of concurrent physical and cognitive effort** on behavioral performance and pupillometric responses in younger adults.
 
 ## Study Design
 
-The study includes four main perceptual discrimination tasks:
-- **ADT** (Auditory Discrimination Task): Frequency discrimination
-- **VDT** (Visual Discrimination Task): Contrast discrimination  
-- **CDT** (Change Detection Task): Arrow direction change detection
+### Main Research Question
+How do concurrent **physical effort** (handgrip force) and **cognitive effort** (task difficulty) affect:
+- **Behavioral performance** (accuracy, reaction time)
+- **Physiological arousal** (pupil responses measured via AUC metrics)
+- **Individual differences** in effort-related effects
+- **Brain-behavior relationships**
+
+### Tasks
+Participants performed perceptual discrimination tasks under varying levels of physical and cognitive effort:
+
+- **ADT** (Auditory Discrimination Task): Frequency discrimination with concurrent handgrip
+- **VDT** (Visual Discrimination Task): Contrast discrimination with concurrent handgrip
+- **CDT** (Change Detection Task): Arrow direction change detection with concurrent handgrip
 - **MST** (Mnemonic Similarity Task): Memory-based similarity judgments
+
+### Experimental Manipulations
+- **Cognitive Effort**: Stimulus difficulty (Easy vs. Hard discrimination)
+- **Physical Effort**: Handgrip force levels (Low: 5% MVC vs. High: 40% MVC)
+- **Pupillometry**: Continuous pupil diameter measurement for arousal assessment
 
 ## Repository Structure
 
