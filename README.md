@@ -36,10 +36,8 @@ LCYA-Clean/
 ### Manuscript-Verified Scripts and Reports
 
 - Scripts used to generate manuscript Results are in `analysis/manuscript_scripts/`:
-  - `LCYA_Complete_Manuscript_Analysis.R` → **MAIN SCRIPT** - Complete analysis pipeline (behavioral + physiological + brain-behavior + individual differences)
-  - `LCYA_Final_Corrected_Analysis.R` → Corrected analysis pipeline (behavioral + physiological + brain-behavior + individual differences)
-  - `LCYA_Lani_Corrected_Analysis.R` → Dual TEPR/AUCI pupillometry analysis approach
-  - `LCYA_AUC_Analysis.R` → Area Under Curve pupillometry metrics
+  - `LCYA_Final_Corrected_Analysis.R` → **MAIN SCRIPT** - Complete analysis pipeline (behavioral + physiological + brain-behavior + individual differences)
+  - `LCYA_AUC_Analysis.R` → **PUPILLOMETRY ANALYSIS** - Area Under Curve metrics (Total AUC, Cognitive AUC, Physical AUC)
   - `Bivariate_Individual_Differences_brms.R` → Bayesian multivariate individual differences analysis
   - `Final_Individual_Differences_Verification.R` → Final verification of individual differences analysis
   - `response_bias_analysis.R` → Response bias analysis (Same/Different judgments)
