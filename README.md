@@ -45,6 +45,11 @@ LCYA-Clean/
   - `documentation/results_reports/PHYSIOLOGICAL_EFFECTS_ANALYSIS_SUMMARY.md`
   - `documentation/results_reports/FINAL_RESULTS_COMPARISON.md`
 
+### Data Preprocessing
+- `code/preprocessing/eyetracker_mat_to_csv_converter.m` - Convert individual MATLAB eyetracker files to CSV
+- `code/preprocessing/batch_convert_eyetracker_files.m` - Batch conversion of all eyetracker files
+- `code/preprocessing/README.md` - Detailed preprocessing documentation
+
 ### Plot Objects
 - `code/plot_objects/ggplot_objects_ADT.R` - Auditory task visualizations
 - `code/plot_objects/ggplot_objects_VDT.R` - Visual task visualizations
