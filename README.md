@@ -36,8 +36,13 @@ LCYA-Clean/
 ### Manuscript-Verified Scripts and Reports
 
 - Scripts used to generate manuscript Results are in `analysis/manuscript_scripts/`:
-  - `Bivariate_Individual_Differences_brms.R` → writes `documentation/results_reports/Individual_Differences_Brms_Report.md`
-  - `Final_Individual_Differences_Verification.R` → writes CSVs in `Final_Individual_Differences_Results/` and summarized in `documentation/results_reports/INDIVIDUAL_DIFFERENCES_FINAL_SUMMARY.md`
+  - `LCYA_Complete_Manuscript_Analysis.R` → **MAIN SCRIPT** - Complete analysis pipeline (behavioral + physiological + brain-behavior + individual differences)
+  - `LCYA_Final_Corrected_Analysis.R` → Corrected analysis pipeline (behavioral + physiological + brain-behavior + individual differences)
+  - `LCYA_Lani_Corrected_Analysis.R` → Dual TEPR/AUCI pupillometry analysis approach
+  - `LCYA_AUC_Analysis.R` → Area Under Curve pupillometry metrics
+  - `Bivariate_Individual_Differences_brms.R` → Bayesian multivariate individual differences analysis
+  - `Final_Individual_Differences_Verification.R` → Final verification of individual differences analysis
+  - `response_bias_analysis.R` → Response bias analysis (Same/Different judgments)
 - Additional reports:
   - `documentation/results_reports/PHYSIOLOGICAL_EFFECTS_ANALYSIS_SUMMARY.md`
   - `documentation/results_reports/FINAL_RESULTS_COMPARISON.md`
