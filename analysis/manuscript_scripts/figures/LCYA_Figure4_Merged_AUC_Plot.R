@@ -312,7 +312,7 @@ p_cognitive_vdt <- create_auc_bar_plot(combined_auc_data, "VDT", "mean_cognitive
 # Combine plots in 2x3 grid with shared legend
 # No title or caption - these will be in the manuscript
 merged_plot <- (p_total_cdt | p_total_adt | p_total_vdt) /
-               (p_cognitive_adt | p_cognitive_vdt | plot_spacer()) +
+               (plot_spacer() | p_cognitive_adt | p_cognitive_vdt) +
   plot_layout(heights = c(1, 1), guides = "collect") &
   theme(legend.position = "bottom", legend.direction = "horizontal")
 
