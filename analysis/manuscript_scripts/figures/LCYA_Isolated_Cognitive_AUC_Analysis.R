@@ -54,8 +54,9 @@ task_configs <- list(
     b2b_duration = 0.5, # Duration of local baseline before S2/Probe onset
     cognitive_auc_latency = 0.3, # Latency after S2/Probe onset for cognitive AUC start
     cognitive_auc_duration = 1.5, # Duration of cognitive AUC after latency
-    stimulus_marker_label = "Arrow onset",
-    stimulus_marker_short = "Arrow onset"
+    stimulus_marker_label = "Array onset", # Updated per advisor: Arrow renamed to Array
+    stimulus_marker_short = "Array onset",
+    response_marker_label = "Probe + Response" # Updated per advisor: Response renamed for CDT
   ),
   ADT = list(
     task_name = "ADT",
@@ -71,7 +72,8 @@ task_configs <- list(
     cognitive_auc_latency = 0.3,
     cognitive_auc_duration = 1.5,
     stimulus_marker_label = "Target onset",
-    stimulus_marker_short = "Target onset"
+    stimulus_marker_short = "Target onset",
+    response_marker_label = "Response" # Keep original for ADT
   ),
   VDT = list(
     task_name = "VDT",
@@ -87,7 +89,8 @@ task_configs <- list(
     cognitive_auc_latency = 0.3,
     cognitive_auc_duration = 1.5,
     stimulus_marker_label = "Target onset",
-    stimulus_marker_short = "Target onset"
+    stimulus_marker_short = "Target onset",
+    response_marker_label = "Response" # Keep original for VDT
   )
 )
 
@@ -499,39 +502,92 @@ for (task_name in names(task_configs)) {
     }
   }
   extra_margin <- y_range_span * 0.3
-  y_lower_limit <- y_limits[1] - extra_margin * 1.4
+  # Increase bottom margin to ensure Pre-trial Baseline bar and text have enough space
+  y_lower_limit <- y_limits[1] - extra_margin * 2.0
   y_upper_limit <- y_limits[2]
 
-  baseline_label_text <- "Baseline"
+  baseline_label_text <- "Pre-trial Baseline"
   total_label_text <- "Total AUC"
   cognitive_label_text <- "Cognitive AUC"
-
-  bar_positions <- tibble::tibble(
-    label = c(baseline_label_text, total_label_text, cognitive_label_text),
-    xstart = c(-0.5, 0, cognitive_start_plot),
-    xend = c(0, response_onset_plot, response_onset_plot),
-    color = c(
-      timeline_bar_colors$baseline,
-      timeline_bar_colors$total_auc,
-      timeline_bar_colors$cognitive_auc
+  pre_stimulus_baseline_label_text <- "Pre-stimulus Baseline"
+  
+  # Calculate pre-stimulus baseline period (B2b) for ADT and VDT
+  pre_stimulus_baseline_start <- s2_probe_onset_plot - config$b2b_duration
+  pre_stimulus_baseline_end <- s2_probe_onset_plot
+  
+  # Build bar positions conditionally based on task
+  if (task_name == "CDT") {
+    # CDT: Only Pre-trial Baseline and Total AUC (no Cognitive AUC or Pre-stimulus Baseline)
+    bar_positions <- tibble::tibble(
+      label = c(baseline_label_text, total_label_text),
+      xstart = c(-0.5, 0),
+      xend = c(0, response_onset_plot),
+      color = c(
+        timeline_bar_colors$baseline,
+        timeline_bar_colors$total_auc
+      )
     )
-  )
+  } else {
+    # ADT and VDT: Pre-trial Baseline, Total AUC, Pre-stimulus Baseline, and Cognitive AUC
+    bar_positions <- tibble::tibble(
+      label = c(baseline_label_text, total_label_text, pre_stimulus_baseline_label_text, cognitive_label_text),
+      xstart = c(-0.5, 0, pre_stimulus_baseline_start, cognitive_start_plot),
+      xend = c(0, response_onset_plot, pre_stimulus_baseline_end, response_onset_plot),
+      color = c(
+        timeline_bar_colors$baseline,
+        timeline_bar_colors$total_auc,
+        timeline_bar_colors$baseline,  # Pre-stimulus baseline also grey
+        timeline_bar_colors$cognitive_auc
+      )
+    )
+  }
 
   bar_spacing <- extra_margin / (nrow(bar_positions) + 1)
+  # Adjust text offset: CDT uses smaller offset (looks nice), ADT/VDT need larger offset for better spacing
+  text_offset_multiplier <- if (task_name == "CDT") 0.65 else 1.2
   bar_positions <- bar_positions %>%
     mutate(
       y = y_lower_limit + bar_spacing * seq_len(n()),
-      text_y = y + bar_spacing * 0.65,
+      text_y = y + bar_spacing * text_offset_multiplier,
       x_label = (xstart + xend) / 2
     )
 
+  # Create event markers - use task-specific labels
   event_markers_plot <- tibble::tibble(
-    event = c("Trial onset", config$stimulus_marker_label, "Response"),
+    event = c("Trial onset", config$stimulus_marker_label, config$response_marker_label),
     time = c(0, s2_probe_onset_plot, response_onset_plot)
   ) %>%
-    filter(!is.na(time))
+    filter(!is.na(time)) %>%
+    # Adjust x-position for response marker to shift label leftward (so it doesn't go over plot border)
+    mutate(
+      label_x = if_else(event == config$response_marker_label, 
+                       time - 0.15,  # Shift response marker label 0.15 seconds left
+                       time),
+      hjust_val = if_else(event == config$response_marker_label,
+                         1.0,  # Right-align the response marker (text extends left from this point)
+                         0.5)  # Center-align other markers
+    )
 
-  event_label_y <- y_upper_limit - y_range_span * 0.005
+  # Position event labels - use fixed y=5 for CDT, calculated position for others
+  event_label_y <- if (task_name == "CDT") {
+    5  # Fixed y-position at 5 for CDT labels
+  } else {
+    y_upper_limit - y_range_span * 0.005  # Standard position for ADT and VDT (slightly below top)
+  }
+  
+  # Adjust y-axis upper limit to accommodate fixed y=5 labels for CDT
+  y_upper_limit_adjusted <- if (task_name == "CDT") {
+    max(y_upper_limit, 5 + y_range_span * 0.02)  # Ensure y=5 labels are visible, with small margin
+  } else {
+    y_upper_limit
+  }
+  
+  # Adjust vjust for CDT to position text correctly (vjust=1 means text is above the point)
+  event_label_vjust <- if (task_name == "CDT") {
+    0.9  # Position text slightly above for CDT
+  } else {
+    1.1  # Standard for ADT and VDT
+  }
 
   # Plotting range - adjusting to show baseline period and end at response onset  
   # Start from -0.5 seconds (baseline period) and end at response onset
@@ -542,9 +598,9 @@ for (task_name in names(task_configs)) {
     # Use geom_smooth for smoothed lines with confidence intervals
     geom_smooth(aes(fill = condition), method = "gam", formula = y ~ s(x, k = 30), linewidth = 1.2, span = 0.2, se = TRUE) +
     
-    # Add vertical markers for S2/Probe and Response
+    # Add vertical markers for all events (Trial onset, Stimulus, Response)
     {if (nrow(event_markers_plot) > 0) geom_vline(data = event_markers_plot, aes(xintercept = time), linetype = "dashed", color = "grey40", linewidth = 0.6) } +
-    {if (nrow(event_markers_plot) > 0) geom_text(data = event_markers_plot, aes(x = time, y = event_label_y, label = event), inherit.aes = FALSE, size = 4.5, color = "grey20", hjust = 0.5, vjust = 1.1, fontface = "bold") } +
+    {if (nrow(event_markers_plot) > 0) geom_text(data = event_markers_plot, aes(x = label_x, y = event_label_y, label = event, hjust = hjust_val), inherit.aes = FALSE, size = 4.5, color = "grey20", vjust = event_label_vjust, fontface = "bold") } +
 
     # Annotate baseline and AUC windows with horizontal bars
     geom_segment(
@@ -572,7 +628,7 @@ for (task_name in names(task_configs)) {
     scale_color_manual(values = condition_colors) +
     scale_fill_manual(values = condition_colors) + # Apply new color scheme
     scale_x_continuous(breaks = seq(0, 5, by = 1)) +
-    coord_cartesian(xlim = c(plot_start_time, plot_end_time), ylim = c(y_lower_limit, y_upper_limit)) +
+    coord_cartesian(xlim = c(plot_start_time, plot_end_time), ylim = c(y_lower_limit, y_upper_limit_adjusted)) +
     theme_minimal() +
     theme(
       text = element_text(size = 12),
@@ -603,5 +659,15 @@ combined_waveform_plot <- (all_waveform_plots[["CDT"]] / all_waveform_plots[["AD
 waveform_output_file <- file.path(OUTPUT_DIR, "Cognitive_Pupil_Waveforms_Publication_Ready_v2.png") # Publication-ready 500ms baseline version (updated)
 ggsave(waveform_output_file, combined_waveform_plot, width = 12, height = 15, dpi = 300)
 cat("✅ Refined Cognitive Pupil waveform plots saved to:", waveform_output_file, "\n")
+
+# Also save to publication directory
+publication_dir <- file.path(BASE_DIR, "LCYA", "figures", "publication")
+if (dir.exists(publication_dir)) {
+  publication_output_file <- file.path(publication_dir, "Figure3_Pupil_Waveforms.png")
+  ggsave(publication_output_file, combined_waveform_plot, width = 12, height = 15, dpi = 300)
+  cat("✅ Figure 3 saved to publication directory:", publication_output_file, "\n")
+} else {
+  cat("⚠️  Publication directory not found:", publication_dir, "\n")
+}
 
 cat("\n🎉 Combined analysis complete! Check the PI_Feedback_Outputs directory for model summaries and plots.\n")
