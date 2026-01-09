@@ -28,108 +28,222 @@ Participants performed perceptual discrimination tasks under varying levels of p
 
 ## Repository Structure
 
+The repository is organized into four main directories:
+
 ```
 LCYA/
-├── analysis/
-│   ├── main/                          # Publication-scale R Markdown workflow
-│   └── manuscript_scripts/
-│       ├── figures/                   # Figure-specific generation scripts (Figures 2–4)
-│       ├── Bivariate_Individual_Differences_brms.R
-│       ├── Final_Individual_Differences_Verification.R
-│       ├── LCYA_AUC_Analysis.R
-│       ├── LCYA_Final_Corrected_Analysis.R
-│       ├── Updated_Individual_Differences_Accuracy_RT_SubjectMeans.R
-│       └── response_bias_analysis.R
-├── code/
-│   ├── plot_objects/                  # ggplot object definitions
-│   ├── preprocessing/                 # Eyetracker preprocessing utilities
-│   └── utilities/                     # Shared helper functions
-├── documentation/
-│   ├── ANALYSIS_OVERVIEW.md
-│   ├── CODE_DOCUMENTATION.md
-│   ├── REPOSITORY_STRUCTURE.md
-│   └── results_reports/
-│       ├── FINAL_RESULTS_COMPARISON.md
-│       ├── INDIVIDUAL_DIFFERENCES_FINAL_SUMMARY.md
-│       ├── Individual_Differences_Brms_Report.md
-│       ├── PHYSIOLOGICAL_EFFECTS_ANALYSIS_SUMMARY.md
-│       └── subject_means/
-│           ├── ANALYSIS_COMPLETE_SUMMARY.md
-│           ├── VERIFICATION_SUMMARY.md
-│           └── results/
-│               ├── individual_differences_subject_means_summary.csv
-│               ├── individual_differences_subject_means_report.md
-│               └── updated_manuscript_text.md
-├── figures/
-│   └── publication/                   # Publication-ready PNG exports
-├── CONTRIBUTING.md
-├── LICENSE
-└── README.md
+├── analysis/                    # All analysis scripts
+│   ├── main/                   # Complete publication workflow (R Markdown)
+│   └── manuscript_scripts/     # Individual analysis scripts
+│       ├── figures/            # Scripts to generate manuscript figures (Figures 2-4)
+│       └── *.R                 # Statistical analysis scripts
+├── code/                       # Reusable code components
+│   ├── plot_objects/          # ggplot theme and plot definitions
+│   ├── preprocessing/         # Data preprocessing utilities (MATLAB, Python)
+│   └── utilities/             # Helper functions for data processing
+├── documentation/              # Documentation and results
+│   ├── results_reports/       # Statistical analysis reports and summaries
+│   └── *.md                   # Documentation files
+└── figures/
+    └── publication/           # Final publication-ready figures (PNG format)
 ```
 
-## Key Files
+### Directory Descriptions
 
-### Main Analysis
-- `analysis/main/Aggregated_analysis_publication.Rmd` - Complete analysis pipeline and results
+**`analysis/`** - Contains all analysis scripts organized by purpose:
+- `main/`: Complete analysis pipeline in R Markdown format
+- `manuscript_scripts/`: Individual R scripts for specific analyses
+  - `figures/`: Scripts that generate the manuscript figures
+  - Root-level scripts: Statistical models and verification analyses
 
-### Manuscript-Verified Scripts and Reports
+**`code/`** - Reusable code components:
+- `plot_objects/`: ggplot theme definitions and plot templates for each task
+- `preprocessing/`: Tools for converting and aggregating raw eyetracker data
+  - MATLAB scripts for file conversion
+  - Python notebooks for data aggregation
+- `utilities/`: Helper functions used across multiple analyses
 
-The table below links each Results subsection and figure to the script that generated it:
+**`documentation/`** - Comprehensive documentation:
+- Analysis overviews and methodological notes
+- Statistical reports and summaries
+- Results from various analysis approaches
 
-| Result / Figure | Script | Key Outputs |
-|-----------------|--------|-------------|
-| Full manuscript pipeline | `analysis/manuscript_scripts/LCYA_Final_Corrected_Analysis.R` | Behavioral, physiological, and individual-differences statistics written to `documentation/results_reports/`. |
-| Pupillometry AUC models | `analysis/manuscript_scripts/LCYA_AUC_Analysis.R` | Total, Cognitive, and Physical AUC model summaries. |
-| Figure 2 – Task performance | `analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R` | `figures/publication/Figure2_Task_Performance_Effects.png`. |
-| Figure 3 – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | `figures/publication/Figure3_Pupil_Waveforms.png` plus LMM output. |
-| Figure 4 – Total & Cognitive AUC bars | `analysis/manuscript_scripts/figures/LCYA_Updated_Combined_AUC_Plots.R` | `Figure4_Total_AUC.png`, `Figure4_Cognitive_AUC.png`. |
-| Figure 4 – Combined layout | `analysis/manuscript_scripts/figures/LCYA_Figure4_Merged_AUC_Plot.R` | `Figure4_Merged_Total_Cognitive_AUC.png`. |
-| Bayesian individual differences | `analysis/manuscript_scripts/Bivariate_Individual_Differences_brms.R` | `documentation/results_reports/Individual_Differences_Brms_Report.md`. |
-| Subject-means individual differences | `analysis/manuscript_scripts/Updated_Individual_Differences_Accuracy_RT_SubjectMeans.R` | CSV + markdown in `documentation/results_reports/subject_means/results/`. |
-| Frequentist verification | `analysis/manuscript_scripts/Final_Individual_Differences_Verification.R` | Confirms quoted correlations for Total & Cognitive AUC. |
-| Response bias analysis | `analysis/manuscript_scripts/response_bias_analysis.R` | GLMM summary for Same/Different judgments. |
+**`figures/publication/`** - Final publication-ready figures:
+- All figures are in PNG format, high resolution (300 DPI)
+- Generated by scripts in `analysis/manuscript_scripts/figures/`
+
+## Key Analysis Scripts
+
+### Main Analysis Pipeline
+- **`analysis/main/Aggregated_analysis_publication.Rmd`** - Complete analysis pipeline and results (R Markdown)
+
+### Manuscript Figures
+
+| Figure | Script | Description | Output |
+|--------|--------|-------------|--------|
+| **Figure 2** – Behavioral performance | `analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R` | Accuracy and reaction time effects across tasks and conditions | `figures/publication/Figure2_Task_Performance_Effects.png` |
+| **Figure 3** – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | Time-locked pupil responses with baseline and AUC period annotations (see details below) | `figures/publication/Figure3_Pupil_Waveforms.png` |
+| **Figure 4** – AUC bar plots | `analysis/manuscript_scripts/figures/LCYA_Updated_Combined_AUC_Plots.R` | Total AUC and Cognitive AUC effects across tasks | `Figure4_Total_AUC.png`, `Figure4_Cognitive_AUC.png` |
+| **Figure 4** – Combined layout | `analysis/manuscript_scripts/figures/LCYA_Figure4_Merged_AUC_Plot.R` | Merged visualization of Total and Cognitive AUC | `Figure4_Merged_Total_Cognitive_AUC.png` |
+
+**Figure 3 Details:**
+- **Baseline correction**: 500ms pre-squeeze window (-0.5s to 0s) for optimal separation
+- **Time range**: From -0.5s (baseline period) to response onset for complete trial visualization
+- **Smoothing**: GAM trajectories with 95% confidence intervals
+- **Task-specific annotations**:
+  - **CDT**: Shows "Pre-trial Baseline" (grey) and "Total AUC" (blue) only. Cognitive AUC excluded per analytical recommendations.
+  - **ADT/VDT**: Shows "Pre-trial Baseline" (grey), "Total AUC" (blue), "Pre-stimulus Baseline" (grey, 500ms before target onset), and "Cognitive AUC" (orange)
+- **Event markers**: Task-specific labels ("Array onset" for CDT, "Target onset" for ADT/VDT, "Probe + Response" for CDT, "Response" for ADT/VDT)
+
+### Statistical Analyses
+
+| Analysis | Script | Description | Output Location |
+|----------|--------|-------------|-----------------|
+| Full manuscript pipeline | `analysis/manuscript_scripts/LCYA_Final_Corrected_Analysis.R` | Complete statistical analysis (behavioral, physiological, individual differences) | `documentation/results_reports/` |
+| Pupillometry AUC models | `analysis/manuscript_scripts/LCYA_AUC_Analysis.R` | Linear mixed-effects models for Total, Cognitive, and Physical AUC | Model summaries to console/file |
+| Bayesian individual differences | `analysis/manuscript_scripts/Bivariate_Individual_Differences_brms.R` | Multivariate Bayesian models examining individual-level associations | `documentation/results_reports/Individual_Differences_Brms_Report.md` |
+| Subject-means individual differences | `analysis/manuscript_scripts/Updated_Individual_Differences_Accuracy_RT_SubjectMeans.R` | Alternative approach using subject-level means | `documentation/results_reports/subject_means/results/` |
+| Frequentist verification | `analysis/manuscript_scripts/Final_Individual_Differences_Verification.R` | Verification of correlations using frequentist methods | Console output |
+| Response bias analysis | `analysis/manuscript_scripts/response_bias_analysis.R` | GLMM for Same/Different judgment bias | Console output |
 
 ### Data Preprocessing
-- `code/preprocessing/eyetracker_mat_to_csv_converter.m` - Convert individual MATLAB eyetracker files to CSV
-- `code/preprocessing/batch_convert_eyetracker_files.m` - Batch conversion of all eyetracker files
-- `code/preprocessing/README.md` - Detailed preprocessing documentation
 
-### Figures
-
-Publication-ready exports are bundled under `figures/publication/`:
-
-| Figure | File | Generated by |
-|--------|------|--------------|
-| Figure 2 – Behavioral performance | `Figure2_Task_Performance_Effects.png` | `Figure2_Clean_Final_Version.R` |
-| Figure 3 – Pupil waveforms | `Figure3_Pupil_Waveforms.png` | `LCYA_Isolated_Cognitive_AUC_Analysis.R` |
-| Figure 4 – Total AUC | `Figure4_Total_AUC.png` | `LCYA_Updated_Combined_AUC_Plots.R` |
-| Figure 4 – Cognitive AUC | `Figure4_Cognitive_AUC.png` | `LCYA_Updated_Combined_AUC_Plots.R` |
-| Figure 4 – Combined layout | `Figure4_Merged_Total_Cognitive_AUC.png` | `LCYA_Figure4_Merged_AUC_Plot.R` |
+- **MATLAB scripts** (`code/preprocessing/`):
+  - `eyetracker_mat_to_csv_converter.m` - Convert individual MATLAB eyetracker files to CSV
+  - `batch_convert_eyetracker_files.m` - Batch conversion of all eyetracker files
+- **Python notebooks** (`code/preprocessing/python_notebooks/`):
+  - Task-specific aggregation notebooks for trial-level data
+  - See `code/preprocessing/README.md` for detailed preprocessing documentation
 
 ## Dependencies
 
-The analysis requires the following R packages:
-- `dplyr`, `ggplot2`, `tidyr` - Data manipulation and visualization
-- `gridExtra`, `cowplot` - Plot arrangement
-- `viridis`, `ggridges` - Advanced plotting
-- `raincloudplots` - Distribution visualizations
-- `report` - Statistical reporting
+### Required R Packages
+
+**Core Analysis:**
+- `tidyverse` - Data manipulation and visualization (`dplyr`, `ggplot2`, `tidyr`, `readr`, `purrr`)
+- `lme4` - Linear mixed-effects models
+- `lmerTest` - p-values for mixed-effects models
+- `brms` - Bayesian regression models (for individual differences)
+- `mgcv` - Generalized additive models (GAM) for smoothing
+- `patchwork` / `cowplot` - Combining multiple plots
+- `posterior` - Bayesian posterior analysis (for brms)
+
+**Visualization:**
+- `ggplot2` - Primary plotting package
+- `gridExtra` - Additional plot arrangement tools
+- `viridis` - Color palettes
+- `ggridges` - Distribution visualizations
+
+**Other:**
+- `rmcorr` - Repeated measures correlation (optional, for sensitivity analyses)
+
+### Installation
+
+```r
+# Install CRAN packages
+install.packages(c("tidyverse", "lme4", "lmerTest", "mgcv", 
+                   "patchwork", "cowplot", "viridis", "ggridges", 
+                   "rmcorr", "posterior"))
+
+# Install brms (requires compilation)
+install.packages("brms")
+# Note: brms may require additional system dependencies; see brms documentation
+```
 
 ## Usage
 
-1. Install the required R packages (`tidyverse`, `lme4`, `lmerTest`, `brms`, `mgcv`, `patchwork`, `ggplot2`, etc.).
-2. Set your working directory to the repository root.
-3. Run `analysis/main/Aggregated_analysis_publication.Rmd` for the full reproduction, **or** execute the figure-specific scripts in `analysis/manuscript_scripts/figures/` to regenerate individual panels.
-4. For the updated subject-means individual-differences analysis, run `analysis/manuscript_scripts/Updated_Individual_Differences_Accuracy_RT_SubjectMeans.R`; outputs land in `documentation/results_reports/subject_means/results/`.
+### Quick Start: Reproducing Manuscript Figures
+
+1. **Set up R environment**: Install all required packages (see Dependencies section)
+
+2. **Update file paths**: Edit the `BASE_DIR` variable in each script to point to your data directory:
+   ```r
+   BASE_DIR <- "/path/to/your/LC–YA"
+   ```
+
+3. **Ensure data files are available**:
+   - Raw pupil data: `100 Hz/` directory with `*_DS100_merged.csv` files
+   - Processed AUC data: `PI_Feedback_Outputs/Combined_Dual_AUC_Data.csv` (generated by scripts)
+   - Behavioral data: `Complete_Manuscript_Results/complete_analysis_data.csv`
+
+4. **Run figure generation scripts** (in order):
+   ```r
+   # Figure 2: Behavioral performance
+   source("analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R")
+   
+   # Figure 3: Pupil waveforms
+   source("analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R")
+   
+   # Figure 4: AUC bar plots
+   source("analysis/manuscript_scripts/figures/LCYA_Updated_Combined_AUC_Plots.R")
+   ```
+
+5. **Find outputs**: All figures are saved to `figures/publication/`
+
+### Complete Analysis Pipeline
+
+For full reproduction of all analyses:
+```r
+# Run the complete R Markdown pipeline
+rmarkdown::render("analysis/main/Aggregated_analysis_publication.Rmd")
+```
+
+### Data Requirements
+
+**Note**: Due to data privacy and file size constraints, raw data files are not included in this repository. Users need to provide their own data files with the following structure:
+
+- **Raw pupil data**: `100 Hz/` directory containing `*_DS100_merged.csv` files with columns:
+  - `sub` (subject ID)
+  - `trial_index` (trial number)
+  - `time` (timestamp)
+  - `pupil` (pupil diameter)
+  - `duration_label` (event labels: "Squeeze", "Arrow"/"Stimulus", "Response", "Confidence")
+  - `stimLev` (stimulus level/difficulty)
+  - `isStrength` (effort condition: 0=Low, 1=High)
+
+- **Behavioral data**: Processed behavioral data files (accuracy and reaction time)
+
+**File paths**: Scripts use absolute paths that need to be adjusted for your local setup. Update the `BASE_DIR` variable at the top of each script.
+
+## Key Methodological Decisions
+
+### Pupil Waveform Analysis (Figure 3)
+- **Baseline period**: 500ms pre-squeeze (-0.5s to 0s) for optimal separation
+- **Baseline correction**: Global baseline (B0) applied throughout to ensure convergence at squeeze onset
+- **Task-specific analyses**:
+  - **CDT**: Physical effort only (Total AUC); Cognitive AUC excluded per analytical recommendations
+  - **ADT/VDT**: Full 2×2 ANOVA (difficulty × effort) for both Total AUC and Cognitive AUC
+- **Pre-stimulus Baseline (B2b)**: 500ms window before target/stimulus onset, shown only for ADT/VDT (used specifically for Cognitive AUC calculation)
+
+### AUC Measures
+- **Pre-trial Baseline (B0)**: 500ms window (-0.5s to 0s) before squeeze onset, used for global baseline correction
+- **Pre-stimulus Baseline (B2b)**: 500ms window before target/stimulus onset, used specifically for Cognitive AUC calculation
+- **Total AUC**: Raw pupil data from squeeze onset (0s) to response onset
+- **Cognitive AUC**: Isolated pupil data (B0-corrected) from 300ms after target/stimulus onset to response onset
+
+### Individual Differences Analysis
+- **Primary method**: Multivariate Bayesian mixed-effects models (brms)
+- **Target estimand**: Correlation between subject-specific effort slopes
+- **Sensitivity analyses**: rmcorr and subject-means correlations
+- **Statistical approach**: Bayesian inference with credible intervals
+
+## Documentation
+
+For detailed documentation, see:
+- `documentation/ANALYSIS_OVERVIEW.md` - Comprehensive analysis overview
+- `documentation/CODE_DOCUMENTATION.md` - Technical documentation for code files
+- `documentation/REPOSITORY_STRUCTURE.md` - Detailed repository organization
+- `code/preprocessing/README.md` - Data preprocessing instructions
 
 ## Citation
 
-If you use this code or data, please cite:
-[Your paper citation will go here]
+If you use this code or reference these analyses, please cite:
+
+[Manuscript citation - to be updated upon publication]
 
 ## Contact
 
-Mohammad Dastgheib
+**Mohammad Dastgheib**  
 mdast003@ucr.edu
 
 ## License
