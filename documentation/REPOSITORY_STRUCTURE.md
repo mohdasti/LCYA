@@ -9,7 +9,7 @@ This document describes the organization of the LCYA-Clean repository, designed 
 ```
 LCYA-Clean/
 ├── README.md                    # Main repository documentation
-├── LICENSE                      # MIT License
+├── LICENSE                      # GPLv3 License
 ├── CONTRIBUTING.md              # Contribution guidelines
 ├── .gitignore                   # Git ignore rules
 │
@@ -51,7 +51,7 @@ LCYA-Clean/
 
 ### Core Files
 - **README.md**: Main entry point with project overview, usage instructions, and key information
-- **LICENSE**: MIT License for open-source distribution
+- **LICENSE**: GPLv3 License for open-source distribution
 - **CONTRIBUTING.md**: Guidelines for contributors
 - **.gitignore**: Rules for excluding files from version control
 
