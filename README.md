@@ -253,6 +253,4 @@ mdast003@ucr.edu
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-This allows anyone to use, modify, and distribute the code with attribution.
+This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
