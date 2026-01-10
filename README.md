@@ -1,5 +1,12 @@
 # LCYA: Locus Coeruleus - Young Adults Study
 
+![License](https://img.shields.io/github/license/mohdasti/LCYA)
+![R](https://img.shields.io/badge/R-4.0+-blue.svg)
+![GitHub stars](https://img.shields.io/github/stars/mohdasti/LCYA?style=social)
+![GitHub forks](https://img.shields.io/github/forks/mohdasti/LCYA?style=social)
+![GitHub issues](https://img.shields.io/github/issues/mohdasti/LCYA)
+![GitHub top language](https://img.shields.io/github/languages/top/mohdasti/LCYA)
+
 ## Overview
 
 This repository contains the supplementary materials and analysis code for the **LCYA (Locus Coeruleus - Young Adults)** study. The study investigates the **effects and interactions of concurrent physical and cognitive effort** on behavioral performance and pupillometric responses in younger adults.
