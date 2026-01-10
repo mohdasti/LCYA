@@ -1,10 +1,8 @@
 # LCYA: Locus Coeruleus - Young Adults Study
 
-![License](https://img.shields.io/github/license/mohdasti/LCYA)
+[![DOI](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204998)
+![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![R](https://img.shields.io/badge/R-4.0+-blue.svg)
-![GitHub stars](https://img.shields.io/github/stars/mohdasti/LCYA?style=social)
-![GitHub forks](https://img.shields.io/github/forks/mohdasti/LCYA?style=social)
-![GitHub issues](https://img.shields.io/github/issues/mohdasti/LCYA)
 ![GitHub top language](https://img.shields.io/github/languages/top/mohdasti/LCYA)
 
 ## Overview
