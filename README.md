@@ -1,6 +1,7 @@
 # LCYA: Locus Coeruleus - Young Adults Study
 
 [![DOI](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204998)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0001--7684--3731-a6ce39.svg)](https://orcid.org/0000-0001-7684-3731)
 ![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![R](https://img.shields.io/badge/R-4.0+-blue.svg)
 ![GitHub top language](https://img.shields.io/github/languages/top/mohdasti/LCYA)
