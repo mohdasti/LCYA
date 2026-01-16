@@ -196,7 +196,7 @@ rmarkdown::render("analysis/main/Aggregated_analysis_publication.Rmd")
 
 ### Data Requirements
 
-**Note**: Due to data privacy and file size constraints, raw data files are not included in this repository. Users need to provide their own data files with the following structure:
+**Note**: Due to data privacy and file size constraints, raw data files are not included in this repository. **Data are available for reviewers upon reasonable request.** Users who wish to reproduce the analyses will need to provide their own data files with the following structure:
 
 - **Raw pupil data**: `100 Hz/` directory containing `*_DS100_merged.csv` files with columns:
   - `sub` (subject ID)

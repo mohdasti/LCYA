@@ -661,13 +661,25 @@ ggsave(waveform_output_file, combined_waveform_plot, width = 12, height = 15, dp
 cat("✅ Refined Cognitive Pupil waveform plots saved to:", waveform_output_file, "\n")
 
 # Also save to publication directory
-publication_dir <- file.path(BASE_DIR, "LCYA", "figures", "publication")
-if (dir.exists(publication_dir)) {
+# Try multiple possible paths for robustness
+publication_dir <- NULL
+possible_paths <- c(
+  file.path(BASE_DIR, "LCYA", "figures", "publication"),  # Standard repository structure
+  file.path(BASE_DIR, "figures", "publication"),  # If BASE_DIR already points to LCYA directory
+  "figures/publication"  # Relative path fallback
+)
+for (path in possible_paths) {
+  if (dir.exists(path)) {
+    publication_dir <- path
+    break
+  }
+}
+if (!is.null(publication_dir)) {
   publication_output_file <- file.path(publication_dir, "Figure3_Pupil_Waveforms.png")
   ggsave(publication_output_file, combined_waveform_plot, width = 12, height = 15, dpi = 300)
   cat("✅ Figure 3 saved to publication directory:", publication_output_file, "\n")
 } else {
-  cat("⚠️  Publication directory not found:", publication_dir, "\n")
+  cat("⚠️  Publication directory not found. Tried paths:", paste(possible_paths, collapse = ", "), "\n")
 }
 
 cat("\n🎉 Combined analysis complete! Check the PI_Feedback_Outputs directory for model summaries and plots.\n")
