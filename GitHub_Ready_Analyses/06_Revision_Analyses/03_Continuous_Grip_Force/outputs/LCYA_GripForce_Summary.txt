@@ -1,0 +1,862 @@
+LCYA — Continuous Grip Force Model Summaries
+Generated: 2026-04-12 23:36:11 
+
+------------------------------------------------------------ 
+ CDT Model A: Accuracy ~ GF 
+Formula: iscorr ~ difficulty * gf_scaled + (1 | sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: iscorr ~ difficulty * gf_scaled + (1 | sub)
+   Data: data
+Control: ctrl_g
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   7468.5    7501.7   -3729.3    7458.5      5596 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8664 -0.8706 -0.5846  0.9738  1.8672 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ sub    (Intercept) 0.1875   0.433   
+Number of obs: 5601, groups:  sub, 39
+
+Fixed effects:
+                         Estimate Std. Error z value Pr(>|z|)    
+(Intercept)               0.24114    0.07952   3.032  0.00243 ** 
+difficultyHard           -0.64093    0.05543 -11.562  < 2e-16 ***
+gf_scaled                 0.08335    0.03892   2.141  0.03224 *  
+difficultyHard:gf_scaled -0.08096    0.05532  -1.464  0.14333    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.345              
+gf_scaled    0.004 -0.007       
+dffcltyHr:_ -0.003  0.005 -0.704
+
+------------------------------------------------------------ 
+ CDT Model A: RT ~ GF 
+Formula: log_rt ~ difficulty * gf_scaled + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 13982.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-6.0241 -0.1631  0.0715  0.3630  2.6773 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 0.1075   0.3279  
+ Residual             0.6930   0.8325  
+Number of obs: 5601, groups:  sub, 39
+
+Fixed effects:
+                           Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)               2.522e-01  5.481e-02  4.134e+01   4.601 3.95e-05 ***
+difficultyHard            1.370e-02  2.225e-02  5.559e+03   0.616    0.538    
+gf_scaled                 7.608e-03  1.573e-02  5.559e+03   0.484    0.629    
+difficultyHard:gf_scaled -4.285e-03  2.225e-02  5.559e+03  -0.193    0.847    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.203              
+gf_scaled    0.000  0.000       
+dffcltyHr:_  0.000  0.000 -0.707
+
+------------------------------------------------------------ 
+ CDT Model B: Total AUC ~ GF 
+Formula: Total_AUC ~ gf_scaled + (1 + gf_scaled | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 88426.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.1465 -0.5135  0.0183  0.5084  6.8125 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr 
+ sub      (Intercept) 112282   335.1         
+          gf_scaled    13495   116.2    -0.03
+ Residual             406489   637.6         
+Number of obs: 5601, groups:  sub, 39
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)  -441.69      54.33   38.01  -8.130 7.69e-10 ***
+gf_scaled     113.40      20.46   38.03   5.542 2.41e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+          (Intr)
+gf_scaled -0.030
+
+------------------------------------------------------------ 
+ CDT Model C: Total AUC ~ auc_rel_mvc scaled (High only) 
+Formula: Total_AUC ~ auc_scaled + (1 + auc_scaled | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 42995.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.5272 -0.5308  0.0109  0.5086  5.6069 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr
+ sub      (Intercept) 117842   343.28       
+          auc_scaled    3907    62.51   0.23
+ Residual             386121   621.39       
+Number of obs: 2731, groups:  sub, 38
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)  -318.99      57.08   37.07  -5.589 2.25e-06 ***
+auc_scaled    -66.19      18.51   32.26  -3.575  0.00113 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+           (Intr)
+auc_scaled 0.110 
+
+------------------------------------------------------------ 
+ CDT Model D: Total AUC ~ log_RT × effort 
+Formula: Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 88379.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.1764 -0.5062  0.0126  0.5123  6.8548 
+
+Random effects:
+ Groups   Name          Variance Std.Dev. Corr       
+ sub      (Intercept)   128397   358.33              
+          log_rt_scaled   5813    76.24   -0.39      
+          effortHigh     53994   232.37   -0.34 -0.23
+ Residual               402521   634.45              
+Number of obs: 5601, groups:  sub, 39
+
+Fixed effects:
+                         Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              -561.013     58.660   37.987  -9.564 1.17e-11 ***
+log_rt_scaled               5.996     20.231   38.917   0.296    0.769    
+effortHigh                230.331     40.906   37.976   5.631 1.83e-06 ***
+log_rt_scaled:effortHigh   15.345     18.978 2225.354   0.809    0.419    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_rt_ effrtH
+log_rt_scld -0.242              
+effortHigh  -0.361 -0.118       
+lg_rt_scl:H  0.005 -0.509 -0.008
+
+------------------------------------------------------------ 
+ ADT Model A: Accuracy ~ GF 
+Formula: iscorr ~ difficulty * gf_scaled + (1 | sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: iscorr ~ difficulty * gf_scaled + (1 | sub)
+   Data: data
+Control: ctrl_g
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   4502.3    4537.1   -2246.1    4492.3      7794 
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-12.7212  -0.2759  -0.0606   0.2689  17.4229 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ sub    (Intercept) 1.365    1.168   
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                         Estimate Std. Error z value Pr(>|z|)    
+(Intercept)              -2.73239    0.19879 -13.745   <2e-16 ***
+difficultyHard            5.24725    0.10484  50.051   <2e-16 ***
+gf_scaled                -0.05405    0.05809  -0.931    0.352    
+difficultyHard:gf_scaled -0.01225    0.07996  -0.153    0.878    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.269              
+gf_scaled    0.012 -0.025       
+dffcltyHr:_ -0.008 -0.002 -0.726
+
+------------------------------------------------------------ 
+ ADT Model A: RT ~ GF 
+Formula: log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 26248.4
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.3608 -0.4673  0.0468  0.5802  3.2554 
+
+Random effects:
+ Groups   Name           Variance Std.Dev. Corr       
+ sub      (Intercept)    0.78753  0.8874              
+          difficultyHard 0.07228  0.2689    0.20      
+          gf_scaled      0.01395  0.1181    0.04 -0.30
+ Residual                1.63655  1.2793              
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                           Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)                -1.23027    0.14357   37.99963  -8.569 2.08e-10 ***
+difficultyHard             -0.21897    0.05189   38.00120  -4.220 0.000146 ***
+gf_scaled                  -0.01352    0.02788   71.23912  -0.485 0.629265    
+difficultyHard:gf_scaled    0.03375    0.02897 7681.00902   1.165 0.244077    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd  0.105              
+gf_scaled    0.024 -0.169       
+dffcltyHr:_  0.000  0.000 -0.519
+
+------------------------------------------------------------ 
+ ADT Model B: Total AUC ~ GF 
+Formula: Total_AUC ~ difficulty * gf_scaled + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 121021
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.5060 -0.5647  0.0263  0.5472  7.5185 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 119397   345.5   
+ Residual             315587   561.8   
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                         Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              -429.406     56.057   38.998  -7.660 2.71e-09 ***
+difficultyHard             22.652     12.722 7757.000   1.780    0.075 .  
+gf_scaled                 105.892      8.996 7757.000  11.771  < 2e-16 ***
+difficultyHard:gf_scaled   -3.453     12.723 7757.000  -0.271    0.786    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.113              
+gf_scaled    0.000  0.000       
+dffcltyHr:_  0.000  0.000 -0.707
+
+------------------------------------------------------------ 
+ ADT Model C: Total AUC ~ auc_rel_mvc scaled (High only) 
+Formula: Total_AUC ~ difficulty * auc_scaled + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 60563.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.4476 -0.5426  0.0315  0.5288  7.2683 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 109821   331.4   
+ Residual             316377   562.5   
+Number of obs: 3900, groups:  sub, 39
+
+Fixed effects:
+                          Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)                -323.34      54.57   40.14  -5.925 5.95e-07 ***
+difficultyHard               18.74      18.01 3858.01   1.040   0.2983    
+auc_scaled                  -29.62      13.62 3892.59  -2.175   0.0297 *  
+difficultyHard:auc_scaled   -10.22      18.10 3859.32  -0.565   0.5722    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH ac_scl
+diffcltyHrd -0.165              
+auc_scaled  -0.002  0.006       
+dffcltyHr:_  0.001  0.000 -0.622
+
+------------------------------------------------------------ 
+ ADT Model D: Total AUC ~ log_RT × effort 
+Formula: Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 120935.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.4406 -0.5571  0.0240  0.5304  7.4669 
+
+Random effects:
+ Groups   Name          Variance Std.Dev. Corr       
+ sub      (Intercept)   128507   358.5               
+          log_rt_scaled  11264   106.1    -0.01      
+          effortHigh     16337   127.8    -0.46  0.37
+ Residual               308171   555.1               
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                         Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              -519.237     58.278   37.934  -8.910 7.75e-11 ***
+log_rt_scaled               3.125     21.100   31.091   0.148    0.883    
+effortHigh                206.595     24.048   37.487   8.591 2.18e-10 ***
+log_rt_scaled:effortHigh  -16.597     14.472 1557.278  -1.147    0.252    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_rt_ effrtH
+log_rt_scld -0.034              
+effortHigh  -0.441  0.251       
+lg_rt_scl:H  0.007 -0.364 -0.003
+
+------------------------------------------------------------ 
+ VDT Model A: Accuracy ~ GF 
+Formula: iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |  
+    sub)
+   Data: data
+Control: ctrl_g
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   6326.6    6395.6   -3153.3    6306.6      7357 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-9.0311 -0.4809  0.1581  0.4204  4.4862 
+
+Random effects:
+ Groups Name           Variance Std.Dev. Corr       
+ sub    (Intercept)    0.98329  0.9916              
+        difficultyHard 1.73163  1.3159   -0.09      
+        gf_scaled      0.01362  0.1167    0.26 -0.47
+Number of obs: 7367, groups:  sub, 37
+
+Fixed effects:
+                         Estimate Std. Error z value Pr(>|z|)    
+(Intercept)              -0.97378    0.16844  -5.781 7.43e-09 ***
+difficultyHard            3.38506    0.23428  14.449  < 2e-16 ***
+gf_scaled                -0.05696    0.04495  -1.267    0.205    
+difficultyHard:gf_scaled  0.03936    0.07506   0.524    0.600    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.130              
+gf_scaled    0.113 -0.191       
+dffcltyHr:_ -0.006  0.000 -0.551
+
+------------------------------------------------------------ 
+ VDT Model A: RT ~ GF 
+Formula: log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 22661.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9784 -0.4151  0.0807  0.5479  3.7032 
+
+Random effects:
+ Groups   Name           Variance Std.Dev. Corr       
+ sub      (Intercept)    0.78212  0.8844              
+          difficultyHard 0.08176  0.2859    0.50      
+          gf_scaled      0.01412  0.1188   -0.04 -0.16
+ Residual                1.22084  1.1049              
+Number of obs: 7367, groups:  sub, 37
+
+Fixed effects:
+                           Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)                -1.14692    0.14653   36.00111  -7.827 2.78e-09 ***
+difficultyHard             -0.20707    0.05360   36.05792  -3.863 0.000448 ***
+gf_scaled                   0.06237    0.02671   61.27880   2.335 0.022822 *  
+difficultyHard:gf_scaled   -0.02536    0.02575 7255.24657  -0.985 0.324734    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd  0.389              
+gf_scaled   -0.026 -0.105       
+dffcltyHr:_  0.000  0.000 -0.482
+
+------------------------------------------------------------ 
+ VDT Model B: Total AUC ~ GF 
+Formula: Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 114117.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.4796 -0.5392  0.0028  0.5122  6.8395 
+
+Random effects:
+ Groups   Name           Variance Std.Dev. Corr       
+ sub      (Intercept)    141376   376.00              
+          difficultyHard   1829    42.77   -0.30      
+          gf_scaled        7141    84.50   -0.12  0.24
+ Residual                303987   551.35              
+Number of obs: 7367, groups:  sub, 37
+
+Fixed effects:
+                         Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              -422.438     62.479   36.007  -6.761 6.76e-08 ***
+difficultyHard              0.268     14.646   35.404   0.018    0.986    
+gf_scaled                  92.770     16.602   49.884   5.588 9.55e-07 ***
+difficultyHard:gf_scaled  -10.235     12.848 7254.610  -0.797    0.426    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH gf_scl
+diffcltyHrd -0.231              
+gf_scaled   -0.098  0.096       
+dffcltyHr:_  0.000  0.000 -0.387
+
+------------------------------------------------------------ 
+ VDT Model C: Total AUC ~ auc_rel_mvc scaled (High only) 
+Formula: Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 56959.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.8054 -0.5186  0.0084  0.5294  6.4266 
+
+Random effects:
+ Groups   Name           Variance Std.Dev. Corr       
+ sub      (Intercept)    148711   385.63              
+          difficultyHard   5753    75.85   -0.40      
+          auc_scaled      16224   127.37    0.19  0.12
+ Residual                288599   537.21              
+Number of obs: 3685, groups:  sub, 37
+
+Fixed effects:
+                          Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)               -325.230     64.863   35.918  -5.014 1.45e-05 ***
+difficultyHard              -7.811     21.685   35.657  -0.360   0.7208    
+auc_scaled                 -52.485     26.225   38.170  -2.001   0.0525 .  
+difficultyHard:auc_scaled   20.545     18.999  464.000   1.081   0.2801    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH ac_scl
+diffcltyHrd -0.335              
+auc_scaled   0.137  0.057       
+dffcltyHr:_  0.006 -0.004 -0.356
+
+------------------------------------------------------------ 
+ VDT Model D: Total AUC ~ log_RT × effort 
+Formula: Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_l
+
+REML criterion at convergence: 114091.5
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.2021 -0.5371  0.0043  0.5157  6.7946 
+
+Random effects:
+ Groups   Name          Variance Std.Dev. Corr       
+ sub      (Intercept)   148002   384.7               
+          log_rt_scaled   4844    69.6    -0.19      
+          effortHigh     28750   169.6    -0.32 -0.22
+ Residual               302042   549.6               
+Number of obs: 7367, groups:  sub, 37
+
+Fixed effects:
+                         Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)              -508.968     64.038   36.031  -7.948 1.94e-09 ***
+log_rt_scaled             -16.466     16.705   45.229  -0.986    0.330    
+effortHigh                176.718     30.710   35.790   5.754 1.51e-06 ***
+log_rt_scaled:effortHigh    1.668     16.086 1956.563   0.104    0.917    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_rt_ effrtH
+log_rt_scld -0.136              
+effortHigh  -0.329 -0.147       
+lg_rt_scl:H -0.007 -0.443 -0.006
+
+
+
+ ============================================================ 
+COMPREHENSIVE FIXED-EFFECTS TABLE
+
+                        term         b      SE        z      p       t      df
+1                (Intercept)    0.2411  0.0795   3.0323 0.0024      NA      NA
+2             difficultyHard   -0.6409  0.0554 -11.5621 0.0000      NA      NA
+3                  gf_scaled    0.0833  0.0389   2.1414 0.0322      NA      NA
+4   difficultyHard:gf_scaled   -0.0810  0.0553  -1.4635 0.1433      NA      NA
+5                (Intercept)    0.2522  0.0548       NA 0.0000  4.6008   41.34
+6             difficultyHard    0.0137  0.0222       NA 0.5380  0.6158 5559.01
+7                  gf_scaled    0.0076  0.0157       NA 0.6287  0.4835 5559.03
+8   difficultyHard:gf_scaled   -0.0043  0.0222       NA 0.8473 -0.1926 5559.02
+9                (Intercept) -441.6922 54.3287       NA 0.0000 -8.1300   38.01
+10                 gf_scaled  113.3989 20.4602       NA 0.0000  5.5424   38.03
+11               (Intercept) -318.9879 57.0768       NA 0.0000 -5.5887   37.07
+12                auc_scaled  -66.1926 18.5142       NA 0.0011 -3.5752   32.26
+13               (Intercept) -561.0128 58.6605       NA 0.0000 -9.5637   37.99
+14             log_rt_scaled    5.9963 20.2312       NA 0.7685  0.2964   38.92
+15                effortHigh  230.3307 40.9062       NA 0.0000  5.6307   37.98
+16  log_rt_scaled:effortHigh   15.3445 18.9783       NA 0.4189  0.8085 2225.35
+17               (Intercept)   -2.7324  0.1988 -13.7451 0.0000      NA      NA
+18            difficultyHard    5.2472  0.1048  50.0510 0.0000      NA      NA
+19                 gf_scaled   -0.0541  0.0581  -0.9305 0.3521      NA      NA
+20  difficultyHard:gf_scaled   -0.0122  0.0800  -0.1532 0.8783      NA      NA
+21               (Intercept)   -1.2303  0.1436       NA 0.0000 -8.5691   38.00
+22            difficultyHard   -0.2190  0.0519       NA 0.0001 -4.2198   38.00
+23                 gf_scaled   -0.0135  0.0279       NA 0.6293 -0.4849   71.24
+24  difficultyHard:gf_scaled    0.0338  0.0290       NA 0.2441  1.1649 7681.01
+25               (Intercept) -429.4063 56.0570       NA 0.0000 -7.6602   39.00
+26            difficultyHard   22.6520 12.7224       NA 0.0750  1.7805 7757.00
+27                 gf_scaled  105.8924  8.9961       NA 0.0000 11.7709 7757.00
+28  difficultyHard:gf_scaled   -3.4533 12.7233       NA 0.7861 -0.2714 7757.00
+29               (Intercept) -323.3371 54.5728       NA 0.0000 -5.9249   40.14
+30            difficultyHard   18.7371 18.0141       NA 0.2983  1.0401 3858.01
+31                auc_scaled  -29.6230 13.6202       NA 0.0297 -2.1749 3892.59
+32 difficultyHard:auc_scaled  -10.2214 18.0955       NA 0.5722 -0.5649 3859.32
+33               (Intercept) -519.2375 58.2780       NA 0.0000 -8.9097   37.93
+34             log_rt_scaled    3.1246 21.0996       NA 0.8832  0.1481   31.09
+35                effortHigh  206.5948 24.0478       NA 0.0000  8.5910   37.49
+36  log_rt_scaled:effortHigh  -16.5973 14.4717       NA 0.2516 -1.1469 1557.28
+37               (Intercept)   -0.9738  0.1684  -5.7810 0.0000      NA      NA
+38            difficultyHard    3.3851  0.2343  14.4485 0.0000      NA      NA
+39                 gf_scaled   -0.0570  0.0450  -1.2672 0.2051      NA      NA
+40  difficultyHard:gf_scaled    0.0394  0.0751   0.5244 0.6000      NA      NA
+41               (Intercept)   -1.1469  0.1465       NA 0.0000 -7.8274   36.00
+42            difficultyHard   -0.2071  0.0536       NA 0.0004 -3.8631   36.06
+43                 gf_scaled    0.0624  0.0267       NA 0.0228  2.3352   61.28
+44  difficultyHard:gf_scaled   -0.0254  0.0257       NA 0.3247 -0.9848 7255.25
+45               (Intercept) -422.4383 62.4789       NA 0.0000 -6.7613   36.01
+46            difficultyHard    0.2680 14.6465       NA 0.9855  0.0183   35.40
+47                 gf_scaled   92.7703 16.6017       NA 0.0000  5.5880   49.88
+48  difficultyHard:gf_scaled  -10.2349 12.8484       NA 0.4257 -0.7966 7254.61
+49               (Intercept) -325.2301 64.8635       NA 0.0000 -5.0141   35.92
+50            difficultyHard   -7.8106 21.6845       NA 0.7208 -0.3602   35.66
+51                auc_scaled  -52.4850 26.2252       NA 0.0525 -2.0013   38.17
+52 difficultyHard:auc_scaled   20.5453 18.9993       NA 0.2801  1.0814  464.00
+53               (Intercept) -508.9677 64.0377       NA 0.0000 -7.9479   36.03
+54             log_rt_scaled  -16.4658 16.7048       NA 0.3295 -0.9857   45.23
+55                effortHigh  176.7185 30.7101       NA 0.0000  5.7544   35.79
+56  log_rt_scaled:effortHigh    1.6684 16.0864       NA 0.9174  0.1037 1956.56
+    CI_lower  CI_upper task               outcome model_type
+1     0.0853    0.3970  CDT              Accuracy       GLMM
+2    -0.7496   -0.5323  CDT              Accuracy       GLMM
+3     0.0071    0.1596  CDT              Accuracy       GLMM
+4    -0.1894    0.0275  CDT              Accuracy       GLMM
+5     0.1448    0.3596  CDT                RT_log        LMM
+6    -0.0299    0.0573  CDT                RT_log        LMM
+7    -0.0232    0.0384  CDT                RT_log        LMM
+8    -0.0479    0.0393  CDT                RT_log        LMM
+9  -548.1745 -335.2098  CDT             Total_AUC        LMM
+10   73.2978  153.5001  CDT             Total_AUC        LMM
+11 -430.8563 -207.1194  CDT    Total_AUC_HighOnly        LMM
+12 -102.4796  -29.9055  CDT    Total_AUC_HighOnly        LMM
+13 -675.9853 -446.0404  CDT Total_AUC_RTpredictor        LMM
+14  -33.6562   45.6488  CDT Total_AUC_RTpredictor        LMM
+15  150.1560  310.5054  CDT Total_AUC_RTpredictor        LMM
+16  -21.8523   52.5413  CDT Total_AUC_RTpredictor        LMM
+17   -3.1220   -2.3428  ADT              Accuracy       GLMM
+18    5.0418    5.4527  ADT              Accuracy       GLMM
+19   -0.1679    0.0598  ADT              Accuracy       GLMM
+20   -0.1690    0.1445  ADT              Accuracy       GLMM
+21   -1.5117   -0.9489  ADT                RT_log        LMM
+22   -0.3207   -0.1173  ADT                RT_log        LMM
+23   -0.0682    0.0411  ADT                RT_log        LMM
+24   -0.0230    0.0905  ADT                RT_log        LMM
+25 -539.2759 -319.5366  ADT             Total_AUC        LMM
+26   -2.2835   47.5875  ADT             Total_AUC        LMM
+27   88.2603  123.5245  ADT             Total_AUC        LMM
+28  -28.3904   21.4839  ADT             Total_AUC        LMM
+29 -430.2977 -216.3764  ADT    Total_AUC_HighOnly        LMM
+30  -16.5700   54.0441  ADT    Total_AUC_HighOnly        LMM
+31  -56.3181   -2.9278  ADT    Total_AUC_HighOnly        LMM
+32  -45.6880   25.2453  ADT    Total_AUC_HighOnly        LMM
+33 -633.4603 -405.0147  ADT Total_AUC_RTpredictor        LMM
+34  -38.2299   44.4791  ADT Total_AUC_RTpredictor        LMM
+35  159.4620  253.7276  ADT Total_AUC_RTpredictor        LMM
+36  -44.9613   11.7666  ADT Total_AUC_RTpredictor        LMM
+37   -1.3039   -0.6436  VDT              Accuracy       GLMM
+38    2.9259    3.8442  VDT              Accuracy       GLMM
+39   -0.1451    0.0311  VDT              Accuracy       GLMM
+40   -0.1077    0.1865  VDT              Accuracy       GLMM
+41   -1.4341   -0.8597  VDT                RT_log        LMM
+42   -0.3121   -0.1020  VDT                RT_log        LMM
+43    0.0100    0.1147  VDT                RT_log        LMM
+44   -0.0758    0.0251  VDT                RT_log        LMM
+45 -544.8946 -299.9820  VDT             Total_AUC        LMM
+46  -28.4385   28.9746  VDT             Total_AUC        LMM
+47   60.2316  125.3089  VDT             Total_AUC        LMM
+48  -35.4172   14.9475  VDT             Total_AUC        LMM
+49 -452.3602 -198.1001  VDT    Total_AUC_HighOnly        LMM
+50  -50.3115   34.6903  VDT    Total_AUC_HighOnly        LMM
+51 -103.8854   -1.0846  VDT    Total_AUC_HighOnly        LMM
+52  -16.6927   57.7833  VDT    Total_AUC_HighOnly        LMM
+53 -634.4793 -383.4561  VDT Total_AUC_RTpredictor        LMM
+54  -49.2066   16.2750  VDT Total_AUC_RTpredictor        LMM
+55  116.5278  236.9092  VDT Total_AUC_RTpredictor        LMM
+56  -29.8603   33.1972  VDT Total_AUC_RTpredictor        LMM
+                       model_set
+1                A_GF_Behavioral
+2                A_GF_Behavioral
+3                A_GF_Behavioral
+4                A_GF_Behavioral
+5                A_GF_Behavioral
+6                A_GF_Behavioral
+7                A_GF_Behavioral
+8                A_GF_Behavioral
+9                     B_GF_Pupil
+10                    B_GF_Pupil
+11 C_GF_Pupil_HighOnly_aucRelMVC
+12 C_GF_Pupil_HighOnly_aucRelMVC
+13                    D_RT_Pupil
+14                    D_RT_Pupil
+15                    D_RT_Pupil
+16                    D_RT_Pupil
+17               A_GF_Behavioral
+18               A_GF_Behavioral
+19               A_GF_Behavioral
+20               A_GF_Behavioral
+21               A_GF_Behavioral
+22               A_GF_Behavioral
+23               A_GF_Behavioral
+24               A_GF_Behavioral
+25                    B_GF_Pupil
+26                    B_GF_Pupil
+27                    B_GF_Pupil
+28                    B_GF_Pupil
+29 C_GF_Pupil_HighOnly_aucRelMVC
+30 C_GF_Pupil_HighOnly_aucRelMVC
+31 C_GF_Pupil_HighOnly_aucRelMVC
+32 C_GF_Pupil_HighOnly_aucRelMVC
+33                    D_RT_Pupil
+34                    D_RT_Pupil
+35                    D_RT_Pupil
+36                    D_RT_Pupil
+37               A_GF_Behavioral
+38               A_GF_Behavioral
+39               A_GF_Behavioral
+40               A_GF_Behavioral
+41               A_GF_Behavioral
+42               A_GF_Behavioral
+43               A_GF_Behavioral
+44               A_GF_Behavioral
+45                    B_GF_Pupil
+46                    B_GF_Pupil
+47                    B_GF_Pupil
+48                    B_GF_Pupil
+49 C_GF_Pupil_HighOnly_aucRelMVC
+50 C_GF_Pupil_HighOnly_aucRelMVC
+51 C_GF_Pupil_HighOnly_aucRelMVC
+52 C_GF_Pupil_HighOnly_aucRelMVC
+53                    D_RT_Pupil
+54                    D_RT_Pupil
+55                    D_RT_Pupil
+56                    D_RT_Pupil
+                                                                          formula
+1                                     iscorr ~ difficulty * gf_scaled + (1 | sub)
+2                                     iscorr ~ difficulty * gf_scaled + (1 | sub)
+3                                     iscorr ~ difficulty * gf_scaled + (1 | sub)
+4                                     iscorr ~ difficulty * gf_scaled + (1 | sub)
+5                                     log_rt ~ difficulty * gf_scaled + (1 | sub)
+6                                     log_rt ~ difficulty * gf_scaled + (1 | sub)
+7                                     log_rt ~ difficulty * gf_scaled + (1 | sub)
+8                                     log_rt ~ difficulty * gf_scaled + (1 | sub)
+9                                   Total_AUC ~ gf_scaled + (1 + gf_scaled | sub)
+10                                  Total_AUC ~ gf_scaled + (1 + gf_scaled | sub)
+11                                Total_AUC ~ auc_scaled + (1 + auc_scaled | sub)
+12                                Total_AUC ~ auc_scaled + (1 + auc_scaled | sub)
+13   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+14   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+15   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+16   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+17                                    iscorr ~ difficulty * gf_scaled + (1 | sub)
+18                                    iscorr ~ difficulty * gf_scaled + (1 | sub)
+19                                    iscorr ~ difficulty * gf_scaled + (1 | sub)
+20                                    iscorr ~ difficulty * gf_scaled + (1 | sub)
+21      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+22      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+23      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+24      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+25                                 Total_AUC ~ difficulty * gf_scaled + (1 | sub)
+26                                 Total_AUC ~ difficulty * gf_scaled + (1 | sub)
+27                                 Total_AUC ~ difficulty * gf_scaled + (1 | sub)
+28                                 Total_AUC ~ difficulty * gf_scaled + (1 | sub)
+29                                Total_AUC ~ difficulty * auc_scaled + (1 | sub)
+30                                Total_AUC ~ difficulty * auc_scaled + (1 | sub)
+31                                Total_AUC ~ difficulty * auc_scaled + (1 | sub)
+32                                Total_AUC ~ difficulty * auc_scaled + (1 | sub)
+33   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+34   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+35   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+36   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+37      iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+38      iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+39      iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+40      iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+41      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+42      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+43      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+44      log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+45   Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+46   Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+47   Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+48   Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub)
+49 Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub)
+50 Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub)
+51 Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub)
+52 Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub)
+53   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+54   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+55   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+56   Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub)
+     sig
+1   TRUE
+2   TRUE
+3   TRUE
+4  FALSE
+5   TRUE
+6  FALSE
+7  FALSE
+8  FALSE
+9   TRUE
+10  TRUE
+11  TRUE
+12  TRUE
+13  TRUE
+14 FALSE
+15  TRUE
+16 FALSE
+17  TRUE
+18  TRUE
+19 FALSE
+20 FALSE
+21  TRUE
+22  TRUE
+23 FALSE
+24 FALSE
+25  TRUE
+26 FALSE
+27  TRUE
+28 FALSE
+29  TRUE
+30 FALSE
+31  TRUE
+32 FALSE
+33  TRUE
+34 FALSE
+35  TRUE
+36 FALSE
+37  TRUE
+38  TRUE
+39 FALSE
+40 FALSE
+41  TRUE
+42  TRUE
+43  TRUE
+44 FALSE
+45  TRUE
+46 FALSE
+47  TRUE
+48 FALSE
+49  TRUE
+50 FALSE
+51 FALSE
+52 FALSE
+53  TRUE
+54 FALSE
+55  TRUE
+56 FALSE

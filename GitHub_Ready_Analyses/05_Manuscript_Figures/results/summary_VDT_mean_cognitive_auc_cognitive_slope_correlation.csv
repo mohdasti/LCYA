@@ -1,0 +1,2 @@
+param,mean,median,sd,lower_95,upper_95,prob_positive,prob_negative,model
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.023603985048499983,-0.0178813,0.39611436767002817,-0.7477856500000001,0.7129627499999994,0.4895,0.5105,VDT_mean_cognitive_auc_cognitive

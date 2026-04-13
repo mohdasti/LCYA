@@ -1,0 +1,57 @@
+term,b,SE,z,p,t,df,CI_lower,CI_upper,task,outcome,model_type,model_set,formula,sig
+(Intercept),0.2411,0.0795,3.0323,0.0024,NA,NA,0.0853,0.397,CDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard,-0.6409,0.0554,-11.5621,0,NA,NA,-0.7496,-0.5323,CDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),TRUE
+gf_scaled,0.0833,0.0389,2.1414,0.0322,NA,NA,0.0071,0.1596,CDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard:gf_scaled,-0.081,0.0553,-1.4635,0.1433,NA,NA,-0.1894,0.0275,CDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),FALSE
+(Intercept),0.2522,0.0548,NA,0,4.6008,41.3449,0.1448,0.3596,CDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard,0.0137,0.0222,NA,0.538,0.6158,5559.0121,-0.0299,0.0573,CDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 | sub),FALSE
+gf_scaled,0.0076,0.0157,NA,0.6287,0.4835,5559.0311,-0.0232,0.0384,CDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 | sub),FALSE
+difficultyHard:gf_scaled,-0.0043,0.0222,NA,0.8473,-0.1926,5559.0206,-0.0479,0.0393,CDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 | sub),FALSE
+(Intercept),-441.6922,54.3287,NA,0,-8.13,38.0051,-548.1745,-335.2098,CDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ gf_scaled + (1 + gf_scaled | sub),TRUE
+gf_scaled,113.3989,20.4602,NA,0,5.5424,38.0317,73.2978,153.5001,CDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ gf_scaled + (1 + gf_scaled | sub),TRUE
+(Intercept),-318.9879,57.0768,NA,0,-5.5887,37.0747,-430.8563,-207.1194,CDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ auc_scaled + (1 + auc_scaled | sub),TRUE
+auc_scaled,-66.1926,18.5142,NA,0.0011,-3.5752,32.2555,-102.4796,-29.9055,CDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ auc_scaled + (1 + auc_scaled | sub),TRUE
+(Intercept),-561.0128,58.6605,NA,0,-9.5637,37.9872,-675.9853,-446.0404,CDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled,5.9963,20.2312,NA,0.7685,0.2964,38.9169,-33.6562,45.6488,CDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE
+effortHigh,230.3307,40.9062,NA,0,5.6307,37.9761,150.156,310.5054,CDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled:effortHigh,15.3445,18.9783,NA,0.4189,0.8085,2225.3543,-21.8523,52.5413,CDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE
+(Intercept),-2.7324,0.1988,-13.7451,0,NA,NA,-3.122,-2.3428,ADT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard,5.2472,0.1048,50.051,0,NA,NA,5.0418,5.4527,ADT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),TRUE
+gf_scaled,-0.0541,0.0581,-0.9305,0.3521,NA,NA,-0.1679,0.0598,ADT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),FALSE
+difficultyHard:gf_scaled,-0.0122,0.08,-0.1532,0.8783,NA,NA,-0.169,0.1445,ADT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 | sub),FALSE
+(Intercept),-1.2303,0.1436,NA,0,-8.5691,37.9996,-1.5117,-0.9489,ADT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard,-0.219,0.0519,NA,1e-4,-4.2198,38.0012,-0.3207,-0.1173,ADT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+gf_scaled,-0.0135,0.0279,NA,0.6293,-0.4849,71.2391,-0.0682,0.0411,ADT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+difficultyHard:gf_scaled,0.0338,0.029,NA,0.2441,1.1649,7681.009,-0.023,0.0905,ADT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+(Intercept),-429.4063,56.057,NA,0,-7.6602,38.9978,-539.2759,-319.5366,ADT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard,22.652,12.7224,NA,0.075,1.7805,7757.0002,-2.2835,47.5875,ADT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 | sub),FALSE
+gf_scaled,105.8924,8.9961,NA,0,11.7709,7757.0001,88.2603,123.5245,ADT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 | sub),TRUE
+difficultyHard:gf_scaled,-3.4533,12.7233,NA,0.7861,-0.2714,7757.0002,-28.3904,21.4839,ADT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 | sub),FALSE
+(Intercept),-323.3371,54.5728,NA,0,-5.9249,40.1413,-430.2977,-216.3764,ADT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 | sub),TRUE
+difficultyHard,18.7371,18.0141,NA,0.2983,1.0401,3858.0133,-16.57,54.0441,ADT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 | sub),FALSE
+auc_scaled,-29.623,13.6202,NA,0.0297,-2.1749,3892.5853,-56.3181,-2.9278,ADT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 | sub),TRUE
+difficultyHard:auc_scaled,-10.2214,18.0955,NA,0.5722,-0.5649,3859.3164,-45.688,25.2453,ADT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 | sub),FALSE
+(Intercept),-519.2375,58.278,NA,0,-8.9097,37.9344,-633.4603,-405.0147,ADT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled,3.1246,21.0996,NA,0.8832,0.1481,31.0912,-38.2299,44.4791,ADT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE
+effortHigh,206.5948,24.0478,NA,0,8.591,37.4873,159.462,253.7276,ADT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled:effortHigh,-16.5973,14.4717,NA,0.2516,-1.1469,1557.2783,-44.9613,11.7666,ADT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE
+(Intercept),-0.9738,0.1684,-5.781,0,NA,NA,-1.3039,-0.6436,VDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard,3.3851,0.2343,14.4485,0,NA,NA,2.9259,3.8442,VDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+gf_scaled,-0.057,0.045,-1.2672,0.2051,NA,NA,-0.1451,0.0311,VDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+difficultyHard:gf_scaled,0.0394,0.0751,0.5244,0.6,NA,NA,-0.1077,0.1865,VDT,Accuracy,GLMM,A_GF_Behavioral,iscorr ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+(Intercept),-1.1469,0.1465,NA,0,-7.8274,36.0011,-1.4341,-0.8597,VDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard,-0.2071,0.0536,NA,4e-4,-3.8631,36.0579,-0.3121,-0.102,VDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+gf_scaled,0.0624,0.0267,NA,0.0228,2.3352,61.2788,0.01,0.1147,VDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard:gf_scaled,-0.0254,0.0257,NA,0.3247,-0.9848,7255.2466,-0.0758,0.0251,VDT,RT_log,LMM,A_GF_Behavioral,log_rt ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+(Intercept),-422.4383,62.4789,NA,0,-6.7613,36.0073,-544.8946,-299.982,VDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard,0.268,14.6465,NA,0.9855,0.0183,35.4045,-28.4385,28.9746,VDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+gf_scaled,92.7703,16.6017,NA,0,5.588,49.8844,60.2316,125.3089,VDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),TRUE
+difficultyHard:gf_scaled,-10.2349,12.8484,NA,0.4257,-0.7966,7254.6104,-35.4172,14.9475,VDT,Total_AUC,LMM,B_GF_Pupil,Total_AUC ~ difficulty * gf_scaled + (1 + difficulty + gf_scaled |      sub),FALSE
+(Intercept),-325.2301,64.8635,NA,0,-5.0141,35.9179,-452.3602,-198.1001,VDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub),TRUE
+difficultyHard,-7.8106,21.6845,NA,0.7208,-0.3602,35.6567,-50.3115,34.6903,VDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub),FALSE
+auc_scaled,-52.485,26.2252,NA,0.0525,-2.0013,38.1704,-103.8854,-1.0846,VDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub),FALSE
+difficultyHard:auc_scaled,20.5453,18.9993,NA,0.2801,1.0814,464.0004,-16.6927,57.7833,VDT,Total_AUC_HighOnly,LMM,C_GF_Pupil_HighOnly_aucRelMVC,Total_AUC ~ difficulty * auc_scaled + (1 + difficulty + auc_scaled |      sub),FALSE
+(Intercept),-508.9677,64.0377,NA,0,-7.9479,36.0307,-634.4793,-383.4561,VDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled,-16.4658,16.7048,NA,0.3295,-0.9857,45.2288,-49.2066,16.275,VDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE
+effortHigh,176.7185,30.7101,NA,0,5.7544,35.7897,116.5278,236.9092,VDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),TRUE
+log_rt_scaled:effortHigh,1.6684,16.0864,NA,0.9174,0.1037,1956.5632,-29.8603,33.1972,VDT,Total_AUC_RTpredictor,LMM,D_RT_Pupil,Total_AUC ~ log_rt_scaled * effort + (1 + log_rt_scaled + effort |      sub),FALSE

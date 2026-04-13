@@ -1,0 +1,50 @@
+LCYA Revision — TOST Equivalence Testing Summary
+Generated: 2026-03-31 01:28:57 
+
+SESOI Definition:
+  Source: Park et al. (2021). Cognitive Research: Principles and Implications, 6(1), 17.
+  Cohen's d = 0.79 for the Task Difficulty x Physical Effort interaction on RT.
+  (Interaction effect = 20 ms; high-load cost 69.8 ms vs. low-load cost 49.8 ms)
+  Also reported: eta_p^2 = 0.388; standardised beta = 0.13 (mediation).
+  SESOI per outcome: d = 0.79 × SD(outcome), converted to unstandardised b.
+  Rationale: any effect smaller than d = 0.79 is considered negligible for
+  this paradigm and population given our prior work.
+
+Alpha: 0.05 
+
+Equivalence decision: 'TRUE' = effect equivalent to zero (both TOST p-values < alpha)
+
+ task           outcome                        term_clean        b      SE
+  CDT          Accuracy Task Difficulty × Physical Effort  -0.1568  0.1105
+  CDT Reaction_Time_log    Physical Effort (High vs. Low)   0.0155  0.0314
+  CDT Reaction_Time_log Task Difficulty × Physical Effort  -0.0095  0.0444
+  ADT          Accuracy    Physical Effort (High vs. Low)  -0.1081  0.1162
+  ADT          Accuracy Task Difficulty × Physical Effort  -0.0247  0.1599
+  ADT Reaction_Time_log    Physical Effort (High vs. Low)  -0.0270  0.0414
+  ADT Reaction_Time_log Task Difficulty × Physical Effort   0.0673  0.0585
+  ADT         Total_AUC Task Difficulty × Physical Effort  -6.9061 25.4449
+  ADT     Cognitive_AUC    Physical Effort (High vs. Low)  -0.5924  3.3231
+  ADT     Cognitive_AUC Task Difficulty × Physical Effort  -4.5626  4.6993
+  VDT          Accuracy    Physical Effort (High vs. Low)  -0.1273  0.0904
+  VDT          Accuracy Task Difficulty × Physical Effort   0.0420  0.1847
+  VDT Reaction_Time_log Task Difficulty × Physical Effort  -0.0523  0.0521
+  VDT         Total_AUC Task Difficulty × Physical Effort -20.3808 30.5376
+  VDT     Cognitive_AUC    Physical Effort (High vs. Low)   3.6723  3.3203
+  VDT     Cognitive_AUC Task Difficulty × Physical Effort  -7.2188  4.6943
+  sesoi_used      p_lower      p_upper       p_tost equivalent
+   0.6444809 2.062269e-13 5.087954e-06 5.087954e-06       TRUE
+   0.2218721 2.701518e-11 2.353673e-14 2.701518e-11       TRUE
+   0.2218721 9.724995e-08 8.850481e-07 8.850481e-07       TRUE
+   0.6444809 4.690640e-11 1.955901e-06 1.955901e-06       TRUE
+   0.6444809 1.425856e-05 5.308231e-05 5.308231e-05       TRUE
+   0.2218721 9.612329e-10 1.278399e-06 1.278399e-06       TRUE
+   0.2218721 4.126039e-03 3.924854e-07 4.126039e-03       TRUE
+ 136.3142262 9.398155e-09 1.873098e-07 1.873098e-07       TRUE
+  19.5245947 7.407895e-10 6.314167e-09 6.314167e-09       TRUE
+  19.5245947 1.517977e-07 7.294546e-04 7.294546e-04       TRUE
+   0.6444809 6.863854e-18 5.294099e-09 5.294099e-09       TRUE
+   0.6444809 5.532571e-04 1.009072e-04 5.532571e-04       TRUE
+   0.2218721 7.309253e-08 5.700415e-04 5.700415e-04       TRUE
+ 136.3142262 4.992485e-06 2.710157e-04 2.710157e-04       TRUE
+  19.5245947 9.189105e-07 1.534217e-12 9.189105e-07       TRUE
+  19.5245947 6.333234e-09 4.387092e-03 4.387092e-03       TRUE

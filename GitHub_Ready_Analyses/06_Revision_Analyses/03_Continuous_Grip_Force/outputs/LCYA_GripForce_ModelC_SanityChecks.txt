@@ -1,0 +1,22 @@
+LCYA Model C — auc_rel_mvc within High-effort trials (z-scored within High only)
+Generated: 2026-04-12 23:36:11
+============================================================
+
+Task CDT — Model C diagnostics (High-effort trials only)
+  n trials: 2731 | n subjects: 38
+  gf_trPer: n_unique = 1 | sd = 0.000000 (expect ~0, all High = 0.40)
+  auc_rel_mvc: min = 0.0000 | max = 0.5339 | sd = 0.040797 (expect sd > 0)
+  auc_scaled: mean = 0.000000 | sd = 1.000000 (expect ~0 and ~1)
+  cor(Total_AUC, auc_rel_mvc) [trial-level, High]: -0.0980
+Task ADT — Model C diagnostics (High-effort trials only)
+  n trials: 3900 | n subjects: 39
+  gf_trPer: n_unique = 1 | sd = 0.000000 (expect ~0, all High = 0.40)
+  auc_rel_mvc: min = 0.0015 | max = 0.3978 | sd = 0.035163 (expect sd > 0)
+  auc_scaled: mean = 0.000000 | sd = 1.000000 (expect ~0 and ~1)
+  cor(Total_AUC, auc_rel_mvc) [trial-level, High]: -0.0883
+Task VDT — Model C diagnostics (High-effort trials only)
+  n trials: 3685 | n subjects: 37
+  gf_trPer: n_unique = 1 | sd = 0.000000 (expect ~0, all High = 0.40)
+  auc_rel_mvc: min = 0.0000 | max = 0.3864 | sd = 0.032557 (expect sd > 0)
+  auc_scaled: mean = 0.000000 | sd = 1.000000 (expect ~0 and ~1)
+  cor(Total_AUC, auc_rel_mvc) [trial-level, High]: -0.0805

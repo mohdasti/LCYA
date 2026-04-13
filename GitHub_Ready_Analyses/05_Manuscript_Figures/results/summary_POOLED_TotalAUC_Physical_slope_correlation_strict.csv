@@ -1,0 +1,2 @@
+param,mean,median,sd,lower_95,upper_95,prob_positive,prob_negative,model
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.036141684199999996,-0.0441799,0.37689933828122574,-0.728573325,0.6803087749999999,0.4584,0.5416,POOLED_TotalAUC_Physical_strict

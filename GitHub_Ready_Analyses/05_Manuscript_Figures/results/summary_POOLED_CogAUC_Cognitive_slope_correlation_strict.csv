@@ -1,0 +1,2 @@
+param,mean,median,sd,lower_95,upper_95,prob_positive,prob_negative,model
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.019452949455289994,-0.02167015,0.37506189098588283,-0.712094125,0.6820698249999997,0.4793,0.5207,POOLED_CogAUC_Cognitive_strict

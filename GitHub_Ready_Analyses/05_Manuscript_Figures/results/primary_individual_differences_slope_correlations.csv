@@ -1,0 +1,6 @@
+param,mean,median,sd,lower_95,upper_95,prob_positive,prob_negative,model
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.04007810499365001,-0.055841249999999995,0.3705024923595468,-0.720275775,0.6759959499999996,0.4505,0.5495,CDT_mean_total_auc_physical
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.011878884285000009,-0.01329845,0.3738261883634477,-0.7209615749999999,0.69607465,0.4825,0.5175,ADT_mean_total_auc_physical
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.014050645183999991,-0.00255789,0.38093164336553514,-0.7056249,0.6913131249999999,0.4985,0.5015,VDT_mean_total_auc_physical
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.016180314248000007,-0.02566605,0.38739045611264306,-0.7199809500000001,0.70102015,0.479,0.521,ADT_mean_cognitive_auc_cognitive
+cor_sub__aucvalue_effort_contrast__accvalue_effort_contrast,-0.023603985048499983,-0.0178813,0.39611436767002817,-0.7477856500000001,0.7129627499999994,0.4895,0.5105,VDT_mean_cognitive_auc_cognitive

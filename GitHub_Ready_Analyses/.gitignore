@@ -1,0 +1,75 @@
+# R
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+*.Rproj.user
+
+# Data files (keep structure but ignore large files)
+*.csv
+!*_template.csv
+!*_example.csv
+
+# Model objects
+*.rds
+*.rda
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Output directories (keep structure but ignore contents)
+results/
+models/
+figures/
+outputs/
+
+# Image files (except manuscript figures)
+*.png
+*.pdf
+!05_Manuscript_Figures/Manuscript_Figures_Only/*.png
+
+# Text/log files (except documentation)
+*.log
+*.txt
+!README*.txt
+!CHANGELOG*.txt
+
+# Large data files
+*.h5
+*.hdf5
+*.mat
+
+# Backup files
+*.bak
+*.backup
+
+# Cache directories
+.Rcache/
+cache/
+
+# Stan compilation files
+cmdstan-*/
+.stan/
+
+
+
+
+
+
+
+
+
+
+
+
+

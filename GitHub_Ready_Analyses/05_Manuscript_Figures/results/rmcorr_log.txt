@@ -1,0 +1,88 @@
+=== CORRECTED INDIVIDUAL DIFFERENCES ANALYSIS (rmcorr) ===
+Analysis Date: 1759779449 
+Using repeated measures correlation to address non-independence
+Per literature review recommendations
+
+Data loaded and processed successfully
+
+========== TOTAL AUC ANALYSIS (rmcorr) ==========
+
+--- CDT Total AUC ---
+CDT Total AUC Physical Effort (rmcorr): r_rm = 0.018, 95% CI [-0.295, 0.327], p = 0.914, df = 38, n = 78
+CDT Total AUC Cognitive Effort: Skipped per Lani's recommendations
+Warning message:
+In rmcorr(participant = sub, measure1 = pupil_physical_effect, measure2 = accuracy_physical_effect,  :
+  'sub' coerced into a factor
+
+--- ADT Total AUC ---
+ADT Total AUC Physical Effort (rmcorr): r_rm = -0.150, 95% CI [-0.441, 0.169], p = 0.355, df = 38, n = 78
+ADT Total AUC Cognitive Effort (rmcorr): r_rm = -0.150, 95% CI [-0.441, 0.169], p = 0.355, df = 38, n = 78
+Warning messages:
+1: In rmcorr(participant = sub, measure1 = pupil_physical_effect, measure2 = accuracy_physical_effect,  :
+  'sub' coerced into a factor
+2: In rmcorr(participant = sub, measure1 = pupil_cognitive_effect,  :
+  'sub' coerced into a factor
+
+--- VDT Total AUC ---
+VDT Total AUC Physical Effort (rmcorr): r_rm = 0.206, 95% CI [-0.121, 0.493], p = 0.214, df = 36, n = 74
+VDT Total AUC Cognitive Effort (rmcorr): r_rm = 0.206, 95% CI [-0.121, 0.493], p = 0.214, df = 36, n = 74
+Warning messages:
+1: In rmcorr(participant = sub, measure1 = pupil_physical_effect, measure2 = accuracy_physical_effect,  :
+  'sub' coerced into a factor
+2: In rmcorr(participant = sub, measure1 = pupil_cognitive_effect,  :
+  'sub' coerced into a factor
+
+========== COGNITIVE AUC ANALYSIS (rmcorr) ==========
+
+CDT Cognitive AUC: Skipped per Lani's recommendations
+
+--- ADT Cognitive AUC ---
+ADT Cognitive AUC Physical Effort (rmcorr): r_rm = -0.050, 95% CI [-0.356, 0.266], p = 0.76, df = 38, n = 78
+ADT Cognitive AUC Cognitive Effort (rmcorr): r_rm = -0.050, 95% CI [-0.356, 0.266], p = 0.76, df = 38, n = 78
+Warning messages:
+1: In rmcorr(participant = sub, measure1 = pupil_physical_effect, measure2 = accuracy_physical_effect,  :
+  'sub' coerced into a factor
+2: In rmcorr(participant = sub, measure1 = pupil_cognitive_effect,  :
+  'sub' coerced into a factor
+
+--- VDT Cognitive AUC ---
+VDT Cognitive AUC Physical Effort (rmcorr): r_rm = -0.073, 95% CI [-0.384, 0.253], p = 0.663, df = 36, n = 74
+VDT Cognitive AUC Cognitive Effort (rmcorr): r_rm = -0.073, 95% CI [-0.384, 0.253], p = 0.663, df = 36, n = 74
+Warning messages:
+1: In rmcorr(participant = sub, measure1 = pupil_physical_effect, measure2 = accuracy_physical_effect,  :
+  'sub' coerced into a factor
+2: In rmcorr(participant = sub, measure1 = pupil_cognitive_effect,  :
+  'sub' coerced into a factor
+
+========== SENSITIVITY ANALYSIS: SUBJECT MEANS ==========
+
+--- CDT Total AUC (Subject Means) ---
+CDT Total AUC Physical Effort (subject means): r = -0.089, 95% CI [-0.393, 0.233], p = 0.59, n = 39
+
+--- ADT Total AUC (Subject Means) ---
+ADT Total AUC Physical Effort (subject means): r = -0.064, 95% CI [-0.372, 0.257], p = 0.698, n = 39
+ADT Total AUC Cognitive Effort (subject means): r = 0.189, 95% CI [-0.135, 0.476], p = 0.25, n = 39
+
+--- VDT Total AUC (Subject Means) ---
+VDT Total AUC Physical Effort (subject means): r = -0.159, 95% CI [-0.459, 0.174], p = 0.348, n = 37
+VDT Total AUC Cognitive Effort (subject means): r = 0.075, 95% CI [-0.255, 0.389], p = 0.66, n = 37
+
+=== CORRECTED INDIVIDUAL DIFFERENCES ANALYSIS COMPLETE ===
+Results saved to: /Users/mohdasti/Documents/LC–YA/Corrected_rmcorr_Individual_Differences_Results 
+
+📊 Key Changes:
+✅ Using rmcorr to address non-independence
+✅ Proper degrees of freedom (df = n-1, not 2n-2)
+✅ Sensitivity analysis with subject means approach
+✅ Statistically valid approach per literature review
+✅ Maintains all data while addressing independence assumption
+
+========== COGNITIVE AUC SUBJECT MEANS (SUPPLEMENTARY) ==========
+
+--- ADT Cognitive AUC (Subject Means) ---
+ADT Cognitive AUC Physical Effort (subject means): r = -0.068, 95% CI [-0.376, 0.253], p = 0.679, n = 39
+ADT Cognitive AUC Cognitive Effort (subject means): r = 0.129, 95% CI [-0.194, 0.427], p = 0.433, n = 39
+
+--- VDT Cognitive AUC (Subject Means) ---
+VDT Cognitive AUC Physical Effort (subject means): r = -0.082, 95% CI [-0.395, 0.249], p = 0.630, n = 37
+VDT Cognitive AUC Cognitive Effort (subject means): r = -0.072, 95% CI [-0.387, 0.258], p = 0.671, n = 37

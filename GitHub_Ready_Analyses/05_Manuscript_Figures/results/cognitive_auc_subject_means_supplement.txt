@@ -1,0 +1,10 @@
+
+========== COGNITIVE AUC SUBJECT MEANS (SUPPLEMENTARY) ==========
+
+--- ADT Cognitive AUC (Subject Means) ---
+ADT Cognitive AUC Physical Effort (subject means): r = -0.068, 95% CI [-0.376, 0.253], p = 0.679, n = 39
+ADT Cognitive AUC Cognitive Effort (subject means): r = 0.129, 95% CI [-0.194, 0.427], p = 0.433, n = 39
+
+--- VDT Cognitive AUC (Subject Means) ---
+VDT Cognitive AUC Physical Effort (subject means): r = -0.082, 95% CI [-0.395, 0.249], p = 0.630, n = 37
+VDT Cognitive AUC Cognitive Effort (subject means): r = -0.072, 95% CI [-0.387, 0.258], p = 0.671, n = 37

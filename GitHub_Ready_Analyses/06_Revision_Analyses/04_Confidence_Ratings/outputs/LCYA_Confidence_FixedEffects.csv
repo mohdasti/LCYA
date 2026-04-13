@@ -1,0 +1,22 @@
+term,b,SE,df,t,p,CI_lower,CI_upper,task,model_type,model_set,formula,sig,z,term_clean
+(Intercept),3.2404,0.0106,0.1877,304.9468,0.2597,3.2196,3.2613,CDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Intercept
+difficultyHard,0.0023,0.0034,0.7416,0.6765,0.6504,-0.0043,0.0088,CDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty (Hard vs. Easy)
+effortHigh,1e-4,0.0029,0.0395,0.0398,0.9923,-0.0056,0.0059,CDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,-6e-4,0.0046,0.0537,-0.1297,0.9724,-0.0095,0.0084,CDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty × Physical Effort
+difficultyHard,0.291,7e-4,NA,NA,0,0.2896,0.2923,CDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,425.2573,Task Difficulty (Hard vs. Easy)
+effortHigh,0.2906,7e-4,NA,NA,0,0.2892,0.2919,CDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,424.6686,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,-1.0168,7e-4,NA,NA,0,-1.0181,-1.0155,CDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,-1535.0704,Task Difficulty × Physical Effort
+(Intercept),3.7711,0.005,2.214,753.5411,0,3.7613,3.7809,ADT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),TRUE,NA,Intercept
+difficultyHard,3e-4,0.0032,0.6042,0.0929,0.9474,-0.006,0.0066,ADT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty (Hard vs. Easy)
+effortHigh,-0.0019,0.0025,0.6135,-0.7751,0.6364,-0.0067,0.0029,ADT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,0.0041,0.0055,0.5188,0.7407,0.668,-0.0068,0.015,ADT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty × Physical Effort
+difficultyHard,0.9222,4e-4,NA,NA,0,0.9215,0.9229,ADT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,2622.5101,Task Difficulty (Hard vs. Easy)
+effortHigh,0.9221,4e-4,NA,NA,0,0.9214,0.9228,ADT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,2622.0334,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,-1.8657,4e-4,NA,NA,0,-1.8664,-1.865,ADT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,-5304.7993,Task Difficulty × Physical Effort
+(Intercept),3.5374,0.0065,0.026,546.1819,0.7952,3.5247,3.5501,VDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Intercept
+difficultyHard,-0,8e-4,1.1621,-0.0027,0.9982,-0.0016,0.0016,VDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty (Hard vs. Easy)
+effortHigh,4e-4,0.003,0.0724,0.1412,0.9654,-0.0055,0.0063,VDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,-3e-4,0.0033,0.3734,-0.0782,0.9616,-0.0067,0.0062,VDT,LMM,LMM_continuous,conf_median ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort || sub),FALSE,NA,Task Difficulty × Physical Effort
+difficultyHard,2.2235,2e-4,NA,NA,0,2.2231,2.2239,VDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,10743.6139,Task Difficulty (Hard vs. Easy)
+effortHigh,2.2244,2e-4,NA,NA,0,2.224,2.2248,VDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,10747.926,Physical Effort (High vs. Low)
+difficultyHard:effortHigh,-1.9926,2e-4,NA,NA,0,-1.993,-1.9922,VDT,CLMM,CLMM_ordinal,conf_ordinal ~ difficulty * effort + (1 | sub),TRUE,-9628.0597,Task Difficulty × Physical Effort

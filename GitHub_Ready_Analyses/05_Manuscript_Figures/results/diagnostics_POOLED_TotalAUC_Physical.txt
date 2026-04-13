@@ -1,0 +1,1 @@
+Rhat_max=1.004, ESS_min=260, Divergences=NA
