@@ -570,7 +570,7 @@ for (task_name in names(task_configs)) {
 
   # Position event labels - use fixed y=5 for CDT, calculated position for others
   event_label_y <- if (task_name == "CDT") {
-    5  # Fixed y-position at 5 for CDT labels
+    800  # Fixed y-position at 5 for CDT labels
   } else {
     y_upper_limit - y_range_span * 0.005  # Standard position for ADT and VDT (slightly below top)
   }
