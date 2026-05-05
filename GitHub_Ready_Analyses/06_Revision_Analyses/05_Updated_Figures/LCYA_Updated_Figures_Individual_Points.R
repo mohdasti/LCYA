@@ -43,10 +43,12 @@ if (!dir.exists(OUTPUT_DIR)) dir.create(OUTPUT_DIR, recursive = TRUE)
 
 TASKS <- c("CDT", "ADT", "VDT")
 
+# Align with manuscript Figure 2 (Four_Level: Level1+2→Easy, Level3+4→Hard) /
+# corrected_four_level_complete_data.csv: Easy / Hard stimulus levels per task.
 DIFF_CODING <- list(
-  CDT = list(easy = c(5, 20),        hard = c(45, 90)),
-  ADT = list(easy = c(4, 8),         hard = c(32, 128)),
-  VDT = list(easy = c(0.04, 0.08),   hard = c(0.16, 0.32))
+  CDT = list(easy = c(45, 90),        hard = c(5, 20)),
+  ADT = list(easy = c(32, 128),      hard = c(4, 8)),
+  VDT = list(easy = c(0.16, 0.32),   hard = c(0.04, 0.08))
 )
 
 TASK_CFG <- list(
@@ -141,7 +143,7 @@ compute_trial_auc <- function(raw, cfg) {
       b0  = mean(pupil[t_sq >= -0.5 & t_sq < 0], na.rm = TRUE),
       b2b = mean(pupil[t_sq >= (first(s2_rel) - cfg$b2b_dur) &
                          t_sq <  first(s2_rel)],  na.rm = TRUE),
-      Total_AUC    = calc_auc_trap(t_sq, pupil - b0,  cfg$total_start, first(resp_rel)),
+      Total_AUC    = calc_auc_trap(t_sq, pupil,        cfg$total_start, first(resp_rel)),
       Cognitive_AUC = calc_auc_trap(t_sq, pupil - b2b,
                                     first(s2_rel) + cfg$cog_latency, first(resp_rel)),
       .groups = "drop"
@@ -159,30 +161,33 @@ compute_trial_auc <- function(raw, cfg) {
 
 cat("Loading and computing data for all tasks...\n")
 
-beh_all <- list()
-auc_all <- list()
+# Behavioral data: load from the same corrected CSV used by the original Figure 2
+# (corrected_four_level_complete_data.csv already has the right Easy/Hard labels
+#  and cleaned accuracy/RT values that match the published figure).
+CORRECTED_BEH_PATH <- file.path(BASE_DIR, "Complete_Manuscript_Plots",
+                                 "Four_Level_Difficulty_Plots",
+                                 "corrected_four_level_complete_data.csv")
 
+beh_combined <- read_csv(CORRECTED_BEH_PATH, show_col_types = FALSE) %>%
+  filter(!is.na(rt_ms), rt_ms > 0) %>%
+  mutate(
+    task       = factor(task, levels = TASKS),
+    difficulty = factor(difficulty, levels = c("Easy", "Hard")),
+    effort     = factor(effort,     levels = c("Low",  "High")),
+    condition  = factor(
+      paste(as.character(difficulty), as.character(effort), sep = " / "),
+      levels = names(CONDITION_COLORS)
+    )
+  )
+
+# AUC data: still computed from raw 100 Hz pupil files
+auc_all <- list()
 for (task_name in TASKS) {
   cat("  Processing", task_name, "...\n")
   raw <- load_raw(task_name)
-
-  # Behavioral: trial-level
-  beh_all[[task_name]] <- raw %>%
-    group_by(sub, trial_index) %>% slice(1) %>% ungroup() %>%
-    filter(!is.na(resp1RT), resp1RT > 0) %>%
-    mutate(
-      difficulty = factor(difficulty, levels = c("Easy", "Hard")),
-      effort     = factor(effort,     levels = c("Low",  "High")),
-      condition  = paste(as.character(difficulty), as.character(effort), sep = " / "),
-      rt_ms      = resp1RT * 1000
-    )
-
-  # AUC: trial-level
   auc_all[[task_name]] <- compute_trial_auc(raw, TASK_CFG[[task_name]])
 }
 
-beh_combined <- bind_rows(beh_all) %>%
-  mutate(task = factor(task, levels = TASKS))
 auc_combined <- bind_rows(auc_all) %>%
   mutate(task = factor(task, levels = TASKS),
          condition = factor(condition, levels = names(CONDITION_COLORS)))
@@ -233,11 +238,11 @@ add_individual_layer <- function(sub_data, point_alpha = 0.35, line_alpha = 0.2,
 
 cat("Building Figure 2 (Accuracy + RT with individual points)...\n")
 
-# Subject-level means for behavioral
+# Subject-level means for behavioral (accuracy from corrected CSV)
 sub_beh <- beh_combined %>%
   group_by(sub, task, difficulty, effort, condition) %>%
   summarise(
-    acc_mean = mean(iscorr,  na.rm = TRUE),
+    acc_mean = mean(accuracy, na.rm = TRUE),
     rt_mean  = mean(rt_ms,   na.rm = TRUE),
     .groups  = "drop"
   ) %>%
@@ -247,10 +252,10 @@ sub_beh <- beh_combined %>%
 grp_beh <- beh_combined %>%
   group_by(task, difficulty, effort, condition) %>%
   summarise(
-    acc_mean = mean(iscorr,  na.rm = TRUE),
-    acc_se   = sd(iscorr,    na.rm = TRUE) / sqrt(n_distinct(sub)),
-    rt_mean  = mean(rt_ms,   na.rm = TRUE),
-    rt_se    = sd(rt_ms,     na.rm = TRUE) / sqrt(n_distinct(sub)),
+    acc_mean = mean(accuracy, na.rm = TRUE),
+    acc_se   = sd(accuracy,   na.rm = TRUE) / sqrt(n_distinct(sub)),
+    rt_mean  = mean(rt_ms,    na.rm = TRUE),
+    rt_se    = sd(rt_ms,      na.rm = TRUE) / sqrt(n_distinct(sub)),
     .groups  = "drop"
   ) %>%
   mutate(condition = factor(condition, levels = names(CONDITION_COLORS)))
@@ -334,6 +339,14 @@ grp_total <- auc_combined %>%
   ) %>%
   mutate(condition = factor(condition, levels = names(CONDITION_COLORS)))
 
+# Compute y-axis limits from data range (individual points + SE) with 5% buffer
+total_all_vals <- c(sub_total$value,
+                    grp_total$auc_mean - grp_total$auc_se,
+                    grp_total$auc_mean + grp_total$auc_se)
+total_ylim <- range(total_all_vals, na.rm = TRUE)
+total_buf  <- diff(total_ylim) * 0.05
+total_ylim <- total_ylim + c(-total_buf, total_buf)
+
 p_total <- ggplot(grp_total,
                   aes(x = difficulty, y = auc_mean,
                       fill = condition, group = condition)) +
@@ -352,10 +365,10 @@ p_total <- ggplot(grp_total,
   scale_fill_manual(values  = CONDITION_COLORS,
                     name    = "Condition (Difficulty / Effort)") +
   scale_colour_manual(values = CONDITION_COLORS) +
+  coord_cartesian(ylim = total_ylim) +
   labs(
-    title = "Total AUC by Task Difficulty and Physical Effort",
-    x     = "Task Difficulty",
-    y     = "Total AUC (arbitrary units)"
+    x = "Task Difficulty",
+    y = "Total AUC (arbitrary units)"
   ) +
   theme_pub()
 
