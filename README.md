@@ -77,9 +77,9 @@ LCYA/
 
 | Figure | Script | Description | Output |
 |--------|--------|-------------|--------|
-| **Figure 2** – Behavioral performance | `analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R` | Accuracy and RT by task difficulty × physical effort for CDT, ADT, VDT | `figures/publication/Figure2_Task_Performance_Effects.png` |
-| **Figure 3** – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | GAM-smoothed pupil waveforms with pre-trial baseline and AUC windows annotated | `figures/publication/Figure3_Pupil_Waveforms.png` |
-| **Figure 4** – AUC bar plots | `analysis/revision_analyses/LCYA_Merged_TotalCognitive_AUC_IndivPoints.R` | Total AUC and Cognitive AUC by condition with individual data points | `figures/publication/Figure4_Merged_Total_Cognitive_AUC_IndivPoints.png` |
+| **Figure 2** – Behavioral performance | `analysis/revision_analyses/LCYA_Updated_Figures_Individual_Points.R` | Accuracy and RT by task difficulty × physical effort for CDT, ADT, VDT, with individual participant means and connecting lines | `figures/publication/Figure2_Task_Performance_Effects_Clean_Final.png` |
+| **Figure 3** – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | GAM-smoothed pupil waveforms with pre-trial baseline and AUC windows annotated; CIs derived from subject-level means | `figures/publication/Figure3_Pupil_Waveforms.png` |
+| **Figure 4** – AUC bar plots | `analysis/revision_analyses/LCYA_Merged_TotalCognitive_AUC_IndivPoints.R` | Merged Total AUC (all tasks) and Cognitive AUC (ADT/VDT) with individual data points | `figures/publication/Figure4_Merged_Total_Cognitive_AUC.png` |
 
 **Figure 3 details:**
 - Baseline: 500 ms pre-squeeze window (B₀)
@@ -142,7 +142,7 @@ See `code/preprocessing/README.md` for preprocessing details.
    ```
 3. Run in order:
    ```r
-   source("analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R")
+   source("analysis/revision_analyses/LCYA_Updated_Figures_Individual_Points.R")
    source("analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R")
    source("analysis/revision_analyses/LCYA_Merged_TotalCognitive_AUC_IndivPoints.R")
    ```
