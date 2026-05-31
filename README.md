@@ -1,257 +1,188 @@
-# LCYA: Locus Coeruleus - Young Adults Study
+# LCYA: Concurrent Effort in Younger Adults
 
-[![DOI](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204998)
+[![DOI](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204999)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0001--7684--3731-a6ce39.svg)](https://orcid.org/0000-0001-7684-3731)
 ![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
-![R](https://img.shields.io/badge/R-4.0+-blue.svg)
+![R](https://img.shields.io/badge/R-4.5.1-blue.svg)
 ![GitHub top language](https://img.shields.io/github/languages/top/mohdasti/LCYA)
 
 ## Overview
 
-This repository contains the supplementary materials and analysis code for the **LCYA (Locus Coeruleus - Young Adults)** study. The study investigates the **effects and interactions of concurrent physical and cognitive effort** on behavioral performance and pupillometric responses in younger adults.
+This repository contains the analysis code and supplementary materials for:
+
+> Dastgheib, M.\*, Sun, A. Y.\*, Yaghoubi, K. C., Zhang, W., Peters, M. A. K., Bennett, I. J., & Seitz, A. R. (in press). **Effects of concurrent task difficulty and physical effort on memory and perceptual performance and pupil response in younger adults.** _\*co-first authors_
+
+The study examined effects of concurrent **task difficulty** (Easy vs. Hard stimulus similarity) and **physical effort** (Low 5% vs. High 40% MVC handgrip) on behavioral performance and pupillometric responses across three cognitive domains—visual working memory, auditory perception, and visual perception—in healthy younger adults (N = 38, M age = 22.9 years).
+
+**Key findings:**
+- Robust main effects of task difficulty on accuracy (all three tasks) and reaction time (perceptual tasks)
+- Main effect of physical effort on reaction time for the visual perception task only
+- Main effect of physical effort on pupillary response (Total AUC) for all three tasks
+- Exploratory main effect of task difficulty on Cognitive AUC for the auditory perception task
+- No interactions between task difficulty and physical effort for any outcome
+- No significant individual-difference correlations between behavioral and pupillary effort effects
+
+These findings suggest that task difficulty and physical effort influence performance and pupillary arousal through largely independent mechanisms in healthy younger adults.
 
 ## Study Design
 
-### Main Research Question
-How do concurrent **physical effort** (handgrip force) and **cognitive effort** (task difficulty) affect:
-- **Behavioral performance** (accuracy, reaction time)
-- **Physiological arousal** (pupil responses measured via AUC metrics)
-- **Individual differences** in effort-related effects
-- **Brain-behavior relationships**
-
 ### Tasks
-Participants performed perceptual discrimination tasks under varying levels of physical and cognitive effort:
 
-- **ADT** (Auditory Discrimination Task): Frequency discrimination with concurrent handgrip
-- **VDT** (Visual Discrimination Task): Contrast discrimination with concurrent handgrip
-- **CDT** (Change Detection Task): Arrow direction change detection with concurrent handgrip
-- **MST** (Mnemonic Similarity Task): Memory-based similarity judgments
+Participants completed three experimental sessions, each involving a different cognitive task performed concurrently with an isometric handgrip at either Low (5% MVC) or High (40% MVC) force:
 
-### Experimental Manipulations
-- **Cognitive Effort**: Stimulus difficulty (Easy vs. Hard discrimination)
-- **Physical Effort**: Handgrip force levels (Low: 5% MVC vs. High: 40% MVC)
-- **Pupillometry**: Continuous pupil diameter measurement for arousal assessment
+- **CDT** (Change Detection Task): Visual working memory — participants judged whether a probe arrow orientation matched a studied arrow. Task difficulty was manipulated by varying the rotation difference between studied and probe arrows (Easy: 45° or 90°; Hard: 5° or 20°).
+- **ADT** (Auditory Discrimination Task): Auditory frequency discrimination — participants judged whether two sequential tones were the same or different. Task difficulty was manipulated by varying the frequency offset (Easy: +32 or +128 Hz; Hard: +4 or +8 Hz).
+- **VDT** (Visual Discrimination Task): Visual contrast discrimination — participants judged whether two sequential Gabor patches were the same or different. Task difficulty was manipulated by varying the contrast offset (Easy: +0.16 or +0.32; Hard: +0.04 or +0.08).
+
+### Physiological Measure
+
+Pupil diameter was recorded continuously at 1000 Hz (EyeLink 1000, SR Research) and downsampled to 100 Hz. Two AUC metrics were computed:
+- **Total AUC**: Integrated baseline-corrected pupil response from squeeze onset to response window onset
+- **Cognitive AUC** (exploratory, ADT/VDT only): Integrated pupil response from 300 ms after target onset until response window onset, corrected to a pre-target baseline
 
 ## Repository Structure
 
-The repository is organized into four main directories:
-
 ```
 LCYA/
-├── analysis/                    # All analysis scripts
-│   ├── main/                   # Complete publication workflow (R Markdown)
-│   └── manuscript_scripts/     # Individual analysis scripts
-│       ├── figures/            # Scripts to generate manuscript figures (Figures 2-4)
-│       └── *.R                 # Statistical analysis scripts
-├── code/                       # Reusable code components
-│   ├── plot_objects/          # ggplot theme and plot definitions
-│   ├── preprocessing/         # Data preprocessing utilities (MATLAB, Python)
-│   └── utilities/             # Helper functions for data processing
-├── documentation/              # Documentation and results
-│   ├── results_reports/       # Statistical analysis reports and summaries
-│   └── *.md                   # Documentation files
+├── analysis/
+│   ├── main/                        # Full publication pipeline (R Markdown)
+│   ├── manuscript_scripts/          # Scripts for individual analyses and figures
+│   │   ├── figures/                 # Figure generation scripts (Figures 2–4)
+│   │   └── *.R                      # Statistical analysis scripts
+│   └── revision_analyses/           # Supplementary analyses added at revision
+│       ├── *.R                      # Analysis scripts (numbered 01–05)
+│       └── outputs/                 # Generated tables and figures
+├── code/
+│   ├── plot_objects/                # ggplot theme and task-specific plot templates
+│   ├── preprocessing/               # Data preprocessing (MATLAB scripts, Python notebooks)
+│   └── utilities/                   # Shared helper functions
+├── documentation/
+│   └── results_reports/             # Statistical summaries and reports
 └── figures/
-    └── publication/           # Final publication-ready figures (PNG format)
+    └── publication/                 # Final publication-ready figures (PNG, 300 DPI)
 ```
-
-### Directory Descriptions
-
-**`analysis/`** - Contains all analysis scripts organized by purpose:
-- `main/`: Complete analysis pipeline in R Markdown format
-- `manuscript_scripts/`: Individual R scripts for specific analyses
-  - `figures/`: Scripts that generate the manuscript figures
-  - Root-level scripts: Statistical models and verification analyses
-
-**`code/`** - Reusable code components:
-- `plot_objects/`: ggplot theme definitions and plot templates for each task
-- `preprocessing/`: Tools for converting and aggregating raw eyetracker data
-  - MATLAB scripts for file conversion
-  - Python notebooks for data aggregation
-- `utilities/`: Helper functions used across multiple analyses
-
-**`documentation/`** - Comprehensive documentation:
-- Analysis overviews and methodological notes
-- Statistical reports and summaries
-- Results from various analysis approaches
-
-**`figures/publication/`** - Final publication-ready figures:
-- All figures are in PNG format, high resolution (300 DPI)
-- Generated by scripts in `analysis/manuscript_scripts/figures/`
 
 ## Key Analysis Scripts
 
-### Main Analysis Pipeline
-- **`analysis/main/Aggregated_analysis_publication.Rmd`** - Complete analysis pipeline and results (R Markdown)
+### Primary Analyses
+
+| Analysis | Script | Description |
+|----------|--------|-------------|
+| Full pipeline | `analysis/main/Aggregated_analysis_publication.Rmd` | Complete R Markdown pipeline reproducing all results |
+| Behavioral + AUC models | `analysis/manuscript_scripts/LCYA_Final_Corrected_Analysis.R` | Primary GLMMs and LMMs for accuracy, RT, and pupil AUC |
+| AUC models | `analysis/manuscript_scripts/LCYA_AUC_Analysis.R` | Focused LMM analysis for Total and Cognitive AUC |
+| Individual differences | `analysis/manuscript_scripts/Bivariate_Individual_Differences_brms.R` | Bayesian multivariate models for behavior–pupil correlations |
 
 ### Manuscript Figures
 
 | Figure | Script | Description | Output |
 |--------|--------|-------------|--------|
-| **Figure 2** – Behavioral performance | `analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R` | Accuracy and reaction time effects across tasks and conditions | `figures/publication/Figure2_Task_Performance_Effects.png` |
-| **Figure 3** – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | Time-locked pupil responses with baseline and AUC period annotations (see details below) | `figures/publication/Figure3_Pupil_Waveforms.png` |
-| **Figure 4** – AUC bar plots | `analysis/manuscript_scripts/figures/LCYA_Updated_Combined_AUC_Plots.R` | Total AUC and Cognitive AUC effects across tasks | `Figure4_Total_AUC.png`, `Figure4_Cognitive_AUC.png` |
-| **Figure 4** – Combined layout | `analysis/manuscript_scripts/figures/LCYA_Figure4_Merged_AUC_Plot.R` | Merged visualization of Total and Cognitive AUC | `Figure4_Merged_Total_Cognitive_AUC.png` |
+| **Figure 2** – Behavioral performance | `analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R` | Accuracy and RT by task difficulty × physical effort for CDT, ADT, VDT | `figures/publication/Figure2_Task_Performance_Effects.png` |
+| **Figure 3** – Pupil waveforms | `analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R` | GAM-smoothed pupil waveforms with pre-trial baseline and AUC windows annotated | `figures/publication/Figure3_Pupil_Waveforms.png` |
+| **Figure 4** – AUC bar plots | `analysis/revision_analyses/LCYA_Merged_TotalCognitive_AUC_IndivPoints.R` | Total AUC and Cognitive AUC by condition with individual data points | `figures/publication/Figure4_Merged_Total_Cognitive_AUC_IndivPoints.png` |
 
-**Figure 3 Details:**
-- **Baseline correction**: 500ms pre-squeeze window (-0.5s to 0s) for optimal separation
-- **Time range**: From -0.5s (baseline period) to response onset for complete trial visualization
-- **Smoothing**: GAM trajectories with 95% confidence intervals
-- **Task-specific annotations**:
-  - **CDT**: Shows "Pre-trial Baseline" (grey) and "Total AUC" (blue) only. Cognitive AUC excluded per analytical recommendations.
-  - **ADT/VDT**: Shows "Pre-trial Baseline" (grey), "Total AUC" (blue), "Pre-stimulus Baseline" (grey, 500ms before target onset), and "Cognitive AUC" (orange)
-- **Event markers**: Task-specific labels ("Array onset" for CDT, "Target onset" for ADT/VDT, "Probe + Response" for CDT, "Response" for ADT/VDT)
+**Figure 3 details:**
+- Baseline: 500 ms pre-squeeze window (B₀)
+- CDT: Total AUC only (Cognitive AUC excluded — probe presented during response window)
+- ADT/VDT: Total AUC + Cognitive AUC shown; pre-stimulus baseline (B₂b) annotated
 
-### Statistical Analyses
+### Revision Analyses (`analysis/revision_analyses/`)
 
-| Analysis | Script | Description | Output Location |
-|----------|--------|-------------|-----------------|
-| Full manuscript pipeline | `analysis/manuscript_scripts/LCYA_Final_Corrected_Analysis.R` | Complete statistical analysis (behavioral, physiological, individual differences) | `documentation/results_reports/` |
-| Pupillometry AUC models | `analysis/manuscript_scripts/LCYA_AUC_Analysis.R` | Linear mixed-effects models for Total, Cognitive, and Physical AUC | Model summaries to console/file |
-| Bayesian individual differences | `analysis/manuscript_scripts/Bivariate_Individual_Differences_brms.R` | Multivariate Bayesian models examining individual-level associations | `documentation/results_reports/Individual_Differences_Brms_Report.md` |
-| Subject-means individual differences | `analysis/manuscript_scripts/Updated_Individual_Differences_Accuracy_RT_SubjectMeans.R` | Alternative approach using subject-level means | `documentation/results_reports/subject_means/results/` |
-| Frequentist verification | `analysis/manuscript_scripts/Final_Individual_Differences_Verification.R` | Verification of correlations using frequentist methods | Console output |
-| Response bias analysis | `analysis/manuscript_scripts/response_bias_analysis.R` | GLMM for Same/Different judgment bias | Console output |
+All scripts output tables to `analysis/revision_analyses/outputs/`.
 
-### Data Preprocessing
+| Script | Supplement | Description |
+|--------|------------|-------------|
+| `LCYA_Random_Slopes_Models.R` | Section 2 | Trial-level GLMMs (accuracy) and LMMs (RT, Total AUC, Cognitive AUC) with maximal random-effects structure (Barr et al., 2013) |
+| `LCYA_TOST_Equivalence_Testing.R` | Section 3 | Two one-sided equivalence tests (TOST) for all non-significant interaction and PE main effects; SESOI anchored to Park et al. (2021), d = 0.79 |
+| `LCYA_Grip_Force_Continuous_Models.R` | Section 4 | Models replacing binary Physical Effort with actual measured grip force (AUC/MVC, z-scored); includes motor-artifact check in High-effort trials |
+| `LCYA_Confidence_Ratings_Analysis.R` | Section 1 | Trial-level LMMs for subjective confidence ratings (1–4 scale) across all tasks |
+| `LCYA_Merged_TotalCognitive_AUC_IndivPoints.R` | Figure 4 | Generates Figure 4 (merged Total + Cognitive AUC bar plots with individual points) |
+| `LCYA_Updated_Figures_Individual_Points.R` | Figure 2 | Generates Figure 2 (behavioral performance with individual data points) |
 
-- **MATLAB scripts** (`code/preprocessing/`):
-  - `eyetracker_mat_to_csv_converter.m` - Convert individual MATLAB eyetracker files to CSV
-  - `batch_convert_eyetracker_files.m` - Batch conversion of all eyetracker files
-- **Python notebooks** (`code/preprocessing/python_notebooks/`):
-  - Task-specific aggregation notebooks for trial-level data
-  - See `code/preprocessing/README.md` for detailed preprocessing documentation
+Key output files:
+- `LCYA_FixedEffects_AllModels.csv` — fixed-effect estimates (b, SE, 95% CI, p) for all primary models (Supplementary Table S6)
+- `LCYA_GripForce_FixedEffects.csv` — estimates from continuous grip force models (Supplementary Tables S4–S5)
+- `LCYA_TOST_Results.csv` + `LCYA_TOST_ForestPlot.png` — equivalence test results (Supplementary Table S3 + Figure S2)
+- `FigureS_ActualForce_vs_TotalAUC.png` — dose-response figure (Supplementary Figure S3)
 
 ## Dependencies
 
-### Required R Packages
-
-**Core Analysis:**
-- `tidyverse` - Data manipulation and visualization (`dplyr`, `ggplot2`, `tidyr`, `readr`, `purrr`)
-- `lme4` - Linear mixed-effects models
-- `lmerTest` - p-values for mixed-effects models
-- `brms` - Bayesian regression models (for individual differences)
-- `mgcv` - Generalized additive models (GAM) for smoothing
-- `patchwork` / `cowplot` - Combining multiple plots
-- `posterior` - Bayesian posterior analysis (for brms)
-
-**Visualization:**
-- `ggplot2` - Primary plotting package
-- `gridExtra` - Additional plot arrangement tools
-- `viridis` - Color palettes
-- `ggridges` - Distribution visualizations
-
-**Other:**
-- `rmcorr` - Repeated measures correlation (optional, for sensitivity analyses)
-
-### Installation
+### R Packages
 
 ```r
-# Install CRAN packages
-install.packages(c("tidyverse", "lme4", "lmerTest", "mgcv", 
-                   "patchwork", "cowplot", "viridis", "ggridges", 
-                   "rmcorr", "posterior"))
-
-# Install brms (requires compilation)
-install.packages("brms")
-# Note: brms may require additional system dependencies; see brms documentation
+install.packages(c(
+  "tidyverse",   # data wrangling + ggplot2
+  "lme4",        # mixed-effects models
+  "lmerTest",    # p-values for LMMs
+  "mgcv",        # GAM smoothing (Figure 3)
+  "patchwork",   # combining plots
+  "cowplot",     # plot assembly
+  "viridis",     # color palettes
+  "brms"         # Bayesian individual-differences models
+))
 ```
+
+R version used: 4.5.1
+
+### Data Preprocessing
+
+- **MATLAB** (`code/preprocessing/`): eyetracker file conversion
+- **Python notebooks** (`code/preprocessing/python_notebooks/`): trial-level data aggregation per task
+
+See `code/preprocessing/README.md` for preprocessing details.
 
 ## Usage
 
-### Quick Start: Reproducing Manuscript Figures
+### Reproducing Manuscript Figures
 
-1. **Set up R environment**: Install all required packages (see Dependencies section)
-
-2. **Update file paths**: Edit the `BASE_DIR` variable in each script to point to your data directory:
+1. Install all required R packages (see Dependencies)
+2. Set `BASE_DIR` at the top of each script to point to your local data directory:
    ```r
-   BASE_DIR <- "/path/to/your/LC–YA"
+   BASE_DIR <- "/path/to/your/LC-YA"
    ```
-
-3. **Ensure data files are available**:
-   - Raw pupil data: `100 Hz/` directory with `*_DS100_merged.csv` files
-   - Processed AUC data: `PI_Feedback_Outputs/Combined_Dual_AUC_Data.csv` (generated by scripts)
-   - Behavioral data: `Complete_Manuscript_Results/complete_analysis_data.csv`
-
-4. **Run figure generation scripts** (in order):
+3. Run in order:
    ```r
-   # Figure 2: Behavioral performance
    source("analysis/manuscript_scripts/figures/Figure2_Clean_Final_Version.R")
-   
-   # Figure 3: Pupil waveforms
    source("analysis/manuscript_scripts/figures/LCYA_Isolated_Cognitive_AUC_Analysis.R")
-   
-   # Figure 4: AUC bar plots
-   source("analysis/manuscript_scripts/figures/LCYA_Updated_Combined_AUC_Plots.R")
+   source("analysis/revision_analyses/LCYA_Merged_TotalCognitive_AUC_IndivPoints.R")
    ```
 
-5. **Find outputs**: All figures are saved to `figures/publication/`
+### Full Analysis Pipeline
 
-### Complete Analysis Pipeline
-
-For full reproduction of all analyses:
 ```r
-# Run the complete R Markdown pipeline
 rmarkdown::render("analysis/main/Aggregated_analysis_publication.Rmd")
 ```
 
 ### Data Requirements
 
-**Note**: Due to data privacy and file size constraints, raw data files are not included in this repository. **Data are available for reviewers upon reasonable request.** Users who wish to reproduce the analyses will need to provide their own data files with the following structure:
+Raw data are not included (see Data Availability below). Scripts expect:
 
-- **Raw pupil data**: `100 Hz/` directory containing `*_DS100_merged.csv` files with columns:
-  - `sub` (subject ID)
-  - `trial_index` (trial number)
-  - `time` (timestamp)
-  - `pupil` (pupil diameter)
-  - `duration_label` (event labels: "Squeeze", "Arrow"/"Stimulus", "Response", "Confidence")
-  - `stimLev` (stimulus level/difficulty)
-  - `isStrength` (effort condition: 0=Low, 1=High)
+- **Pupil data**: `100 Hz/` directory containing `*_DS100_merged.csv` files with columns `sub`, `trial_index`, `time`, `pupil`, `duration_label`, `stimLev`, `isStrength`
+- **Behavioral data**: `Complete_Manuscript_Results/complete_analysis_data.csv`
 
-- **Behavioral data**: Processed behavioral data files (accuracy and reaction time)
+## Data Availability
 
-**File paths**: Scripts use absolute paths that need to be adjusted for your local setup. Update the `BASE_DIR` variable at the top of each script.
-
-## Key Methodological Decisions
-
-### Pupil Waveform Analysis (Figure 3)
-- **Baseline period**: 500ms pre-squeeze (-0.5s to 0s) for optimal separation
-- **Baseline correction**: Global baseline (B0) applied throughout to ensure convergence at squeeze onset
-- **Task-specific analyses**:
-  - **CDT**: Physical effort only (Total AUC); Cognitive AUC excluded per analytical recommendations
-  - **ADT/VDT**: Full 2×2 ANOVA (difficulty × effort) for both Total AUC and Cognitive AUC
-- **Pre-stimulus Baseline (B2b)**: 500ms window before target/stimulus onset, shown only for ADT/VDT (used specifically for Cognitive AUC calculation)
-
-### AUC Measures
-- **Pre-trial Baseline (B0)**: 500ms window (-0.5s to 0s) before squeeze onset, used for global baseline correction
-- **Pre-stimulus Baseline (B2b)**: 500ms window before target/stimulus onset, used specifically for Cognitive AUC calculation
-- **Total AUC**: Raw pupil data from squeeze onset (0s) to response onset
-- **Cognitive AUC**: Isolated pupil data (B0-corrected) from 300ms after target/stimulus onset to response onset
-
-### Individual Differences Analysis
-- **Primary method**: Multivariate Bayesian mixed-effects models (brms)
-- **Target estimand**: Correlation between subject-specific effort slopes
-- **Sensitivity analyses**: rmcorr and subject-means correlations
-- **Statistical approach**: Bayesian inference with credible intervals
-
-## Documentation
-
-For detailed documentation, see:
-- `documentation/ANALYSIS_OVERVIEW.md` - Comprehensive analysis overview
-- `documentation/CODE_DOCUMENTATION.md` - Technical documentation for code files
-- `documentation/REPOSITORY_STRUCTURE.md` - Detailed repository organization
-- `code/preprocessing/README.md` - Data preprocessing instructions
+De-identified behavioral and pupillometry data are available from the corresponding author upon reasonable request (subject to IRB/consent constraints). Analysis code and study materials are publicly available via Zenodo: https://doi.org/10.5281/zenodo.18204999
 
 ## Citation
 
-If you use this code or reference these analyses, please cite:
-
-[Manuscript citation - to be updated upon publication]
+```bibtex
+@article{dastgheib2025concurrent,
+  title   = {Effects of concurrent task difficulty and physical effort on memory
+             and perceptual performance and pupil response in younger adults},
+  author  = {Dastgheib, Mohammad and Sun, Andrew Y. and Yaghoubi, Kimia C. and
+             Zhang, Weiwei and Peters, Megan A. K. and Bennett, Ilana J. and
+             Seitz, Aaron R.},
+  year    = {2025},
+  note    = {in press}
+}
+```
 
 ## Contact
 
-**Mohammad Dastgheib**  
-mdast003@ucr.edu
+**Mohammad Dastgheib** — mdast003@ucr.edu  
+University of California, Riverside
 
 ## License
 
-This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GPLv3 License — see the [LICENSE](LICENSE) file for details.
