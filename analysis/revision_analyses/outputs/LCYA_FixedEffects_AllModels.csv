@@ -1,0 +1,43 @@
+task,outcome,model_type,term_clean,term,b,SE,CI_lower,CI_upper,z,t,df,p,sig,random_fx,singular_flag
+CDT,Accuracy,GLMM,Intercept,(Intercept),1.482,0.1047,1.2767,1.6873,14.1499,NA,NA,0,TRUE,resp1_diff ~ difficulty * effort + (1 | sub),FALSE
+CDT,Accuracy,GLMM,Task Difficulty (Hard vs. Easy),difficultyHard,-2.3555,0.0948,-2.5414,-2.1697,-24.8404,NA,NA,0,TRUE,resp1_diff ~ difficulty * effort + (1 | sub),FALSE
+CDT,Accuracy,GLMM,Physical Effort (High vs. Low),effortHigh,-0.103,0.0982,-0.2954,0.0894,-1.0498,NA,NA,0.2938,FALSE,resp1_diff ~ difficulty * effort + (1 | sub),FALSE
+CDT,Accuracy,GLMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,-0.1325,0.1321,-0.3914,0.1264,-1.0033,NA,NA,0.3157,FALSE,resp1_diff ~ difficulty * effort + (1 | sub),FALSE
+CDT,Reaction_Time_log,LMM,Intercept,(Intercept),0.263,0.057,0.1513,0.3747,NA,4.6145,48.3683,0,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+CDT,Reaction_Time_log,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,-0.0187,0.0314,-0.0802,0.0428,NA,-0.597,5574,0.5506,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+CDT,Reaction_Time_log,LMM,Physical Effort (High vs. Low),effortHigh,0.006,0.0314,-0.0555,0.0675,NA,0.1914,5574,0.8482,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+CDT,Reaction_Time_log,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,0.0095,0.0444,-0.0775,0.0965,NA,0.2145,5574,0.8302,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+CDT,Total_AUC,LMM,Intercept,(Intercept),-555.1822,58.6259,-670.0868,-440.2776,NA,-9.4699,38.0105,0,TRUE,Total_AUC ~ effort + (1 + effort | sub),FALSE
+CDT,Total_AUC,LMM,Physical Effort (High vs. Low),effortHigh,226.7777,40.9167,146.5825,306.973,NA,5.5424,38.0317,0,TRUE,Total_AUC ~ effort + (1 + effort | sub),FALSE
+ADT,Accuracy,GLMM,Intercept,(Intercept),2.5814,0.2065,2.1767,2.9861,12.5025,NA,NA,0,TRUE,iscorr ~ difficulty * effort + (1 | sub),FALSE
+ADT,Accuracy,GLMM,Task Difficulty (Hard vs. Easy),difficultyHard,-5.2598,0.132,-5.5185,-5.0011,-39.8518,NA,NA,0,TRUE,iscorr ~ difficulty * effort + (1 | sub),FALSE
+ADT,Accuracy,GLMM,Physical Effort (High vs. Low),effortHigh,-0.1328,0.1099,-0.3481,0.0826,-1.2082,NA,NA,0.227,FALSE,iscorr ~ difficulty * effort + (1 | sub),FALSE
+ADT,Accuracy,GLMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,0.0247,0.1599,-0.2888,0.3381,0.1542,NA,NA,0.8775,FALSE,iscorr ~ difficulty * effort + (1 | sub),FALSE
+ADT,Reaction_Time_log,LMM,Intercept,(Intercept),-1.4693,0.1507,-1.7646,-1.1739,NA,-9.7491,40.2406,0,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+ADT,Reaction_Time_log,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,0.2525,0.0414,0.1715,0.3336,NA,6.1055,7758,0,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+ADT,Reaction_Time_log,LMM,Physical Effort (High vs. Low),effortHigh,0.0402,0.0414,-0.0408,0.1213,NA,0.9732,7758,0.3305,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+ADT,Reaction_Time_log,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,-0.0673,0.0585,-0.1819,0.0474,NA,-1.1504,7758,0.25,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+ADT,Total_AUC,LMM,Intercept,(Intercept),-509.2,56.7749,-620.4768,-397.9232,NA,-8.9688,41.034,0,TRUE,Total_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Total_AUC,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,-26.1055,17.9934,-61.3719,9.161,NA,-1.4508,7757.0004,0.1469,FALSE,Total_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Total_AUC,LMM,Physical Effort (High vs. Low),effortHigh,204.8652,17.9934,169.5988,240.1316,NA,11.3856,7757.0004,0,TRUE,Total_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Total_AUC,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,6.9061,25.4449,-42.965,56.7771,NA,0.2714,7757.0002,0.7861,FALSE,Total_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Cognitive_AUC,LMM,Intercept,(Intercept),45.4929,5.8127,34.1002,56.8856,NA,7.8265,49.3491,0,TRUE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Cognitive_AUC,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,-7.4729,3.3231,-13.9861,-0.9596,NA,-2.2487,7757.001,0.0246,TRUE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Cognitive_AUC,LMM,Physical Effort (High vs. Low),effortHigh,-5.155,3.3227,-11.6674,1.3574,NA,-1.5514,7757.0001,0.1208,FALSE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT,Cognitive_AUC,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,4.5626,4.6993,-4.6479,13.7732,NA,0.9709,7757.0006,0.3316,FALSE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+VDT,Accuracy,GLMM,Intercept,(Intercept),2.4693,0.2946,1.8918,3.0467,8.3806,NA,NA,0,TRUE,iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub),FALSE
+VDT,Accuracy,GLMM,Task Difficulty (Hard vs. Easy),difficultyHard,-3.3859,0.2533,-3.8825,-2.8894,-13.3656,NA,NA,0,TRUE,iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub),FALSE
+VDT,Accuracy,GLMM,Physical Effort (High vs. Low),effortHigh,-0.0854,0.1636,-0.406,0.2352,-0.5221,NA,NA,0.6016,FALSE,iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub),FALSE
+VDT,Accuracy,GLMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,-0.0419,0.1847,-0.4039,0.32,-0.227,NA,NA,0.8204,FALSE,iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub),FALSE
+VDT,Reaction_Time_log,LMM,Intercept,(Intercept),-1.3934,0.1602,-1.7073,-1.0795,NA,-8.6994,37.4717,0,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+VDT,Reaction_Time_log,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,0.1789,0.0368,0.1067,0.2511,NA,4.8572,7360,0,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+VDT,Reaction_Time_log,LMM,Physical Effort (High vs. Low),effortHigh,0.0758,0.0368,0.0036,0.148,NA,2.0582,7360,0.0396,TRUE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+VDT,Reaction_Time_log,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,0.0523,0.0521,-0.0498,0.1544,NA,1.0031,7360,0.3158,FALSE,log_rt ~ difficulty * effort + (1 | sub),FALSE
+VDT,Total_AUC,LMM,Intercept,(Intercept),-504.7516,64.831,-631.8179,-377.6852,NA,-7.7857,36.0112,0,TRUE,Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub),FALSE
+VDT,Total_AUC,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,-10.4667,20.5546,-50.753,29.8196,NA,-0.5092,35.4783,0.6138,FALSE,Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub),FALSE
+VDT,Total_AUC,LMM,Physical Effort (High vs. Low),effortHigh,165.108,34.9989,96.5114,233.7046,NA,4.7175,36.0488,0,TRUE,Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub),FALSE
+VDT,Total_AUC,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,20.3807,30.5377,-39.4719,80.2334,NA,0.6674,36.1019,0.5088,FALSE,Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub),FALSE
+VDT,Cognitive_AUC,LMM,Intercept,(Intercept),21.7286,6.5377,8.915,34.5422,NA,3.3236,44.1167,0.0018,TRUE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+VDT,Cognitive_AUC,LMM,Task Difficulty (Hard vs. Easy),difficultyHard,3.1774,3.3199,-3.3295,9.6843,NA,0.9571,7326.0268,0.3386,FALSE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+VDT,Cognitive_AUC,LMM,Physical Effort (High vs. Low),effortHigh,-3.5465,3.3185,-10.0506,2.9577,NA,-1.0687,7326.0125,0.2852,FALSE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+VDT,Cognitive_AUC,LMM,Task Difficulty × Physical Effort,difficultyHard:effortHigh,7.2188,4.6943,-1.982,16.4195,NA,1.5378,7326.0143,0.1242,FALSE,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE

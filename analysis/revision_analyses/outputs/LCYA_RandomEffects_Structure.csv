@@ -1,0 +1,12 @@
+label,task,outcome,final_formula,singular
+CDT Accuracy,CDT,Accuracy,resp1_diff ~ difficulty * effort + (1 | sub),FALSE
+CDT RT,CDT,Reaction_Time_log,log_rt ~ difficulty * effort + (1 | sub),FALSE
+CDT Total_AUC,CDT,Total_AUC,Total_AUC ~ effort + (1 + effort | sub),FALSE
+ADT Accuracy,ADT,Accuracy,iscorr ~ difficulty * effort + (1 | sub),FALSE
+ADT RT,ADT,Reaction_Time_log,log_rt ~ difficulty * effort + (1 | sub),FALSE
+ADT Total_AUC,ADT,Total_AUC,Total_AUC ~ difficulty * effort + (1 | sub),FALSE
+ADT Cognitive_AUC,ADT,Cognitive_AUC,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE
+VDT Accuracy,VDT,Accuracy,iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub),FALSE
+VDT RT,VDT,Reaction_Time_log,log_rt ~ difficulty * effort + (1 | sub),FALSE
+VDT Total_AUC,VDT,Total_AUC,Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub),FALSE
+VDT Cognitive_AUC,VDT,Cognitive_AUC,Cognitive_AUC ~ difficulty * effort + (1 | sub),FALSE

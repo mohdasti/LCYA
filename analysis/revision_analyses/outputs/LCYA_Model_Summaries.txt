@@ -1,0 +1,642 @@
+LCYA Revision — Random Slopes Model Summaries
+Generated: 2026-05-23 15:42:39 
+
+------------------------------------------------------------ 
+MODEL: CDT Accuracy 
+Final formula: resp1_diff ~ difficulty * effort + (1 | sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: resp1_diff ~ difficulty * effort + (1 | sub)
+   Data: data
+Control: ctrl_glmer
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   5714.3    5747.2   -2852.1    5704.3      5321 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.2016 -0.6295  0.3549  0.5395  2.8881 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ sub    (Intercept) 0.23     0.4796  
+Number of obs: 5326, groups:  sub, 39
+
+Fixed effects:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                1.48200    0.10474  14.150   <2e-16 ***
+difficultyHard            -2.35555    0.09483 -24.840   <2e-16 ***
+effortHigh                -0.10305    0.09817  -1.050    0.294    
+difficultyHard:effortHigh -0.13252    0.13209  -1.003    0.316    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.516              
+effortHigh  -0.484  0.535       
+dffcltyHr:H  0.359 -0.696 -0.743
+
+------------------------------------------------------------ 
+MODEL: CDT RT 
+Final formula: log_rt ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 14003.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-6.0317 -0.1631  0.0712  0.3631  2.6802 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 0.1075   0.3278  
+ Residual             0.6913   0.8315  
+Number of obs: 5616, groups:  sub, 39
+
+Fixed effects:
+                            Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)                2.630e-01  5.699e-02  4.837e+01   4.615 2.92e-05 ***
+difficultyHard            -1.873e-02  3.138e-02  5.574e+03  -0.597    0.551    
+effortHigh                 6.008e-03  3.138e-02  5.574e+03   0.191    0.848    
+difficultyHard:effortHigh  9.520e-03  4.438e-02  5.574e+03   0.215    0.830    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.275              
+effortHigh  -0.275  0.500       
+dffcltyHr:H  0.195 -0.707 -0.707
+
+------------------------------------------------------------ 
+MODEL: CDT Total_AUC 
+Final formula: Total_AUC ~ effort + (1 + effort | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 88425.3
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.1465 -0.5135  0.0183  0.5084  6.8125 
+
+Random effects:
+ Groups   Name        Variance Std.Dev. Corr  
+ sub      (Intercept) 128375   358.3          
+          effortHigh   53968   232.3    -0.36 
+ Residual             406489   637.6          
+Number of obs: 5601, groups:  sub, 39
+
+Fixed effects:
+            Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)  -555.18      58.63   38.01  -9.470 1.51e-11 ***
+effortHigh    226.78      40.92   38.03   5.542 2.41e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+           (Intr)
+effortHigh -0.377
+
+------------------------------------------------------------ 
+MODEL: ADT Accuracy 
+Final formula: iscorr ~ difficulty * effort + (1 | sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: iscorr ~ difficulty * effort + (1 | sub)
+   Data: data
+Control: ctrl_glmer
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   4502.3    4537.2   -2246.2    4492.3      7795 
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-12.7222  -0.2759  -0.0606   0.2689  17.4251 
+
+Random effects:
+ Groups Name        Variance Std.Dev.
+ sub    (Intercept) 1.365    1.168   
+Number of obs: 7800, groups:  sub, 39
+
+Fixed effects:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                2.58141    0.20647  12.503   <2e-16 ***
+difficultyHard            -5.25982    0.13198 -39.852   <2e-16 ***
+effortHigh                -0.13276    0.10989  -1.208    0.227    
+difficultyHard:effortHigh  0.02465    0.15991   0.154    0.877    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.319              
+effortHigh  -0.279  0.440       
+dffcltyHr:H  0.191 -0.607 -0.687
+
+------------------------------------------------------------ 
+MODEL: ADT RT 
+Final formula: log_rt ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 26318
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.4212 -0.4724  0.0400  0.6006  3.2885 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 0.8525   0.9233  
+ Residual             1.6677   1.2914  
+Number of obs: 7800, groups:  sub, 39
+
+Fixed effects:
+                            Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)                 -1.46927    0.15071   40.24061  -9.749 3.75e-12 ***
+difficultyHard               0.25251    0.04136 7758.00000   6.105 1.07e-09 ***
+effortHigh                   0.04025    0.04136 7758.00000   0.973     0.33    
+difficultyHard:effortHigh   -0.06729    0.05849 7758.00000  -1.150     0.25    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.137              
+effortHigh  -0.137  0.500       
+dffcltyHr:H  0.097 -0.707 -0.707
+
+------------------------------------------------------------ 
+MODEL: ADT Total_AUC 
+Final formula: Total_AUC ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 121018.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-4.5060 -0.5647  0.0263  0.5472  7.5185 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 119397   345.5   
+ Residual             315587   561.8   
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                          Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)               -509.200     56.775   41.034  -8.969 3.21e-11 ***
+difficultyHard             -26.105     17.993 7757.000  -1.451    0.147    
+effortHigh                 204.865     17.993 7757.000  11.386  < 2e-16 ***
+difficultyHard:effortHigh    6.906     25.445 7757.000   0.271    0.786    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.159              
+effortHigh  -0.159  0.500       
+dffcltyHr:H  0.112 -0.707 -0.707
+
+------------------------------------------------------------ 
+MODEL: ADT Cognitive_AUC 
+Final formula: Cognitive_AUC ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 94636.9
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-6.3512 -0.5220 -0.0372  0.5471  4.8723 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept)  1102     33.2   
+ Residual             10764    103.8   
+Number of obs: 7799, groups:  sub, 39
+
+Fixed effects:
+                          Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)                 45.493      5.813   49.349   7.826 3.36e-10 ***
+difficultyHard              -7.473      3.323 7757.001  -2.249   0.0246 *  
+effortHigh                  -5.155      3.323 7757.000  -1.551   0.1208    
+difficultyHard:effortHigh    4.563      4.699 7757.001   0.971   0.3316    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.286              
+effortHigh  -0.286  0.500       
+dffcltyHr:H  0.202 -0.707 -0.707
+
+------------------------------------------------------------ 
+MODEL: VDT Accuracy 
+Final formula: iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub) 
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: 
+iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |  
+    sub)
+   Data: data
+Control: ctrl_glmer
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+   6350.9    6447.6   -3161.4    6322.9      7386 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-9.3146 -0.4794  0.1514  0.3841  4.3477 
+
+Random effects:
+ Groups Name                      Variance Std.Dev. Corr              
+ sub    (Intercept)               2.7581   1.6608                     
+        difficultyHard            1.7989   1.3412   -0.82             
+        effortHigh                0.2202   0.4692   -0.40  0.39       
+        difficultyHard:effortHigh 0.2379   0.4877    0.31 -0.16 -0.90 
+Number of obs: 7400, groups:  sub, 37
+
+Fixed effects:
+                          Estimate Std. Error z value Pr(>|z|)    
+(Intercept)                2.46925    0.29464   8.381   <2e-16 ***
+difficultyHard            -3.38595    0.25333 -13.366   <2e-16 ***
+effortHigh                -0.08540    0.16359  -0.522    0.602    
+difficultyHard:effortHigh -0.04193    0.18469  -0.227    0.820    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.824              
+effortHigh  -0.407  0.429       
+dffcltyHr:H  0.329 -0.368 -0.872
+
+------------------------------------------------------------ 
+MODEL: VDT RT 
+Final formula: log_rt ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 22880.2
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-3.9501 -0.4092  0.0857  0.5580  3.6154 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept) 0.9241   0.9613  
+ Residual             1.2552   1.1204  
+Number of obs: 7400, groups:  sub, 37
+
+Fixed effects:
+                            Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)                 -1.39341    0.16017   37.47167  -8.699 1.59e-10 ***
+difficultyHard               0.17893    0.03684 7360.00001   4.857 1.21e-06 ***
+effortHigh                   0.07582    0.03684 7360.00001   2.058   0.0396 *  
+difficultyHard:effortHigh    0.05226    0.05210 7360.00001   1.003   0.3158    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.115              
+effortHigh  -0.115  0.500       
+dffcltyHr:H  0.081 -0.707 -0.707
+
+------------------------------------------------------------ 
+MODEL: VDT Total_AUC 
+Final formula: Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 114111.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.4431 -0.5377  0.0012  0.5130  6.8214 
+
+Random effects:
+ Groups   Name                      Variance Std.Dev. Corr              
+ sub      (Intercept)               149421   386.55                     
+          difficultyHard              3436    58.62    0.02             
+          effortHigh                 33139   182.04   -0.34  0.13       
+          difficultyHard:effortHigh  10122   100.61    0.18 -0.70 -0.39 
+ Residual                           303361   550.78                     
+Number of obs: 7367, groups:  sub, 37
+
+Fixed effects:
+                          Estimate Std. Error      df t value Pr(>|t|)    
+(Intercept)                -504.75      64.83   36.01  -7.786 3.14e-09 ***
+difficultyHard              -10.47      20.55   35.48  -0.509    0.614    
+effortHigh                  165.11      35.00   36.05   4.718 3.54e-05 ***
+difficultyHard:effortHigh    20.38      30.54   36.10   0.667    0.509    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.112              
+effortHigh  -0.359  0.280       
+dffcltyHr:H  0.179 -0.703 -0.487
+
+------------------------------------------------------------ 
+MODEL: VDT Cognitive_AUC 
+Final formula: Cognitive_AUC ~ difficulty * effort + (1 | sub) 
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: f
+   Data: data
+Control: ctrl_lmer
+
+REML criterion at convergence: 88955.1
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-5.3267 -0.5095 -0.0186  0.5399  7.0529 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ sub      (Intercept)  1378     37.12  
+ Residual             10145    100.72  
+Number of obs: 7366, groups:  sub, 37
+
+Fixed effects:
+                          Estimate Std. Error       df t value Pr(>|t|)   
+(Intercept)                 21.729      6.538   44.117   3.324  0.00179 **
+difficultyHard               3.177      3.320 7326.027   0.957  0.33856   
+effortHigh                  -3.546      3.318 7326.012  -1.069  0.28524   
+difficultyHard:effortHigh    7.219      4.694 7326.014   1.538  0.12415   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) dffclH effrtH
+diffcltyHrd -0.254              
+effortHigh  -0.254  0.500       
+dffcltyHr:H  0.179 -0.707 -0.707
+
+
+
+ ============================================================ 
+COMPREHENSIVE FIXED-EFFECTS TABLE
+============================================================ 
+
+Columns: b = unstandardised coefficient | SE = standard error
+CI_lower/upper = Wald 95% CI | p from Wald test | sig = p < .05
+
+   task           outcome model_type                        term_clean
+1   CDT          Accuracy       GLMM                         Intercept
+2   CDT          Accuracy       GLMM   Task Difficulty (Hard vs. Easy)
+3   CDT          Accuracy       GLMM    Physical Effort (High vs. Low)
+4   CDT          Accuracy       GLMM Task Difficulty × Physical Effort
+5   CDT Reaction_Time_log        LMM                         Intercept
+6   CDT Reaction_Time_log        LMM   Task Difficulty (Hard vs. Easy)
+7   CDT Reaction_Time_log        LMM    Physical Effort (High vs. Low)
+8   CDT Reaction_Time_log        LMM Task Difficulty × Physical Effort
+9   CDT         Total_AUC        LMM                         Intercept
+10  CDT         Total_AUC        LMM    Physical Effort (High vs. Low)
+11  ADT          Accuracy       GLMM                         Intercept
+12  ADT          Accuracy       GLMM   Task Difficulty (Hard vs. Easy)
+13  ADT          Accuracy       GLMM    Physical Effort (High vs. Low)
+14  ADT          Accuracy       GLMM Task Difficulty × Physical Effort
+15  ADT Reaction_Time_log        LMM                         Intercept
+16  ADT Reaction_Time_log        LMM   Task Difficulty (Hard vs. Easy)
+17  ADT Reaction_Time_log        LMM    Physical Effort (High vs. Low)
+18  ADT Reaction_Time_log        LMM Task Difficulty × Physical Effort
+19  ADT         Total_AUC        LMM                         Intercept
+20  ADT         Total_AUC        LMM   Task Difficulty (Hard vs. Easy)
+21  ADT         Total_AUC        LMM    Physical Effort (High vs. Low)
+22  ADT         Total_AUC        LMM Task Difficulty × Physical Effort
+23  ADT     Cognitive_AUC        LMM                         Intercept
+24  ADT     Cognitive_AUC        LMM   Task Difficulty (Hard vs. Easy)
+25  ADT     Cognitive_AUC        LMM    Physical Effort (High vs. Low)
+26  ADT     Cognitive_AUC        LMM Task Difficulty × Physical Effort
+27  VDT          Accuracy       GLMM                         Intercept
+28  VDT          Accuracy       GLMM   Task Difficulty (Hard vs. Easy)
+29  VDT          Accuracy       GLMM    Physical Effort (High vs. Low)
+30  VDT          Accuracy       GLMM Task Difficulty × Physical Effort
+31  VDT Reaction_Time_log        LMM                         Intercept
+32  VDT Reaction_Time_log        LMM   Task Difficulty (Hard vs. Easy)
+33  VDT Reaction_Time_log        LMM    Physical Effort (High vs. Low)
+34  VDT Reaction_Time_log        LMM Task Difficulty × Physical Effort
+35  VDT         Total_AUC        LMM                         Intercept
+36  VDT         Total_AUC        LMM   Task Difficulty (Hard vs. Easy)
+37  VDT         Total_AUC        LMM    Physical Effort (High vs. Low)
+38  VDT         Total_AUC        LMM Task Difficulty × Physical Effort
+39  VDT     Cognitive_AUC        LMM                         Intercept
+40  VDT     Cognitive_AUC        LMM   Task Difficulty (Hard vs. Easy)
+41  VDT     Cognitive_AUC        LMM    Physical Effort (High vs. Low)
+42  VDT     Cognitive_AUC        LMM Task Difficulty × Physical Effort
+                        term         b      SE  CI_lower  CI_upper        z
+1                (Intercept)    1.4820  0.1047    1.2767    1.6873  14.1499
+2             difficultyHard   -2.3555  0.0948   -2.5414   -2.1697 -24.8404
+3                 effortHigh   -0.1030  0.0982   -0.2954    0.0894  -1.0498
+4  difficultyHard:effortHigh   -0.1325  0.1321   -0.3914    0.1264  -1.0033
+5                (Intercept)    0.2630  0.0570    0.1513    0.3747       NA
+6             difficultyHard   -0.0187  0.0314   -0.0802    0.0428       NA
+7                 effortHigh    0.0060  0.0314   -0.0555    0.0675       NA
+8  difficultyHard:effortHigh    0.0095  0.0444   -0.0775    0.0965       NA
+9                (Intercept) -555.1822 58.6259 -670.0868 -440.2776       NA
+10                effortHigh  226.7777 40.9167  146.5825  306.9730       NA
+11               (Intercept)    2.5814  0.2065    2.1767    2.9861  12.5025
+12            difficultyHard   -5.2598  0.1320   -5.5185   -5.0011 -39.8518
+13                effortHigh   -0.1328  0.1099   -0.3481    0.0826  -1.2082
+14 difficultyHard:effortHigh    0.0247  0.1599   -0.2888    0.3381   0.1542
+15               (Intercept)   -1.4693  0.1507   -1.7646   -1.1739       NA
+16            difficultyHard    0.2525  0.0414    0.1715    0.3336       NA
+17                effortHigh    0.0402  0.0414   -0.0408    0.1213       NA
+18 difficultyHard:effortHigh   -0.0673  0.0585   -0.1819    0.0474       NA
+19               (Intercept) -509.2000 56.7749 -620.4768 -397.9232       NA
+20            difficultyHard  -26.1055 17.9934  -61.3719    9.1610       NA
+21                effortHigh  204.8652 17.9934  169.5988  240.1316       NA
+22 difficultyHard:effortHigh    6.9061 25.4449  -42.9650   56.7771       NA
+23               (Intercept)   45.4929  5.8127   34.1002   56.8856       NA
+24            difficultyHard   -7.4729  3.3231  -13.9861   -0.9596       NA
+25                effortHigh   -5.1550  3.3227  -11.6674    1.3574       NA
+26 difficultyHard:effortHigh    4.5626  4.6993   -4.6479   13.7732       NA
+27               (Intercept)    2.4693  0.2946    1.8918    3.0467   8.3806
+28            difficultyHard   -3.3859  0.2533   -3.8825   -2.8894 -13.3656
+29                effortHigh   -0.0854  0.1636   -0.4060    0.2352  -0.5221
+30 difficultyHard:effortHigh   -0.0419  0.1847   -0.4039    0.3200  -0.2270
+31               (Intercept)   -1.3934  0.1602   -1.7073   -1.0795       NA
+32            difficultyHard    0.1789  0.0368    0.1067    0.2511       NA
+33                effortHigh    0.0758  0.0368    0.0036    0.1480       NA
+34 difficultyHard:effortHigh    0.0523  0.0521   -0.0498    0.1544       NA
+35               (Intercept) -504.7516 64.8310 -631.8179 -377.6852       NA
+36            difficultyHard  -10.4667 20.5546  -50.7530   29.8196       NA
+37                effortHigh  165.1080 34.9989   96.5114  233.7046       NA
+38 difficultyHard:effortHigh   20.3807 30.5377  -39.4719   80.2334       NA
+39               (Intercept)   21.7286  6.5377    8.9150   34.5422       NA
+40            difficultyHard    3.1774  3.3199   -3.3295    9.6843       NA
+41                effortHigh   -3.5465  3.3185  -10.0506    2.9577       NA
+42 difficultyHard:effortHigh    7.2188  4.6943   -1.9820   16.4195       NA
+         t      df      p   sig
+1       NA      NA 0.0000  TRUE
+2       NA      NA 0.0000  TRUE
+3       NA      NA 0.2938 FALSE
+4       NA      NA 0.3157 FALSE
+5   4.6145   48.37 0.0000  TRUE
+6  -0.5970 5574.00 0.5506 FALSE
+7   0.1914 5574.00 0.8482 FALSE
+8   0.2145 5574.00 0.8302 FALSE
+9  -9.4699   38.01 0.0000  TRUE
+10  5.5424   38.03 0.0000  TRUE
+11      NA      NA 0.0000  TRUE
+12      NA      NA 0.0000  TRUE
+13      NA      NA 0.2270 FALSE
+14      NA      NA 0.8775 FALSE
+15 -9.7491   40.24 0.0000  TRUE
+16  6.1055 7758.00 0.0000  TRUE
+17  0.9732 7758.00 0.3305 FALSE
+18 -1.1504 7758.00 0.2500 FALSE
+19 -8.9688   41.03 0.0000  TRUE
+20 -1.4508 7757.00 0.1469 FALSE
+21 11.3856 7757.00 0.0000  TRUE
+22  0.2714 7757.00 0.7861 FALSE
+23  7.8265   49.35 0.0000  TRUE
+24 -2.2487 7757.00 0.0246  TRUE
+25 -1.5514 7757.00 0.1208 FALSE
+26  0.9709 7757.00 0.3316 FALSE
+27      NA      NA 0.0000  TRUE
+28      NA      NA 0.0000  TRUE
+29      NA      NA 0.6016 FALSE
+30      NA      NA 0.8204 FALSE
+31 -8.6994   37.47 0.0000  TRUE
+32  4.8572 7360.00 0.0000  TRUE
+33  2.0582 7360.00 0.0396  TRUE
+34  1.0031 7360.00 0.3158 FALSE
+35 -7.7857   36.01 0.0000  TRUE
+36 -0.5092   35.48 0.6138 FALSE
+37  4.7175   36.05 0.0000  TRUE
+38  0.6674   36.10 0.5088 FALSE
+39  3.3236   44.12 0.0018  TRUE
+40  0.9571 7326.03 0.3386 FALSE
+41 -1.0687 7326.01 0.2852 FALSE
+42  1.5378 7326.01 0.1242 FALSE
+                                                                                    random_fx
+1                                                resp1_diff ~ difficulty * effort + (1 | sub)
+2                                                resp1_diff ~ difficulty * effort + (1 | sub)
+3                                                resp1_diff ~ difficulty * effort + (1 | sub)
+4                                                resp1_diff ~ difficulty * effort + (1 | sub)
+5                                                    log_rt ~ difficulty * effort + (1 | sub)
+6                                                    log_rt ~ difficulty * effort + (1 | sub)
+7                                                    log_rt ~ difficulty * effort + (1 | sub)
+8                                                    log_rt ~ difficulty * effort + (1 | sub)
+9                                                     Total_AUC ~ effort + (1 + effort | sub)
+10                                                    Total_AUC ~ effort + (1 + effort | sub)
+11                                                   iscorr ~ difficulty * effort + (1 | sub)
+12                                                   iscorr ~ difficulty * effort + (1 | sub)
+13                                                   iscorr ~ difficulty * effort + (1 | sub)
+14                                                   iscorr ~ difficulty * effort + (1 | sub)
+15                                                   log_rt ~ difficulty * effort + (1 | sub)
+16                                                   log_rt ~ difficulty * effort + (1 | sub)
+17                                                   log_rt ~ difficulty * effort + (1 | sub)
+18                                                   log_rt ~ difficulty * effort + (1 | sub)
+19                                                Total_AUC ~ difficulty * effort + (1 | sub)
+20                                                Total_AUC ~ difficulty * effort + (1 | sub)
+21                                                Total_AUC ~ difficulty * effort + (1 | sub)
+22                                                Total_AUC ~ difficulty * effort + (1 | sub)
+23                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+24                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+25                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+26                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+27    iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub)
+28    iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub)
+29    iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub)
+30    iscorr ~ difficulty * effort + (1 + difficulty + effort + difficulty:effort |      sub)
+31                                                   log_rt ~ difficulty * effort + (1 | sub)
+32                                                   log_rt ~ difficulty * effort + (1 | sub)
+33                                                   log_rt ~ difficulty * effort + (1 | sub)
+34                                                   log_rt ~ difficulty * effort + (1 | sub)
+35 Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub)
+36 Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub)
+37 Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub)
+38 Total_AUC ~ difficulty * effort + (1 + difficulty + effort +      difficulty:effort | sub)
+39                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+40                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+41                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+42                                            Cognitive_AUC ~ difficulty * effort + (1 | sub)
+   singular_flag
+1          FALSE
+2          FALSE
+3          FALSE
+4          FALSE
+5          FALSE
+6          FALSE
+7          FALSE
+8          FALSE
+9          FALSE
+10         FALSE
+11         FALSE
+12         FALSE
+13         FALSE
+14         FALSE
+15         FALSE
+16         FALSE
+17         FALSE
+18         FALSE
+19         FALSE
+20         FALSE
+21         FALSE
+22         FALSE
+23         FALSE
+24         FALSE
+25         FALSE
+26         FALSE
+27         FALSE
+28         FALSE
+29         FALSE
+30         FALSE
+31         FALSE
+32         FALSE
+33         FALSE
+34         FALSE
+35         FALSE
+36         FALSE
+37         FALSE
+38         FALSE
+39         FALSE
+40         FALSE
+41         FALSE
+42         FALSE
