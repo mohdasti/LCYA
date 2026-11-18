@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+title: "LCYA: Analysis code — concurrent task difficulty and physical effort (younger adults)"
+message: >-
+  If you use this software, please cite the peer-reviewed article (preferred)
+  and, when appropriate, the Zenodo archive for the specific code release you used.
+type: software
+authors:
+  - family-names: Dastgheib
+    given-names: Mohammad
+    orcid: "https://orcid.org/0000-0001-7684-3731"
+  - family-names: Sun
+    given-names: Andrew Y.
+  - family-names: Yaghoubi
+    given-names: Kimia C.
+  - family-names: Zhang
+    given-names: Weiwei
+  - family-names: Peters
+    given-names: Megan A. K.
+  - family-names: Bennett
+    given-names: Ilana J.
+  - family-names: Seitz
+    given-names: Aaron R.
+repository-code: "https://github.com/mohdasti/LCYA"
+url: "https://github.com/mohdasti/LCYA"
+license: GPL-3.0-only
+version: publication
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.18204999
+preferred-citation:
+  type: article
+  title: >-
+    Effects of concurrent task difficulty and physical effort on memory and
+    perceptual performance and pupil response in younger adults
+  authors:
+    - family-names: Dastgheib
+      given-names: Mohammad
+    - family-names: Sun
+      given-names: Andrew Y.
+    - family-names: Yaghoubi
+      given-names: Kimia C.
+    - family-names: Zhang
+      given-names: Weiwei
+    - family-names: Peters
+      given-names: Megan A. K.
+    - family-names: Bennett
+      given-names: Ilana J.
+    - family-names: Seitz
+      given-names: Aaron R.
+  journal: "Cognitive Research: Principles and Implications"
+  doi: 10.1186/s41235-026-00768-0
+  date-released: 2026-11-12

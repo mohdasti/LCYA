@@ -1,16 +1,22 @@
 # LCYA: Concurrent Effort in Younger Adults
 
-[![DOI](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204999)
+[![Publication](https://img.shields.io/badge/status-published-brightgreen)](https://doi.org/10.1186/s41235-026-00768-0)
+[![Article DOI](https://img.shields.io/badge/DOI-10.1186%2Fs41235--026--00768--0-blue)](https://doi.org/10.1186/s41235-026-00768-0)
+[![Code archive](https://zenodo.org/badge/750693548.svg)](https://doi.org/10.5281/zenodo.18204999)
 [![ORCID](https://img.shields.io/badge/ORCID-0000--0001--7684--3731-a6ce39.svg)](https://orcid.org/0000-0001-7684-3731)
 ![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)
 ![R](https://img.shields.io/badge/R-4.5.1-blue.svg)
 ![GitHub top language](https://img.shields.io/github/languages/top/mohdasti/LCYA)
 
+> **Project status:** This repository is **complete and archived**. It accompanies a published open-access article; active development has ended. Please cite the [journal article](https://doi.org/10.1186/s41235-026-00768-0) (and the [Zenodo release](https://doi.org/10.5281/zenodo.18204999) if you use a specific code snapshot).
+
 ## Overview
 
-This repository contains the analysis code and supplementary materials for:
+This repository contains the **analysis code and supplementary materials** for the LCYA young-adult study.
 
-> Dastgheib, M.\*, Sun, A. Y.\*, Yaghoubi, K. C., Zhang, W., Peters, M. A. K., Bennett, I. J., & Seitz, A. R. (in press). **Effects of concurrent task difficulty and physical effort on memory and perceptual performance and pupil response in younger adults.** _\*co-first authors_
+**Published article (12 November 2026):** [*Effects of concurrent task difficulty and physical effort on memory and perceptual performance and pupil response in younger adults*](https://link.springer.com/article/10.1186/s41235-026-00768-0) — *Cognitive Research: Principles and Implications*. https://doi.org/10.1186/s41235-026-00768-0
+
+Dastgheib and Sun are **co-first authors**; Bennett and Seitz are **co-senior authors**.
 
 The study examined effects of concurrent **task difficulty** (Easy vs. Hard stimulus similarity) and **physical effort** (Low 5% vs. High 40% MVC handgrip) on behavioral performance and pupillometric responses across three cognitive domains—visual working memory, auditory perception, and visual perception—in healthy younger adults (N = 38, M age = 22.9 years).
 
@@ -166,21 +172,38 @@ De-identified behavioral and pupillometry data are available from the correspond
 
 ## Citation
 
+Please cite the **article** when referencing the study or results. Cite the **Zenodo archive** when referring to a specific release of this repository.
+
+Machine-readable metadata: [`CITATION.cff`](CITATION.cff) (GitHub / `cffconvert`). EndNote, Zotero, Mendeley: [`citation/Dastgheib2026.ris`](citation/Dastgheib2026.ris).
+
+**APA (7th ed.)**
+
+> Dastgheib, M., Sun, A. Y., Yaghoubi, K. C., Zhang, W., Peters, M. A. K., Bennett, I. J., & Seitz, A. R. (2026). Effects of concurrent task difficulty and physical effort on memory and perceptual performance and pupil response in younger adults. *Cognitive Research: Principles and Implications*. https://doi.org/10.1186/s41235-026-00768-0
+
+**BibTeX**
+
 ```bibtex
-@article{dastgheib2025concurrent,
-  title   = {Effects of concurrent task difficulty and physical effort on memory
-             and perceptual performance and pupil response in younger adults},
-  author  = {Dastgheib, Mohammad and Sun, Andrew Y. and Yaghoubi, Kimia C. and
-             Zhang, Weiwei and Peters, Megan A. K. and Bennett, Ilana J. and
-             Seitz, Aaron R.},
-  year    = {2025},
-  note    = {in press}
+@article{Dastgheib2026,
+  title   = {Effects of concurrent task difficulty and physical effort on memory and perceptual performance and pupil response in younger adults},
+  author  = {Dastgheib, Mohammad and Sun, Andrew Y. and Yaghoubi, Kimia C. and Zhang, Weiwei and Peters, Megan A. K. and Bennett, Ilana J. and Seitz, Aaron R.},
+  journal = {Cognitive Research: Principles and Implications},
+  year    = {2026},
+  month   = nov,
+  doi     = {10.1186/s41235-026-00768-0},
+  url     = {https://doi.org/10.1186/s41235-026-00768-0},
+  issn    = {2365-7464}
 }
 ```
 
+## Funding & ethics
+
+- **Funding:** National Institute on Aging (NIH/NIA R01AG072607). The funder had no role in study design, data collection, analysis, decision to publish, or manuscript preparation.
+- **Ethics:** Institutional Review Board, University of California, Riverside (Protocol HS-21-055). All participants provided written informed consent.
+- **Preregistration:** This study was not preregistered.
+
 ## Contact
 
-**Mohammad Dastgheib** — mdast003@ucr.edu  
+**Mohammad Dastgheib** (corresponding author) — mdast003@ucr.edu  
 University of California, Riverside
 
 ## License
